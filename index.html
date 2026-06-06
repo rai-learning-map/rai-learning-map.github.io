@@ -127,9 +127,128 @@
       max-width: var(--width-page);
       margin: 0 auto;
     }
+    .mobile-bar {
+      display: none;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 0.65rem 1rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+    .mobile-bar-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink-deep);
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mobile-menu-btn {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--ink-deep);
+      color: oklch(98% 0.01 85);
+      border: none;
+      border-radius: 2px;
+      padding: 0.55rem 0.85rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      min-height: 44px;
+      min-width: 44px;
+    }
+    .mobile-menu-btn:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 2px;
+    }
+    .nav-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: oklch(10% 0 0 / 0.45);
+      z-index: 150;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s var(--ease-out);
+    }
+
     @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
-      nav.side { position: relative; top: 0; max-height: none; }
+      .hero {
+        padding: 1.75rem 1.25rem 1.5rem;
+      }
+      .hero h1 {
+        font-size: 1.85rem;
+        max-width: none;
+      }
+      .hero .lead {
+        font-size: 0.975rem;
+        line-height: 1.6;
+      }
+      .hero-pills {
+        display: none;
+      }
+      .mobile-bar { display: flex; }
+      .nav-backdrop { display: block; }
+      body.nav-open { overflow: hidden; }
+      body.nav-open .nav-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .layout {
+        grid-template-columns: 1fr;
+        padding: var(--space-sm) 1rem var(--space-lg);
+        gap: 0;
+      }
+      main { order: 1; min-width: 0; }
+      nav.side {
+        order: 2;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: min(18.5rem, 88vw);
+        z-index: 200;
+        max-height: none;
+        border-radius: 0;
+        border: none;
+        border-right: 1px solid var(--border);
+        box-shadow: var(--shadow-lift);
+        transform: translateX(-105%);
+        transition: transform 0.35s var(--ease-out);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      body.nav-open nav.side {
+        transform: translateX(0);
+      }
+      section { margin-bottom: var(--space-xl); }
+      h2.sec { font-size: 1.35rem; }
+      .hub-grid {
+        grid-template-columns: 1fr;
+      }
+      .paper-hdr {
+        padding: var(--space-sm);
+      }
+      .paper-hdr h3 {
+        font-size: 1rem;
+      }
+      .index-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      table.data {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
     }
 
     nav.side {
@@ -556,8 +675,14 @@
   </div>
 </header>
 
+<div class="mobile-bar">
+  <button type="button" class="mobile-menu-btn" id="menu-btn" aria-expanded="false" aria-controls="site-nav">Menu</button>
+  <span class="mobile-bar-title">Responsible AI Learning Map</span>
+</div>
+<div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
+
 <div class="layout wrap">
-<nav class="side">
+<nav class="side" id="site-nav" aria-label="Site navigation">
   <h2>Explore</h2>
   <ul>
     <li><a href="#home">Home</a></li>
@@ -1126,6 +1251,28 @@
 </footer>
 
 <script>
+const menuBtn = document.getElementById('menu-btn');
+const navBackdrop = document.getElementById('nav-backdrop');
+
+function setNavOpen(open) {
+  document.body.classList.toggle('nav-open', open);
+  if (menuBtn) {
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.textContent = open ? 'Close' : 'Menu';
+  }
+  if (navBackdrop) navBackdrop.setAttribute('aria-hidden', !open);
+}
+
+if (menuBtn) {
+  menuBtn.addEventListener('click', () => setNavOpen(!document.body.classList.contains('nav-open')));
+}
+if (navBackdrop) {
+  navBackdrop.addEventListener('click', () => setNavOpen(false));
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') setNavOpen(false);
+});
+
 function togglePaper(hdr) {
   const p = hdr.closest('.paper');
   const open = p.classList.toggle('open');
@@ -1173,6 +1320,12 @@ function updateNav() {
 
 window.addEventListener('scroll', updateNav, { passive: true });
 updateNav();
+
+document.querySelectorAll('nav.side a[href^="#"]').forEach(a => {
+  a.addEventListener('click', () => {
+    if (window.matchMedia('(max-width: 900px)').matches) setNavOpen(false);
+  });
+});
 </script>
 </body>
 </html>
