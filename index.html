@@ -228,6 +228,7 @@
       body.nav-open nav.side {
         transform: translateX(0);
       }
+      section, .paper[id] { scroll-margin-top: 3.5rem; }
       section { margin-bottom: var(--space-xl); }
       h2.sec { font-size: 1.35rem; }
       .hub-grid {
@@ -1306,9 +1307,22 @@ if (location.hash && location.hash.startsWith('#p-')) {
 
 const navLinks = document.querySelectorAll('nav.side a[href^="#"]');
 const sections = [...navLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+
+function scrollOffset() {
+  return isMobile() ? 56 : 32;
+}
+
+function scrollToHash(hash, smooth = true) {
+  const target = document.querySelector(hash);
+  if (!target) return;
+  const top = target.getBoundingClientRect().top + window.scrollY - scrollOffset();
+  window.scrollTo({ top, behavior: smooth ? 'smooth' : 'auto' });
+  history.pushState(null, '', hash);
+}
 
 function updateNav() {
-  const y = window.scrollY + 120;
+  const y = window.scrollY + scrollOffset() + 64;
   let current = sections[0];
   for (const sec of sections) {
     if (sec.offsetTop <= y) current = sec;
@@ -1321,9 +1335,15 @@ function updateNav() {
 window.addEventListener('scroll', updateNav, { passive: true });
 updateNav();
 
-document.querySelectorAll('nav.side a[href^="#"]').forEach(a => {
-  a.addEventListener('click', () => {
-    if (window.matchMedia('(max-width: 900px)').matches) setNavOpen(false);
+navLinks.forEach(a => {
+  a.addEventListener('click', e => {
+    if (!isMobile()) return;
+    e.preventDefault();
+    const hash = a.getAttribute('href');
+    setNavOpen(false);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => scrollToHash(hash));
+    });
   });
 });
 </script>
