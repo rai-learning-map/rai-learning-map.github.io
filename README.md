@@ -4,7 +4,7 @@ A curated reference portal for exploring Responsible AI research — paper summa
 
 ## Live site
 
-**https://sanjaygupta-professional.github.io/repoinsible-ai/**
+**https://rai-learning-map.github.io/**
 
 ## Open locally
 
