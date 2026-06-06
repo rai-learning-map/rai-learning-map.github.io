@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsible AI — Learning Map</title>
+  <meta name="description" content="A curated map of seminal Responsible AI and ML research — summaries, connections, and sources. Built for DBA cohort exploration." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: oklch(96.5% 0.009 85);
+      --surface: oklch(99% 0.004 85);
+      --surface-raised: oklch(97.5% 0.012 85);
+      --text: oklch(22% 0.03 250);
+      --muted: oklch(48% 0.02 250);
+      --ink: oklch(32% 0.08 245);
+      --ink-deep: oklch(24% 0.06 245);
+      --copper: oklch(52% 0.14 45);
+      --copper-soft: oklch(94% 0.04 55);
+      --sage: oklch(42% 0.07 155);
+      --border: oklch(88% 0.012 85);
+      --border-strong: oklch(78% 0.018 85);
+      --hero-bg: oklch(26% 0.05 245);
+      --hero-fg: oklch(96% 0.01 85);
+      --hero-muted: oklch(78% 0.02 85);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --font-display: "Spectral", Georgia, serif;
+      --font-body: "Karla", system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+      --width-content: 72ch;
+      --width-page: 1120px;
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 32px;
+      --space-xl: 48px;
+      --space-2xl: 80px;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --shadow-hover: 0 4px 24px -4px oklch(0% 0 0 / 0.12), 0 1px 3px oklch(0% 0 0 / 0.06);
+      --shadow-lift: 0 20px 40px oklch(0% 0 0 / 0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 1rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .hero {
+      position: relative;
+      background: var(--hero-bg);
+      color: var(--hero-fg);
+      padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 2.5rem);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 100% 0%, oklch(38% 0.1 245 / 0.45), transparent 55%),
+        radial-gradient(ellipse 50% 80% at 0% 100%, oklch(32% 0.06 155 / 0.25), transparent 50%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .wrap, .hero-inner { max-width: var(--width-page); margin: 0 auto; position: relative; z-index: 1; }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 5.5vw, 3.5rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+      max-width: 14ch;
+    }
+    .hero .tag {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--hero-muted);
+      margin-bottom: var(--space-sm);
+    }
+    .hero .lead {
+      color: oklch(88% 0.015 85);
+      max-width: var(--width-content);
+      margin-top: var(--space-sm);
+      font-size: 1.0625rem;
+      line-height: 1.65;
+    }
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-top: var(--space-md);
+    }
+    .pill {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+      background: oklch(100% 0 0 / 0.08);
+      border: 1px solid oklch(100% 0 0 / 0.14);
+      padding: 0.35rem 0.75rem;
+      border-radius: 2px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: clamp(1.5rem, 4vw, 3rem);
+      padding: clamp(1.5rem, 4vw, var(--space-xl)) clamp(1.25rem, 3vw, 2rem);
+      max-width: var(--width-page);
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      nav.side { position: relative; top: 0; max-height: none; }
+    }
+
+    nav.side {
+      position: sticky;
+      top: var(--space-md);
+      align-self: start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-sm);
+      font-size: 0.875rem;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+    }
+    nav.side h2 {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin: var(--space-sm) 0 var(--space-xs);
+      padding-top: var(--space-xs);
+      border-top: 1px solid var(--border);
+    }
+    nav.side h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    nav.side ul { list-style: none; margin-bottom: var(--space-xs); }
+    nav.side a {
+      color: var(--text);
+      text-decoration: none;
+      display: block;
+      padding: 0.3rem 0.5rem;
+      margin: 0 -0.5rem;
+      border-radius: var(--radius-sm);
+      transition: color 0.15s var(--ease-out), background 0.15s var(--ease-out);
+    }
+    nav.side a:hover { color: var(--ink); background: var(--surface-raised); }
+    nav.side a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    nav.side a.active { color: var(--ink); background: oklch(94% 0.03 245); font-weight: 500; }
+
+    main { min-width: 0; }
+
+    section {
+      margin-bottom: var(--space-2xl);
+      scroll-margin-top: var(--space-md);
+    }
+    h2.sec {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 1.875rem);
+      font-weight: 600;
+      color: var(--ink-deep);
+      margin-bottom: var(--space-sm);
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid var(--border-strong);
+    }
+    h3 {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: var(--space-lg) 0 var(--space-sm);
+    }
+    p, li { margin-bottom: 0.5rem; }
+    ul { margin: 0 0 var(--space-sm) 1.15rem; }
+    a { color: var(--ink); transition: color 0.15s var(--ease-out); }
+    a:hover { color: var(--copper); }
+    a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 2px; }
+
+    .intro {
+      font-size: 1.0625rem;
+      color: var(--muted);
+      max-width: var(--width-content);
+      margin-bottom: var(--space-md);
+      line-height: 1.65;
+    }
+
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .hub-card {
+      --hub-accent: var(--ink);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.2s var(--ease-out);
+      position: relative;
+    }
+    .hub-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--hub-accent);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      opacity: 0.85;
+    }
+    .hub-card:nth-child(1) { --hub-accent: oklch(42% 0.08 245); }
+    .hub-card:nth-child(2) { --hub-accent: oklch(48% 0.1 280); }
+    .hub-card:nth-child(3) { --hub-accent: oklch(40% 0.09 220); }
+    .hub-card:nth-child(4) { --hub-accent: oklch(45% 0.07 155); }
+    .hub-card:nth-child(5) { --hub-accent: oklch(50% 0.12 35); }
+    .hub-card:nth-child(6) { --hub-accent: oklch(48% 0.1 25); }
+    .hub-card:nth-child(7) { --hub-accent: oklch(44% 0.08 190); }
+    .hub-card:nth-child(8) { --hub-accent: oklch(38% 0.06 300); }
+    .hub-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-strong);
+    }
+    .hub-card h4 {
+      font-family: var(--font-display);
+      color: var(--ink-deep);
+      margin: 0 0 0.35rem;
+      font-size: 1.0625rem;
+      font-weight: 600;
+    }
+    .hub-card p { font-size: 0.875rem; color: var(--muted); margin: 0; line-height: 1.55; }
+    .hub-card .count {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: var(--space-sm);
+    }
+
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-sm);
+      margin: var(--space-md) 0;
+      overflow: hidden;
+    }
+    .diagram-figure { margin: 0; }
+    .diagram-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-md);
+    }
+    .diagram-figure figcaption {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-align: center;
+      margin-top: var(--space-sm);
+      padding: 0 var(--space-sm);
+    }
+
+    .paper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin: var(--space-sm) 0;
+      transition: box-shadow 0.25s var(--ease-out), border-color 0.2s var(--ease-out);
+    }
+    .paper:hover { border-color: var(--border-strong); }
+    .paper.open { box-shadow: var(--shadow-hover); border-color: oklch(82% 0.02 245); }
+    .paper.core { background: linear-gradient(180deg, var(--copper-soft) 0%, var(--surface) 28%); }
+    .paper.core .paper-hdr h3::after {
+      content: "Core";
+      font-family: var(--font-mono);
+      font-size: 0.5625rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--copper);
+      background: oklch(94% 0.05 45);
+      padding: 0.15rem 0.4rem;
+      border-radius: 2px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .paper-hdr {
+      padding: var(--space-sm) var(--space-md);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      user-select: none;
+      border-radius: var(--radius-md);
+      transition: background 0.15s var(--ease-out);
+    }
+    .paper-hdr:hover { background: var(--surface-raised); }
+    .paper-hdr:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+    .paper-hdr h3 {
+      font-family: var(--font-display);
+      margin: 0;
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .paper-hdr .meta {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+      letter-spacing: 0.02em;
+    }
+    .paper-hdr .toggle {
+      font-family: var(--font-mono);
+      color: var(--ink);
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      padding-top: 0.25rem;
+      opacity: 0.7;
+      transition: opacity 0.15s, transform 0.25s var(--ease-out);
+    }
+    .paper.open .paper-hdr .toggle { opacity: 1; }
+
+    .paper-body {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      padding: 0 var(--space-md);
+      border-top: 1px solid transparent;
+      font-size: 0.9375rem;
+      transition: max-height 0.4s var(--ease-out), opacity 0.3s var(--ease-out), padding 0.35s var(--ease-out), border-color 0.2s;
+    }
+    .paper.open .paper-body {
+      max-height: 2400px;
+      opacity: 1;
+      padding: 0 var(--space-md) var(--space-md);
+      border-top-color: var(--border);
+    }
+
+    .paper-body .lbl {
+      font-family: var(--font-mono);
+      font-weight: 500;
+      color: var(--ink);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: var(--space-md) 0 0.25rem;
+    }
+    .paper-body .lbl:first-child { margin-top: var(--space-sm); }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.5rem 0; }
+    .tag-pill {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.04em;
+      background: var(--surface-raised);
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .tag-pill.core {
+      background: oklch(94% 0.05 45);
+      color: var(--copper);
+      border-color: oklch(88% 0.06 45);
+      font-weight: 500;
+    }
+
+    .rel-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0; }
+    .rel-links a {
+      font-size: 0.8125rem;
+      padding: 0.2rem 0.5rem;
+      background: var(--surface-raised);
+      border-radius: 2px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .rel-links a:hover { background: oklch(94% 0.03 245); border-color: var(--border-strong); }
+
+    .src-btn {
+      display: inline-block;
+      margin-top: var(--space-sm);
+      padding: 0.65rem 1.25rem;
+      background: var(--ink-deep);
+      color: oklch(98% 0.01 85) !important;
+      text-decoration: none;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+    }
+    .src-btn:hover {
+      background: var(--copper);
+      color: oklch(98% 0.01 85) !important;
+      transform: translateY(-1px);
+    }
+    .src-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+    .index-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .index-table th {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--surface-raised);
+      text-align: left;
+      padding: 0.65rem 0.85rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .index-table td { padding: 0.55rem 0.85rem; border-top: 1px solid var(--border); }
+    .index-table tr:hover td { background: var(--surface-raised); }
+    .index-table a { text-decoration: none; font-weight: 500; }
+
+    .case {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin: var(--space-sm) 0;
+      transition: box-shadow 0.25s var(--ease-out);
+    }
+    .case:hover { box-shadow: var(--shadow-hover); }
+    .case h4 {
+      font-family: var(--font-display);
+      color: var(--ink-deep);
+      margin: 0 0 0.5rem;
+      font-size: 1.0625rem;
+    }
+
+    table.data {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    table.data th, table.data td {
+      padding: 0.6rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    table.data th {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--surface-raised);
+      color: var(--muted);
+      font-weight: 500;
+    }
+    table.data tr:last-child td { border-bottom: none; }
+    table.data tr:hover td { background: var(--surface-raised); }
+
+    .callout {
+      background: oklch(94% 0.025 245);
+      border: 1px solid oklch(88% 0.04 245);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      margin: var(--space-md) 0;
+      font-size: 0.9375rem;
+      max-width: var(--width-content);
+    }
+    .callout strong { color: var(--ink-deep); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: var(--space-xl) var(--space-md);
+      text-align: center;
+      font-size: 0.8125rem;
+      color: var(--muted);
+      background: var(--surface);
+    }
+    footer a { color: var(--ink); }
+    footer code {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: var(--surface-raised);
+      padding: 0.15rem 0.4rem;
+      border-radius: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    @media print {
+      nav.side { display: none; }
+      .layout { grid-template-columns: 1fr; }
+      .paper-body { max-height: none !important; opacity: 1 !important; padding: 0 var(--space-md) var(--space-md) !important; border-top-color: var(--border) !important; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="tag">Curated learning map · shareable</div>
+    <h1>Responsible AI Learning Map</h1>
+    <p class="lead">A personal reference portal for exploring how AI works and how responsibility attaches to it — seminal papers with enough context to orient you before you read the source. Browse broad, drill deep, follow connections.</p>
+    <div class="hero-pills">
+      <span class="pill">~40 curated sources</span>
+      <span class="pill">8 topic hubs</span>
+      <span class="pill">Paper summaries</span>
+      <span class="pill">Case studies</span>
+      <span class="pill">GitHub-ready</span>
+    </div>
+  </div>
+</header>
+
+<div class="layout wrap">
+<nav class="side">
+  <h2>Explore</h2>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#map">Knowledge map</a></li>
+    <li><a href="#hubs">Topic hubs</a></li>
+    <li><a href="#papers">Paper library</a></li>
+    <li><a href="#index">Quick index</a></li>
+  </ul>
+  <h2>Depth</h2>
+  <ul>
+    <li><a href="#cases">Case studies</a></li>
+    <li><a href="#frameworks">Frameworks</a></li>
+    <li><a href="#debates">Debates</a></li>
+    <li><a href="#frontier">Frontier</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+    <li><a href="#media">Books &amp; media</a></li>
+  </ul>
+  <h2>Hubs</h2>
+  <ul>
+    <li><a href="#hub-foundations">Foundations</a></li>
+    <li><a href="#hub-tokenization">Tokenization</a></li>
+    <li><a href="#hub-transformers">Transformers</a></li>
+    <li><a href="#hub-efficiency">Efficiency</a></li>
+    <li><a href="#hub-alignment">Alignment</a></li>
+    <li><a href="#hub-fairness">Fairness</a></li>
+    <li><a href="#hub-explainability">Explainability</a></li>
+    <li><a href="#hub-governance">Governance</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<section id="home">
+  <h2 class="sec">How to use this map</h2>
+  <p class="intro">This is not a course schedule or a note-taking app. It is a structured place to land when you want to understand a topic, find the seminal paper, read a short orientation, then jump to the original source. Click any paper title to expand a brief profile; use <strong>Read source</strong> to open arXiv or the official framework page.</p>
+  <div class="callout"><strong>Three ways in:</strong> (1) Pick a <a href="#hubs">topic hub</a> if you know the area. (2) Scan the <a href="#index">quick index</a> if you want a flat list. (3) Start from the <a href="#map">knowledge map</a> if you want to see how things connect.</div>
+</section>
+
+<section id="map">
+  <h2 class="sec">Knowledge map</h2>
+  <p class="intro">Responsible AI sits on top of how models are built. Follow the stack down for technical depth; follow the RAI branches for policy and ethics.</p>
+  <div class="diagram">
+    <figure class="diagram-figure">
+      <img
+        src="assets/rai-knowledge-map.png"
+        alt="Knowledge map: How AI is built (Foundations and scaling, Tokenization, Transformers, Efficiency and labs) flows into Responsible AI pillars (Alignment and safety, Fairness and bias, Explainability, Governance and compliance)"
+        width="1200"
+        height="900"
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption>Follow the stack down for technical depth; follow the RAI branches for policy and ethics.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="hubs">
+  <h2 class="sec">Topic hubs</h2>
+  <p class="intro">Each hub groups papers, cases, and frameworks. Jump in anywhere — no prescribed order.</p>
+  <div class="hub-grid">
+    <a class="hub-card" href="#hub-foundations"><h4>Foundations</h4><p>Scaling laws, compute-optimal training, how machines learn at scale.</p><div class="count">3 papers</div></a>
+    <a class="hub-card" href="#hub-tokenization"><h4>Tokenization</h4><p>BPE, WordPiece, SentencePiece, vision patches.</p><div class="count">4 papers</div></a>
+    <a class="hub-card" href="#hub-transformers"><h4>Transformers</h4><p>Attention, BERT, GPT — the architecture everything else builds on.</p><div class="count">5 papers</div></a>
+    <a class="hub-card" href="#hub-efficiency"><h4>Efficiency &amp; labs</h4><p>Chinchilla, DeepSeek, MoE, HPC co-design.</p><div class="count">6 papers</div></a>
+    <a class="hub-card" href="#hub-alignment"><h4>Alignment</h4><p>RLHF, Constitutional AI, DPO, AI safety taxonomy.</p><div class="count">7 papers</div></a>
+    <a class="hub-card" href="#hub-fairness"><h4>Fairness</h4><p>Formal fairness, disparate impact, dataset documentation.</p><div class="count">4 papers</div></a>
+    <a class="hub-card" href="#hub-explainability"><h4>Explainability</h4><p>LIME, SHAP, why attention is not explanation.</p><div class="count">4 papers</div></a>
+    <a class="hub-card" href="#hub-governance"><h4>Governance</h4><p>NIST RMF, EU AI Act, model cards, OECD.</p><div class="count">5 frameworks</div></a>
+  </div>
+</section>
+
+<!-- PAPER LIBRARY -->
+<section id="papers">
+  <h2 class="sec">Paper library</h2>
+  <p class="intro">Click a title to expand an orientation summary. Papers marked <span class="tag-pill core">Core</span> are the highest-impact starting set.</p>
+
+  <div id="hub-transformers"></div>
+  <h3>Transformers &amp; architecture</h3>
+
+  <article class="paper core open" id="p-attention" data-hub="transformers">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Attention Is All You Need</h3><div class="meta">Vaswani et al. · 2017 · Google</div></div>
+      <span class="toggle">▼ collapse</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span><span class="tag-pill">Transformers</span></div>
+      <div class="lbl">What it is</div>
+      <p>The paper that introduced the Transformer — self-attention, multi-head attention, and positional encoding replace recurrence entirely. Encoder-decoder structure for sequence transduction.</p>
+      <div class="lbl">Why it matters</div>
+      <p>Every modern LLM (GPT, BERT, Claude, DeepSeek) descends from this architecture. If you read one technical paper, make it this one.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Architectural choices made here constrain everything later — including what alignment can and cannot fix. Interpretability debates often trace back to how attention works (or doesn't explain).</p>
+      <div class="lbl">Related</div>
+      <div class="rel-links"><a href="#p-bert">BERT</a><a href="#p-gpt3">GPT-3</a><a href="#p-attention-not">Attention is Not Explanation</a><a href="#media">Illustrated Transformer</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper core" id="p-bert" data-hub="transformers tokenization">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>BERT: Pre-training of Deep Bidirectional Transformers</h3><div class="meta">Devlin et al. · 2018 · Google</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span><span class="tag-pill">Transformers</span><span class="tag-pill">Tokenization</span></div>
+      <div class="lbl">What it is</div>
+      <p>Encoder-only Transformer pretrained with masked language modeling (predict masked tokens) and next-sentence prediction. Uses WordPiece tokenization.</p>
+      <div class="lbl">Why it matters</div>
+      <p>Split the field into encoder models (understanding) vs decoder models (generation). BERT dominated NLP benchmarks for years and established pretrain-then-finetune as standard practice.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Pretraining data curation is the first fairness intervention point — bias encoded in web-scale corpora enters here, before any deployment decision.</p>
+      <div class="rel-links"><a href="#p-attention">Attention</a><a href="#p-gpt3">GPT-3</a><a href="#p-bpe">BPE tokenization</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/1810.04805" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper core" id="p-gpt3" data-hub="transformers">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>GPT-3: Language Models are Few-Shot Learners</h3><div class="meta">Brown et al. · 2020 · OpenAI</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span><span class="tag-pill">Transformers</span></div>
+      <div class="lbl">What it is</div>
+      <p>175B-parameter autoregressive decoder trained on diverse text. Demonstrates few-shot and zero-shot learning via in-context examples — no gradient updates needed at inference.</p>
+      <div class="lbl">Why it matters</div>
+      <p>Established that scale alone unlocks qualitatively new capabilities. Direct ancestor of ChatGPT after RLHF was added on top.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Emergent capabilities are unpredictable — governance must be capability-aware, not just use-case-aware. You cannot fully enumerate what a scaled model might do.</p>
+      <div class="rel-links"><a href="#p-instructgpt">InstructGPT</a><a href="#p-chinchilla">Chinchilla</a><a href="#debates">Scaling debate</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <div id="hub-foundations"></div>
+  <h3>Foundations &amp; scaling</h3>
+
+  <article class="paper core" id="p-chinchilla" data-hub="foundations efficiency">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Training Compute-Optimal Large Language Models (Chinchilla)</h3><div class="meta">Hoffmann et al. · 2022 · DeepMind</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span><span class="tag-pill">Foundations</span></div>
+      <div class="lbl">What it is</div>
+      <p>Derives scaling laws for compute-optimal training: for a fixed budget, model size and training tokens must scale together. Chinchilla (70B, 1.4T tokens) beats larger undertrained models.</p>
+      <div class="lbl">Why it matters</div>
+      <p>Overturned the "bigger is always better" assumption. Data quality and quantity matter as much as parameters — reshaped how labs train frontier models.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Environmental and economic responsibility: wasteful over-scaling burns compute and carbon. Efficiency is an ethical question, not just an engineering one.</p>
+      <div class="rel-links"><a href="#p-gpt3">GPT-3</a><a href="#p-deepseek">DeepSeek-V3</a><a href="#case-deepseek">DeepSeek case</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/2203.15556" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <div id="hub-tokenization"></div>
+  <h3>Tokenization &amp; representation</h3>
+
+  <article class="paper" id="p-bpe" data-hub="tokenization">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Neural Machine Translation of Rare Words with Subword Units (BPE)</h3><div class="meta">Sennrich et al. · 2016</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="lbl">What it is</div>
+      <p>Byte-Pair Encoding splits text into subword units — balancing vocabulary size with coverage of rare words. The dominant tokenization strategy for OpenAI and most LLMs.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Tokenization choices affect multilingual fairness, compression of languages, and what the model can "see" in a prompt.</p>
+      <div class="rel-links"><a href="#p-bert">BERT (WordPiece)</a><a href="#p-sentencepiece">SentencePiece</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/1508.07909" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper" id="p-sentencepiece" data-hub="tokenization">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>SentencePiece</h3><div class="meta">Kudo &amp; Richardson · 2018 · Google</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="lbl">What it is</div>
+      <p>Language-agnostic, unsupervised tokenizer treating input as raw Unicode. No language-specific preprocessing required.</p>
+      <div class="rel-links"><a href="#p-bpe">BPE</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/1808.06226" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper" id="p-vit" data-hub="tokenization">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>An Image is Worth 16×16 Words (ViT)</h3><div class="meta">Dosovitskiy et al. · 2020 · Google</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="lbl">What it is</div>
+      <p>Splits images into fixed-size patches treated as tokens — applying Transformers to vision without convolutions at scale.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Bridges text and image modalities; multimodal RAI (bias in vision, deepfakes) builds on this representation choice.</p>
+      <div class="rel-links"><a href="#p-attention">Attention</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <div id="hub-efficiency"></div>
+  <h3>Efficiency &amp; lab lineages</h3>
+
+  <article class="paper core" id="p-deepseek" data-hub="efficiency">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>DeepSeek-V3</h3><div class="meta">DeepSeek-AI · 2024</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span></div>
+      <div class="lbl">What it is</div>
+      <p>671B-parameter MoE model (37B active) trained on 14.8T tokens. Multi-Head Latent Attention, FP8 mixed precision, DualPipe parallelism — HPC co-design for constrained GPU interconnect.</p>
+      <div class="lbl">Why it matters</div>
+      <p>Demonstrated frontier-class models can be trained with clever architecture + infrastructure hacks, not just throwing more H100s at the problem.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Democratization vs proliferation: cheaper training lowers barriers but also spreads capability without safety culture. Geopolitical and open-weight debates intensified after this release.</p>
+      <div class="rel-links"><a href="#case-deepseek">DeepSeek case</a><a href="#p-chinchilla">Chinchilla</a><a href="#media">Fowler DeepSeek guide</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noopener">Read source → arXiv</a>
+      <a class="src-btn sec" href="https://martinfowler.com/articles/deepseek-papers.html" target="_blank" rel="noopener">Companion guide → Fowler</a>
+    </div>
+  </article>
+
+  <article class="paper" id="p-deepseek-r1" data-hub="efficiency alignment">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>DeepSeek-R1</h3><div class="meta">DeepSeek-AI · 2025</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="lbl">What it is</div>
+      <p>RL-driven reasoning via Group Relative Policy Optimization (GRPO). Emergent chain-of-thought and self-verification with minimal supervised fine-tuning in the R1-Zero variant.</p>
+      <div class="rel-links"><a href="#p-deepseek">DeepSeek-V3</a><a href="#p-instructgpt">InstructGPT</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/2501.12962" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper" id="p-dpo" data-hub="alignment">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Direct Preference Optimization (DPO)</h3><div class="meta">Rafailov et al. · 2023</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="lbl">What it is</div>
+      <p>Aligns models from preference pairs without explicit RL — reparameterizes the reward model into a simple classification loss on the policy itself.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Simpler alignment pipeline now widely adopted; debate continues whether it matches RLHF safety properties at scale.</p>
+      <div class="rel-links"><a href="#p-instructgpt">InstructGPT</a><a href="#debates">RLHF vs DPO debate</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/2305.18290" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <div id="hub-alignment"></div>
+  <h3>Alignment &amp; safety</h3>
+
+  <article class="paper core" id="p-instructgpt" data-hub="alignment">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Training LMs to Follow Instructions with Human Feedback (InstructGPT)</h3><div class="meta">Ouyang et al. · 2022 · OpenAI</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span></div>
+      <div class="lbl">What it is</div>
+      <p>Three-stage RLHF: supervised fine-tuning on demonstrations → train reward model from human rankings → PPO to optimize against the reward model. The pipeline behind ChatGPT.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Alignment inherits biases of human labelers. Who labels, how they're paid, and what preferences they hold shapes model behaviour.</p>
+      <div class="rel-links"><a href="#p-constitutional">Constitutional AI</a><a href="#p-dpo">DPO</a><a href="#p-safety">AI Safety problems</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/2203.02155" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper core" id="p-constitutional" data-hub="alignment">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Constitutional AI: Harmlessness from AI Feedback</h3><div class="meta">Bai et al. · 2022 · Anthropic</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span></div>
+      <div class="lbl">What it is</div>
+      <p>Models critique and revise their own outputs against a written set of principles ("constitution") — reducing reliance on human harmlessness labels.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Who writes the constitution? Values and power become explicit. RLAIF scales alignment but encodes designer ideology.</p>
+      <div class="rel-links"><a href="#p-instructgpt">InstructGPT</a><a href="#case-tay">Tay case</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper core" id="p-safety" data-hub="alignment">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Concrete Problems in AI Safety</h3><div class="meta">Amodei et al. · 2016</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span></div>
+      <div class="lbl">What it is</div>
+      <p>Taxonomy of AI safety research problems: robustness, monitoring, value alignment, scalable oversight — framed as technical challenges, not just ethics.</p>
+      <div class="lbl">Why it matters</div>
+      <p>Still the conceptual scaffold for safety research a decade later. Good entry point for understanding what "alignment" actually tries to solve.</p>
+      <div class="rel-links"><a href="#p-instructgpt">InstructGPT</a><a href="#frontier">Frontier evals</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/1606.06565" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <div id="hub-fairness"></div>
+  <h3>Fairness &amp; bias</h3>
+
+  <article class="paper core" id="p-hardt" data-hub="fairness">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Equality of Opportunity in Supervised Learning</h3><div class="meta">Hardt et al. · 2016</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span></div>
+      <div class="lbl">What it is</div>
+      <p>Defines equalized odds — equal true positive and false positive rates across groups. Provides post-processing methods to achieve it.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Fairness is mathematically definable but definitions conflict. You cannot satisfy all criteria simultaneously (see Chouldechova impossibility).</p>
+      <div class="rel-links"><a href="#case-compas">COMPAS case</a><a href="#media">Fair ML book</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/1610.07524" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper core" id="p-datasheets" data-hub="fairness governance">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Datasheets for Datasets</h3><div class="meta">Gebru et al. · 2018</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span></div>
+      <div class="lbl">What it is</div>
+      <p>Proposes standardized documentation for datasets — motivation, composition, collection process, limitations — analogous to hardware datasheets.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Upstream responsibility: many harms originate in data, not model architecture. You cannot audit fairness without knowing what the model was trained on.</p>
+      <div class="rel-links"><a href="#p-modelcards">Model Cards</a><a href="#case-amazon">Amazon recruiting case</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/1803.09010" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <div id="hub-explainability"></div>
+  <h3>Explainability</h3>
+
+  <article class="paper" id="p-lime" data-hub="explainability">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>"Why Should I Trust You?" (LIME)</h3><div class="meta">Ribeiro et al. · 2016</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="lbl">What it is</div>
+      <p>Local interpretable model-agnostic explanations — perturbs inputs to learn which features drive a single prediction.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Still cited in regulatory contexts for "explainable AI" — though limited for deep learning and LLMs.</p>
+      <div class="rel-links"><a href="#p-shap">SHAP</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/1602.04938" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper" id="p-shap" data-hub="explainability">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>SHAP (Unified Approach to Interpreting Model Predictions)</h3><div class="meta">Lundberg &amp; Lee · 2017</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="lbl">What it is</div>
+      <p>Shapley values from cooperative game theory assign each feature a contribution to a prediction — unified framework connecting LIME, DeepLIFT, and others.</p>
+      <a class="src-btn" href="https://arxiv.org/abs/1705.07874" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper" id="p-attention-not" data-hub="explainability">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Attention is Not Explanation</h3><div class="meta">Jain &amp; Wallace · 2019</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="lbl">What it is</div>
+      <p>Shows attention weights often do not correlate with feature importance — alternative attention patterns can produce identical predictions.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Essential caution for the LLM era: do not treat attention heatmaps as explanations. Mechanistic interpretability is a different pursuit.</p>
+      <div class="rel-links"><a href="#p-attention">Attention paper</a><a href="#frontier">Scaling Monosemanticity</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/1902.10186" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <div id="hub-governance"></div>
+  <h3>Governance &amp; transparency</h3>
+
+  <article class="paper core" id="p-modelcards" data-hub="governance">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>Model Cards for Model Reporting</h3><div class="meta">Mitchell et al. · 2019 · Google</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span></div>
+      <div class="lbl">What it is</div>
+      <p>Standardized documentation: intended use, factors (demographics, geography), metrics, ethical considerations, caveats.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Industry-standard transparency artifact — increasingly expected by regulators and enterprise procurement.</p>
+      <div class="rel-links"><a href="#p-datasheets">Datasheets</a><a href="#fw-nist">NIST AI RMF</a></div>
+      <a class="src-btn" href="https://arxiv.org/abs/1810.03993" target="_blank" rel="noopener">Read source → arXiv</a>
+    </div>
+  </article>
+
+  <article class="paper core" id="p-nist" data-hub="governance">
+    <div class="paper-hdr" onclick="togglePaper(this)">
+      <div><h3>NIST AI Risk Management Framework 1.0</h3><div class="meta">NIST · 2023</div></div>
+      <span class="toggle">▶ expand</span>
+    </div>
+    <div class="paper-body">
+      <div class="tags"><span class="tag-pill core">Core</span><span class="tag-pill">Framework</span></div>
+      <div class="lbl">What it is</div>
+      <p>Voluntary US framework: Govern → Map → Measure → Manage. Risk taxonomy and controls for organizations building or deploying AI.</p>
+      <div class="lbl">RAI angle</div>
+      <p>Bridge from academic concepts to operational practice — the document enterprises and auditors reference.</p>
+      <div class="rel-links"><a href="#fw-euai">EU AI Act</a><a href="#p-modelcards">Model Cards</a></div>
+      <a class="src-btn" href="https://airc.nist.gov/airmf-resources/airmf/0-ai-rmf-1-0/" target="_blank" rel="noopener">Read source → NIST</a>
+    </div>
+  </article>
+
+</section>
+
+<section id="index">
+  <h2 class="sec">Quick index</h2>
+  <p class="intro">Flat list — jump to any paper profile or open the source directly.</p>
+  <table class="index-table">
+    <thead><tr><th>Title</th><th>Year</th><th>Hub</th><th></th></tr></thead>
+    <tbody>
+      <tr><td><a href="#p-attention">Attention Is All You Need</a></td><td>2017</td><td>Transformers</td><td><a href="https://arxiv.org/abs/1706.03762" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-bert">BERT</a></td><td>2018</td><td>Transformers</td><td><a href="https://arxiv.org/abs/1810.04805" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-gpt3">GPT-3</a></td><td>2020</td><td>Transformers</td><td><a href="https://arxiv.org/abs/2005.14165" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-chinchilla">Chinchilla</a></td><td>2022</td><td>Foundations</td><td><a href="https://arxiv.org/abs/2203.15556" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-bpe">BPE</a></td><td>2016</td><td>Tokenization</td><td><a href="https://arxiv.org/abs/1508.07909" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-sentencepiece">SentencePiece</a></td><td>2018</td><td>Tokenization</td><td><a href="https://arxiv.org/abs/1808.06226" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-vit">ViT</a></td><td>2020</td><td>Tokenization</td><td><a href="https://arxiv.org/abs/2010.11929" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-deepseek">DeepSeek-V3</a></td><td>2024</td><td>Efficiency</td><td><a href="https://arxiv.org/abs/2412.19437" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-deepseek-r1">DeepSeek-R1</a></td><td>2025</td><td>Alignment</td><td><a href="https://arxiv.org/abs/2501.12962" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-instructgpt">InstructGPT</a></td><td>2022</td><td>Alignment</td><td><a href="https://arxiv.org/abs/2203.02155" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-constitutional">Constitutional AI</a></td><td>2022</td><td>Alignment</td><td><a href="https://arxiv.org/abs/2212.08073" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-dpo">DPO</a></td><td>2023</td><td>Alignment</td><td><a href="https://arxiv.org/abs/2305.18290" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-safety">Concrete Problems in AI Safety</a></td><td>2016</td><td>Alignment</td><td><a href="https://arxiv.org/abs/1606.06565" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-hardt">Equality of Opportunity</a></td><td>2016</td><td>Fairness</td><td><a href="https://arxiv.org/abs/1610.07524" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-datasheets">Datasheets for Datasets</a></td><td>2018</td><td>Fairness</td><td><a href="https://arxiv.org/abs/1803.09010" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-lime">LIME</a></td><td>2016</td><td>Explainability</td><td><a href="https://arxiv.org/abs/1602.04938" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-shap">SHAP</a></td><td>2017</td><td>Explainability</td><td><a href="https://arxiv.org/abs/1705.07874" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-attention-not">Attention is Not Explanation</a></td><td>2019</td><td>Explainability</td><td><a href="https://arxiv.org/abs/1902.10186" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-modelcards">Model Cards</a></td><td>2019</td><td>Governance</td><td><a href="https://arxiv.org/abs/1810.03993" target="_blank">source</a></td></tr>
+      <tr><td><a href="#p-nist">NIST AI RMF</a></td><td>2023</td><td>Governance</td><td><a href="https://airc.nist.gov/airmf-resources/airmf/0-ai-rmf-1-0/" target="_blank">source</a></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="cases">
+  <h2 class="sec">Case studies</h2>
+  <p class="intro">Real incidents that connect theory to practice. Each links back to papers in the library.</p>
+
+  <div class="case" id="case-compas">
+    <h4>COMPAS — Algorithmic bias in criminal justice</h4>
+    <p>ProPublica (2016) showed racial bias in recidivism risk scores used in US sentencing. Northpointe disputed the methodology — demonstrating that <em>which fairness metric you choose changes who appears "right."</em></p>
+    <p><strong>Lifecycle:</strong> Data (historical bias) · Evaluate (metric dispute) · Deploy (no appeals) · Govern (no audit mandate)</p>
+    <p><strong>Read next:</strong> <a href="#p-hardt">Hardt</a> · <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing" target="_blank">ProPublica investigation</a></p>
+  </div>
+
+  <div class="case" id="case-tay">
+    <h4>Microsoft Tay — Deployment without safeguards</h4>
+    <p>Twitter chatbot learned toxic behaviour from users within 16 hours (2016). Alignment is not only a training problem — deployment context and adversarial users matter.</p>
+    <p><strong>Read next:</strong> <a href="#p-constitutional">Constitutional AI</a> · <a href="#p-safety">AI Safety taxonomy</a></p>
+  </div>
+
+  <div class="case" id="case-amazon">
+    <h4>Amazon AI recruiting tool — Bias in training data</h4>
+    <p>Resume-screening system penalized women's applications; scrapped in 2018. Historical hiring data encoded past discrimination into the model.</p>
+    <p><strong>Read next:</strong> <a href="#p-datasheets">Datasheets</a> · <a href="#fw-euai">EU AI Act</a> (employment = high-risk)</p>
+  </div>
+
+  <div class="case" id="case-deepseek">
+    <h4>DeepSeek — Compute democratization &amp; geopolitics</h4>
+    <p>Frontier performance at a fraction of reported US lab cost (2024–25). Sparked debate: democratization of AI vs proliferation of capability without proportional safety culture.</p>
+    <p><strong>Read next:</strong> <a href="#p-deepseek">DeepSeek-V3 paper</a> · <a href="#debates">Open vs closed models</a></p>
+  </div>
+
+  <div class="case" id="case-euai">
+    <h4>EU AI Act — Policy as operational framework</h4>
+    <p>World's first comprehensive AI law — risk-based tiers, transparency duties, penalties. Turns abstract RAI principles into legal obligations for deployers.</p>
+    <p><strong>Read next:</strong> <a href="#p-nist">NIST AI RMF</a> · <a href="#p-modelcards">Model Cards</a></p>
+  </div>
+  <p style="font-size:.88rem"><a href="https://incidentdatabase.ai" target="_blank">AI Incident Database</a> — ongoing catalogue of real-world AI harms.</p>
+</section>
+
+<section id="frameworks">
+  <h2 class="sec">Frameworks &amp; reports</h2>
+  <table class="data">
+    <thead><tr><th>Resource</th><th>What it gives you</th><th>Link</th></tr></thead>
+    <tbody>
+      <tr id="fw-nist"><td><strong>NIST AI RMF 1.0</strong></td><td>Govern · Map · Measure · Manage</td><td><a href="https://airc.nist.gov/airmf-resources/airmf/0-ai-rmf-1-0/" target="_blank">NIST</a> · <a href="#p-nist">profile</a></td></tr>
+      <tr><td><strong>NIST GenAI Profile</strong></td><td>Generative-AI-specific risks</td><td><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" target="_blank">PDF</a></td></tr>
+      <tr id="fw-euai"><td><strong>EU AI Act</strong></td><td>Legal compliance, risk tiers</td><td><a href="https://artificialintelligenceact.eu/high-level-summary/" target="_blank">Summary</a></td></tr>
+      <tr><td><strong>OECD AI Principles</strong></td><td>International policy baseline</td><td><a href="https://oecd.ai/en/ai-principles" target="_blank">OECD</a></td></tr>
+      <tr><td><strong>Stanford AI Index</strong></td><td>Annual RAI metrics &amp; trends</td><td><a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/responsible-ai" target="_blank">HAI</a></td></tr>
+      <tr><td><strong>Fairness and Machine Learning</strong> (book)</td><td>Fairness textbook</td><td><a href="https://fairmlbook.org" target="_blank">fairmlbook.org</a></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="debates">
+  <h2 class="sec">Open debates</h2>
+  <p class="intro">Where experts disagree — useful for forming your own view.</p>
+  <table class="data">
+    <thead><tr><th>Topic</th><th>Side A</th><th>Side B</th></tr></thead>
+    <tbody>
+      <tr><td>RLHF vs alternatives</td><td>RLHF works at scale (<a href="#p-instructgpt">InstructGPT</a>)</td><td>DPO / CAI simpler or safer (<a href="#p-dpo">DPO</a>, <a href="#p-constitutional">CAI</a>)</td></tr>
+      <tr><td>Fairness metrics</td><td>Demographic parity</td><td>Equalized odds (<a href="#p-hardt">Hardt</a>)</td></tr>
+      <tr><td>Explainability</td><td>LIME/SHAP suffice for regulation</td><td>Attention ≠ explanation (<a href="#p-attention-not">Jain &amp; Wallace</a>)</td></tr>
+      <tr><td>Scaling</td><td>Bigger = better (<a href="#p-gpt3">GPT-3</a>)</td><td>Better data beats raw scale (<a href="#p-chinchilla">Chinchilla</a>)</td></tr>
+      <tr><td>Open vs closed weights</td><td>Democratizes AI (<a href="#p-deepseek">DeepSeek</a>)</td><td>Enables safety testing before release</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="frontier">
+  <h2 class="sec">Frontier (2024–2026)</h2>
+  <p class="intro">Cutting-edge sources worth knowing — not an exhaustive feed.</p>
+  <ul>
+    <li><a href="#p-deepseek-r1">DeepSeek-R1</a> — RL-for-reasoning</li>
+    <li><a href="https://transformer-circuits.pub/2024/scaling-monosemanticity/" target="_blank">Scaling Monosemanticity</a> (Anthropic) — mechanistic interpretability</li>
+    <li><a href="https://metr.org/common-elements" target="_blank">METR Common Elements</a> — capability evaluation</li>
+    <li><a href="https://cset.georgetown.edu/article/ai-red-teaming-design-threat-models-and-tools/" target="_blank">CSET Red Teaming guide</a></li>
+    <li><a href="https://www.frontiermodelforum.org/publications/" target="_blank">Frontier Model Forum</a></li>
+  </ul>
+  <p class="intro" style="margin-top:1rem"><strong>Evaluating a new paper?</strong> Ask: Is it novel vs this library? Is it credible? Is it connected to an active debate? If not, skip.</p>
+</section>
+
+<section id="glossary">
+  <h2 class="sec">Glossary</h2>
+  <table class="data">
+    <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Tokenization</td><td>Splitting text into subword units for model input</td></tr>
+      <tr><td>Self-attention</td><td>Each token attends to all others to build context</td></tr>
+      <tr><td>RLHF</td><td>Reinforcement Learning from Human Feedback</td></tr>
+      <tr><td>Alignment</td><td>Steering models toward intended values and behaviour</td></tr>
+      <tr><td>MoE</td><td>Mixture of Experts — sparse sub-network activation</td></tr>
+      <tr><td>Model card</td><td>Standardized documentation of model capabilities and limits</td></tr>
+      <tr><td>Equalized odds</td><td>Equal TPR and FPR across demographic groups</td></tr>
+      <tr><td>AI RMF</td><td>NIST risk framework: Govern, Map, Measure, Manage</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="media">
+  <h2 class="sec">Books &amp; visual guides</h2>
+  <ul>
+    <li><a href="http://jalammar.github.io/illustrated-transformer/" target="_blank">The Illustrated Transformer</a> — best visual primer before <a href="#p-attention">Attention paper</a></li>
+    <li><a href="https://martinfowler.com/articles/deepseek-papers.html" target="_blank">Martin Fowler — DeepSeek technical overview</a> — before <a href="#p-deepseek">DeepSeek-V3</a></li>
+    <li><a href="https://fairmlbook.org" target="_blank">Fairness and Machine Learning</a> — fairness pillar</li>
+    <li><a href="https://www.stateof.ai/" target="_blank">State of AI Report</a> — annual landscape</li>
+  </ul>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <div class="wrap">
+    Responsible AI Learning Map · Curated for DBA cohort exploration · June 2026<br>
+    Single-file HTML — publish to <a href="https://pages.github.com/" target="_blank">GitHub Pages</a> by pushing as <code>index.html</code> in a repo.<br>
+    <a href="#home">Back to top</a>
+  </div>
+</footer>
+
+<script>
+function togglePaper(hdr) {
+  const p = hdr.closest('.paper');
+  const open = p.classList.toggle('open');
+  const t = hdr.querySelector('.toggle');
+  if (t) t.textContent = open ? '▼ collapse' : '▶ expand';
+  hdr.setAttribute('aria-expanded', open);
+}
+
+document.querySelectorAll('.paper-hdr').forEach(hdr => {
+  hdr.setAttribute('role', 'button');
+  hdr.setAttribute('tabindex', '0');
+  hdr.setAttribute('aria-expanded', hdr.closest('.paper').classList.contains('open'));
+  hdr.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      togglePaper(hdr);
+    }
+  });
+});
+
+if (location.hash && location.hash.startsWith('#p-')) {
+  const el = document.querySelector(location.hash);
+  if (el && el.classList.contains('paper')) {
+    el.classList.add('open');
+    const hdr = el.querySelector('.paper-hdr');
+    const t = el.querySelector('.toggle');
+    if (t) t.textContent = '▼ collapse';
+    if (hdr) hdr.setAttribute('aria-expanded', 'true');
+  }
+}
+
+const navLinks = document.querySelectorAll('nav.side a[href^="#"]');
+const sections = [...navLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+function updateNav() {
+  const y = window.scrollY + 120;
+  let current = sections[0];
+  for (const sec of sections) {
+    if (sec.offsetTop <= y) current = sec;
+  }
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+  });
+}
+
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+</script>
+</body>
+</html>
