@@ -196,7 +196,12 @@
       }
       .mobile-bar { display: flex; }
       .nav-backdrop { display: block; }
-      body.nav-open { overflow: hidden; }
+      body.nav-open {
+        position: fixed;
+        width: 100%;
+        left: 0;
+        right: 0;
+      }
       body.nav-open .nav-backdrop {
         opacity: 1;
         pointer-events: auto;
@@ -228,7 +233,7 @@
       body.nav-open nav.side {
         transform: translateX(0);
       }
-      section, .paper[id] { scroll-margin-top: 3.5rem; }
+      section, .paper[id], h3[id^="hub-"] { scroll-margin-top: 3.5rem; }
       section { margin-bottom: var(--space-xl); }
       h2.sec { font-size: 1.35rem; }
       .hub-grid {
@@ -760,8 +765,7 @@
   <h2 class="sec">Paper library</h2>
   <p class="intro">Click a title to expand an orientation summary. Papers marked <span class="tag-pill core">Core</span> are the highest-impact starting set.</p>
 
-  <div id="hub-transformers"></div>
-  <h3>Transformers &amp; architecture</h3>
+  <h3 id="hub-transformers">Transformers &amp; architecture</h3>
 
   <article class="paper core open" id="p-attention" data-hub="transformers">
     <div class="paper-hdr" onclick="togglePaper(this)">
@@ -818,8 +822,7 @@
     </div>
   </article>
 
-  <div id="hub-foundations"></div>
-  <h3>Foundations &amp; scaling</h3>
+  <h3 id="hub-foundations">Foundations &amp; scaling</h3>
 
   <article class="paper core" id="p-chinchilla" data-hub="foundations efficiency">
     <div class="paper-hdr" onclick="togglePaper(this)">
@@ -839,8 +842,7 @@
     </div>
   </article>
 
-  <div id="hub-tokenization"></div>
-  <h3>Tokenization &amp; representation</h3>
+  <h3 id="hub-tokenization">Tokenization &amp; representation</h3>
 
   <article class="paper" id="p-bpe" data-hub="tokenization">
     <div class="paper-hdr" onclick="togglePaper(this)">
@@ -885,8 +887,7 @@
     </div>
   </article>
 
-  <div id="hub-efficiency"></div>
-  <h3>Efficiency &amp; lab lineages</h3>
+  <h3 id="hub-efficiency">Efficiency &amp; lab lineages</h3>
 
   <article class="paper core" id="p-deepseek" data-hub="efficiency">
     <div class="paper-hdr" onclick="togglePaper(this)">
@@ -935,8 +936,7 @@
     </div>
   </article>
 
-  <div id="hub-alignment"></div>
-  <h3>Alignment &amp; safety</h3>
+  <h3 id="hub-alignment">Alignment &amp; safety</h3>
 
   <article class="paper core" id="p-instructgpt" data-hub="alignment">
     <div class="paper-hdr" onclick="togglePaper(this)">
@@ -986,8 +986,7 @@
     </div>
   </article>
 
-  <div id="hub-fairness"></div>
-  <h3>Fairness &amp; bias</h3>
+  <h3 id="hub-fairness">Fairness &amp; bias</h3>
 
   <article class="paper core" id="p-hardt" data-hub="fairness">
     <div class="paper-hdr" onclick="togglePaper(this)">
@@ -1021,8 +1020,7 @@
     </div>
   </article>
 
-  <div id="hub-explainability"></div>
-  <h3>Explainability</h3>
+  <h3 id="hub-explainability">Explainability</h3>
 
   <article class="paper" id="p-lime" data-hub="explainability">
     <div class="paper-hdr" onclick="togglePaper(this)">
@@ -1066,8 +1064,7 @@
     </div>
   </article>
 
-  <div id="hub-governance"></div>
-  <h3>Governance &amp; transparency</h3>
+  <h3 id="hub-governance">Governance &amp; transparency</h3>
 
   <article class="paper core" id="p-modelcards" data-hub="governance">
     <div class="paper-hdr" onclick="togglePaper(this)">
@@ -1254,18 +1251,34 @@
 <script>
 const menuBtn = document.getElementById('menu-btn');
 const navBackdrop = document.getElementById('nav-backdrop');
+let savedScrollY = 0;
 
 function setNavOpen(open) {
-  document.body.classList.toggle('nav-open', open);
-  if (menuBtn) {
-    menuBtn.setAttribute('aria-expanded', open);
-    menuBtn.textContent = open ? 'Close' : 'Menu';
+  if (open) {
+    savedScrollY = window.scrollY || document.documentElement.scrollTop;
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.classList.add('nav-open');
+    if (menuBtn) {
+      menuBtn.setAttribute('aria-expanded', 'true');
+      menuBtn.textContent = 'Close';
+    }
+    if (navBackdrop) navBackdrop.setAttribute('aria-hidden', 'false');
+    return;
   }
-  if (navBackdrop) navBackdrop.setAttribute('aria-hidden', !open);
+  document.body.classList.remove('nav-open');
+  document.body.style.top = '';
+  if (menuBtn) {
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.textContent = 'Menu';
+  }
+  if (navBackdrop) navBackdrop.setAttribute('aria-hidden', 'true');
+  window.scrollTo(0, savedScrollY);
 }
 
 if (menuBtn) {
-  menuBtn.addEventListener('click', () => setNavOpen(!document.body.classList.contains('nav-open')));
+  menuBtn.addEventListener('click', () => {
+    setNavOpen(!document.body.classList.contains('nav-open'));
+  });
 }
 if (navBackdrop) {
   navBackdrop.addEventListener('click', () => setNavOpen(false));
@@ -1313,12 +1326,31 @@ function scrollOffset() {
   return isMobile() ? 56 : 32;
 }
 
-function scrollToHash(hash, smooth = true) {
+function closeNavAndScrollTo(hash) {
   const target = document.querySelector(hash);
-  if (!target) return;
-  const top = target.getBoundingClientRect().top + window.scrollY - scrollOffset();
-  window.scrollTo({ top, behavior: smooth ? 'smooth' : 'auto' });
-  history.pushState(null, '', hash);
+  if (!target) {
+    setNavOpen(false);
+    return;
+  }
+
+  const top = Math.max(0, Math.round(
+    target.getBoundingClientRect().top + savedScrollY - scrollOffset()
+  ));
+
+  document.body.classList.remove('nav-open');
+  document.body.style.top = '';
+  if (menuBtn) {
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.textContent = 'Menu';
+  }
+  if (navBackdrop) navBackdrop.setAttribute('aria-hidden', 'true');
+
+  savedScrollY = top;
+  window.scrollTo(0, top);
+  document.documentElement.scrollTop = top;
+  if (history.pushState) history.pushState(null, '', hash);
+  else location.hash = hash;
+  updateNav();
 }
 
 function updateNav() {
@@ -1336,15 +1368,12 @@ window.addEventListener('scroll', updateNav, { passive: true });
 updateNav();
 
 navLinks.forEach(a => {
-  a.addEventListener('click', e => {
+  const go = e => {
     if (!isMobile()) return;
     e.preventDefault();
-    const hash = a.getAttribute('href');
-    setNavOpen(false);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => scrollToHash(hash));
-    });
-  });
+    closeNavAndScrollTo(a.getAttribute('href'));
+  };
+  a.addEventListener('click', go);
 });
 </script>
 </body>
