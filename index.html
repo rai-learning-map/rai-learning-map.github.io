@@ -196,11 +196,8 @@
       }
       .mobile-bar { display: flex; }
       .nav-backdrop { display: block; }
-      body.nav-open {
-        position: fixed;
-        width: 100%;
-        left: 0;
-        right: 0;
+      html.nav-open {
+        overflow: hidden;
       }
       body.nav-open .nav-backdrop {
         opacity: 1;
@@ -289,6 +286,7 @@
       margin: 0 -0.5rem;
       border-radius: var(--radius-sm);
       transition: color 0.15s var(--ease-out), background 0.15s var(--ease-out);
+      touch-action: manipulation;
     }
     nav.side a:hover { color: var(--ink); background: var(--surface-raised); }
     nav.side a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
@@ -1242,7 +1240,7 @@
 
 <footer>
   <div class="wrap">
-    Responsible AI Learning Map · Curated for DBA cohort exploration · June 2026<br>
+    Responsible AI Learning Map · Curated for DBA cohort exploration · June 2026 · build 5<br>
     Published at <a href="https://rai-learning-map.github.io/" target="_blank">rai-learning-map.github.io</a> · <a href="https://github.com/rai-learning-map/rai-learning-map.github.io" target="_blank">Source on GitHub</a><br>
     <a href="#home">Back to top</a>
   </div>
@@ -1251,28 +1249,29 @@
 <script>
 const menuBtn = document.getElementById('menu-btn');
 const navBackdrop = document.getElementById('nav-backdrop');
-let savedScrollY = 0;
+const siteNav = document.getElementById('site-nav');
 
 function setNavOpen(open) {
-  if (open) {
-    savedScrollY = window.scrollY || document.documentElement.scrollTop;
-    document.body.style.top = `-${savedScrollY}px`;
-    document.body.classList.add('nav-open');
-    if (menuBtn) {
-      menuBtn.setAttribute('aria-expanded', 'true');
-      menuBtn.textContent = 'Close';
-    }
-    if (navBackdrop) navBackdrop.setAttribute('aria-hidden', 'false');
-    return;
-  }
-  document.body.classList.remove('nav-open');
-  document.body.style.top = '';
+  document.body.classList.toggle('nav-open', open);
+  document.documentElement.classList.toggle('nav-open', open);
   if (menuBtn) {
-    menuBtn.setAttribute('aria-expanded', 'false');
-    menuBtn.textContent = 'Menu';
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.textContent = open ? 'Close' : 'Menu';
   }
-  if (navBackdrop) navBackdrop.setAttribute('aria-hidden', 'true');
-  window.scrollTo(0, savedScrollY);
+  if (navBackdrop) navBackdrop.setAttribute('aria-hidden', !open);
+}
+
+function pageScrollY() {
+  return window.pageYOffset || document.documentElement.scrollTop || 0;
+}
+
+function scrollToTarget(target) {
+  const top = Math.max(0, Math.round(
+    target.getBoundingClientRect().top + pageScrollY() - scrollOffset()
+  ));
+  window.scrollTo(0, top);
+  document.documentElement.scrollTop = top;
+  document.body.scrollTop = top;
 }
 
 if (menuBtn) {
@@ -1326,30 +1325,15 @@ function scrollOffset() {
   return isMobile() ? 56 : 32;
 }
 
-function closeNavAndScrollTo(hash) {
+function navigateFromMenu(hash) {
   const target = document.querySelector(hash);
-  if (!target) {
-    setNavOpen(false);
-    return;
-  }
+  setNavOpen(false);
+  if (!target) return;
+  scrollToTarget(target);
 
-  const top = Math.max(0, Math.round(
-    target.getBoundingClientRect().top + savedScrollY - scrollOffset()
-  ));
-
-  document.body.classList.remove('nav-open');
-  document.body.style.top = '';
-  if (menuBtn) {
-    menuBtn.setAttribute('aria-expanded', 'false');
-    menuBtn.textContent = 'Menu';
-  }
-  if (navBackdrop) navBackdrop.setAttribute('aria-hidden', 'true');
-
-  savedScrollY = top;
-  window.scrollTo(0, top);
-  document.documentElement.scrollTop = top;
-  if (history.pushState) history.pushState(null, '', hash);
+  if (history.replaceState) history.replaceState(null, '', hash);
   else location.hash = hash;
+
   updateNav();
 }
 
@@ -1367,14 +1351,16 @@ function updateNav() {
 window.addEventListener('scroll', updateNav, { passive: true });
 updateNav();
 
-navLinks.forEach(a => {
-  const go = e => {
+if (siteNav) {
+  siteNav.addEventListener('click', e => {
     if (!isMobile()) return;
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
     e.preventDefault();
-    closeNavAndScrollTo(a.getAttribute('href'));
-  };
-  a.addEventListener('click', go);
-});
+    e.stopPropagation();
+    navigateFromMenu(link.getAttribute('href'));
+  });
+}
 </script>
 </body>
 </html>
