@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "dimensions": [
+    {
+      "id": "fairness",
+      "name": "Fairness & Bias",
+      "description": "Equitable outcomes across demographic and linguistic groups",
+      "classical": ["AIF360", "Fairlearn"],
+      "llmEra": ["BiasGRPO", "red teaming"]
+    },
+    {
+      "id": "explainability",
+      "name": "Explainability (XAI)",
+      "description": "Why did the model decide this? Can we trust the answer?",
+      "classical": ["SHAP", "LIME", "EBMs"],
+      "llmEra": ["Attention maps", "chain-of-thought"]
+    },
+    {
+      "id": "privacy",
+      "name": "Privacy",
+      "description": "Data protection, minimization, and consent in training and inference",
+      "classical": ["Opacus", "DP-SGD", "PySyft"],
+      "llmEra": ["Federated LLM fine-tuning"]
+    },
+    {
+      "id": "safety",
+      "name": "Safety & Alignment",
+      "description": "Preventing harmful outputs and steering models toward intended values",
+      "classical": ["Adversarial testing", "ART"],
+      "llmEra": ["Guardrails", "RLHF", "Constitutional AI"]
+    },
+    {
+      "id": "robustness",
+      "name": "Robustness",
+      "description": "Resisting attacks, jailbreaks, and distribution shift",
+      "classical": ["CleverHans", "ART"],
+      "llmEra": ["Red teaming", "PyRIT"]
+    },
+    {
+      "id": "governance",
+      "name": "Governance",
+      "description": "Oversight, accountability, audit trails, and compliance",
+      "classical": ["Model cards", "datasheets"],
+      "llmEra": ["AI policies", "RSPs"]
+    },
+    {
+      "id": "sustainability",
+      "name": "Sustainability",
+      "description": "Environmental and economic cost of compute at scale",
+      "classical": ["CodeCarbon"],
+      "llmEra": ["Efficiency-first model selection"]
+    },
+    {
+      "id": "social-impact",
+      "name": "Social Impact",
+      "description": "Societal effects at scale — labor, power, geopolitics",
+      "classical": ["Impact assessments"],
+      "llmEra": ["Foundation model risk evaluations"]
+    }
+  ],
+  "hubDimensionMap": [
+    { "hub": "foundations", "dimensions": ["sustainability", "governance"] },
+    { "hub": "tokenization", "dimensions": ["fairness", "social-impact"] },
+    { "hub": "transformers", "dimensions": ["explainability", "social-impact"] },
+    { "hub": "efficiency", "dimensions": ["sustainability", "governance", "social-impact"] },
+    { "hub": "alignment", "dimensions": ["safety", "governance", "robustness"] },
+    { "hub": "fairness", "dimensions": ["fairness", "governance"] },
+    { "hub": "explainability", "dimensions": ["explainability"] },
+    { "hub": "governance", "dimensions": ["governance"] }
+  ]
+}

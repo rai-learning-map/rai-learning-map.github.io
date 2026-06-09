@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsible AI: Practitioner Knowledge Map</title>
+<style>
+  :root {
+    /* Anthropic / Claude design system — warm parchment palette */
+    --bg: #f5f4ed;           /* Parchment — primary page background */
+    --bg2: #faf9f5;          /* Ivory — card surface */
+    --bg3: #e8e6dc;          /* Warm Sand — elevated / hover */
+    --border: #f0eee6;       /* Border Cream — subtle dividers */
+    --border-warm: #e8e6dc;  /* Border Warm — prominent dividers */
+    --accent: #c96442;       /* Terracotta — brand CTA, primary accent */
+    --accent2: #d97757;      /* Coral — secondary accent */
+    --green: #2a6b42;        /* Warm forest — success / active */
+    --yellow: #9a6520;       /* Warm amber — warning / highlight */
+    --red: #b53333;          /* Error Crimson */
+    --orange: #c96442;       /* Terracotta (reuse) */
+    --text: #141413;         /* Near Black — primary text */
+    --muted: #5e5d59;        /* Olive Gray — secondary text */
+    --text3: #87867f;        /* Stone Gray — tertiary / captions */
+    --text-light: #b0aea5;   /* Warm Silver — text on dark surfaces */
+    --dark: #141413;         /* Near Black — dark section bg */
+    --dark2: #30302e;        /* Dark Surface — dark cards / sidebar */
+    --sidebar-w: 240px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.6; }
+
+  /* LAYOUT */
+  #sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0; width: var(--sidebar-w);
+    background: var(--dark); border-right: 1px solid var(--dark2);
+    overflow-y: auto; z-index: 100; padding: 16px 0;
+  }
+  #main { margin-left: var(--sidebar-w); padding: 40px 48px; max-width: 1100px; }
+
+  /* SIDEBAR — dark for contrast against parchment main */
+  .sidebar-title { padding: 0 16px 12px; font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--text3); text-transform: uppercase; border-bottom: 1px solid var(--dark2); margin-bottom: 8px; }
+  .sidebar-link { display: block; padding: 7px 16px; color: var(--text-light); text-decoration: none; font-size: 12.5px; transition: all 0.15s; border-left: 3px solid transparent; }
+  .sidebar-link:hover { color: #faf9f5; background: var(--dark2); border-left-color: var(--accent); }
+  .sidebar-link.active { color: var(--accent2); background: rgba(201,100,66,0.15); border-left-color: var(--accent); }
+  .sidebar-section { margin-top: 8px; padding: 4px 16px; font-size: 10px; font-weight: 700; color: #3d3d3a; text-transform: uppercase; letter-spacing: 0.8px; }
+
+  /* CONTENT */
+  h1 { font-size: 28px; font-weight: 500; color: var(--text); font-family: Georgia, serif; margin-bottom: 4px; line-height: 1.2; }
+  h2 { font-size: 20px; font-weight: 500; color: var(--accent); font-family: Georgia, serif; margin: 48px 0 14px; padding-bottom: 10px; border-bottom: 2px solid var(--border-warm); scroll-margin-top: 24px; }
+  h3 { font-size: 15px; font-weight: 600; color: var(--muted); margin: 24px 0 8px; }
+  h4 { font-size: 13px; font-weight: 600; color: var(--yellow); margin: 16px 0 6px; }
+  p, li { color: var(--text); margin-bottom: 6px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  ul { padding-left: 20px; margin-bottom: 10px; }
+  li { margin-bottom: 3px; }
+  code { background: var(--bg3); padding: 2px 6px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 12px; color: var(--accent); border: 1px solid var(--border-warm); }
+  blockquote { border-left: 3px solid var(--accent); padding: 10px 16px; background: rgba(201,100,66,0.05); border-radius: 0 6px 6px 0; margin: 12px 0; color: var(--muted); font-size: 13px; }
+  blockquote strong { color: var(--accent); }
+  strong { color: var(--text); font-weight: 600; }
+  em { color: var(--muted); font-style: italic; }
+
+  /* HEADER */
+  .doc-header { background: var(--bg2); border: 1px solid var(--border-warm); border-radius: 12px; padding: 28px 32px; margin-bottom: 36px; box-shadow: rgba(0,0,0,0.05) 0px 4px 24px; }
+  .doc-meta { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
+  .doc-meta span { font-size: 12px; color: var(--muted); }
+  .doc-meta span strong { color: var(--green); }
+  .verify-note { margin-top: 10px; padding: 8px 14px; background: rgba(154,101,32,0.08); border: 1px solid rgba(154,101,32,0.22); border-radius: 6px; font-size: 12px; color: var(--yellow); }
+  .callout { padding: 12px 16px; border-radius: 8px; font-size: 13px; margin: 10px 0; }
+  .callout-warn { background: rgba(154,101,32,0.07); border: 1px solid rgba(154,101,32,0.25); color: var(--text); }
+  .callout-warn strong { color: var(--yellow); }
+  .callout-info { background: rgba(201,100,66,0.06); border: 1px solid rgba(201,100,66,0.2); color: var(--text); }
+  .callout-info strong { color: var(--accent); }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--bg3); color: var(--muted); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; padding: 8px 12px; text-align: left; border-bottom: 2px solid var(--border-warm); }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: rgba(201,100,66,0.04); }
+  td code { font-size: 11.5px; }
+  .stars { color: var(--yellow); font-weight: 600; }
+  .ratio-high { color: var(--green); font-weight: 600; }
+  .ratio-med { color: var(--yellow); }
+  .ratio-low { color: var(--muted); }
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 10.5px; font-weight: 600; }
+  .badge-new { background: rgba(42,107,66,0.12); color: var(--green); border: 1px solid rgba(42,107,66,0.25); }
+  .badge-uv { background: rgba(154,101,32,0.1); color: var(--yellow); border: 1px solid rgba(154,101,32,0.22); font-size: 10px; }
+
+  /* NEXT ACTIONS */
+  #next-actions { background: var(--bg2); border: 1px solid var(--border-warm); border-radius: 10px; padding: 20px 24px; margin-bottom: 32px; }
+  .actions-title { font-size: 15px; font-weight: 600; color: var(--accent); font-family: Georgia, serif; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .action-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .action-item:last-child { border-bottom: none; }
+  .action-item input[type=checkbox] { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; cursor: pointer; }
+  .action-item label { color: var(--text); cursor: pointer; font-size: 13px; line-height: 1.5; }
+  .action-item label.done { text-decoration: line-through; color: var(--muted); }
+  .action-tag { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 8px; margin-left: 6px; }
+  .tag-you { background: rgba(181,51,51,0.1); color: var(--red); border: 1px solid rgba(181,51,51,0.2); }
+  .tag-notebooklm { background: rgba(42,107,66,0.1); color: var(--green); border: 1px solid rgba(42,107,66,0.2); }
+  .tag-claude { background: rgba(201,100,66,0.1); color: var(--accent); border: 1px solid rgba(201,100,66,0.2); }
+  .tag-github { background: rgba(215,119,87,0.12); color: var(--accent2); border: 1px solid rgba(215,119,87,0.2); }
+
+  /* NOTES */
+  .section-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .notes-toggle { background: none; border: 1px solid var(--border-warm); color: var(--muted); padding: 3px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; transition: all 0.15s; white-space: nowrap; }
+  .notes-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .notes-toggle.has-note { border-color: var(--yellow); color: var(--yellow); }
+  .notes-area { display: none; margin-top: 10px; }
+  .notes-area.open { display: block; }
+  .notes-area textarea { width: 100%; min-height: 80px; background: var(--bg3); border: 1px solid var(--border-warm); border-radius: 8px; color: var(--text); padding: 10px 12px; font-family: inherit; font-size: 13px; resize: vertical; outline: none; }
+  .notes-area textarea:focus { border-color: var(--accent); }
+  .notes-area textarea::placeholder { color: var(--text3); }
+  .notes-meta { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+  /* FEEDBACK */
+  #feedback-btn { position: fixed; bottom: 28px; right: 28px; background: var(--accent); color: #faf9f5; border: none; border-radius: 50px; padding: 12px 20px; font-size: 14px; font-weight: 600; cursor: pointer; z-index: 200; box-shadow: 0 4px 20px rgba(201,100,66,0.35); transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+  #feedback-btn:hover { background: var(--accent2); transform: translateY(-1px); }
+  #feedback-modal { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(20,20,19,0.7); backdrop-filter: blur(4px); align-items: center; justify-content: center; }
+  #feedback-modal.open { display: flex; }
+  .modal-box { background: var(--bg2); border: 1px solid var(--border-warm); border-radius: 14px; padding: 28px; width: 600px; max-width: 95vw; max-height: 85vh; overflow-y: auto; }
+  .modal-title { font-size: 17px; font-weight: 600; color: var(--text); font-family: Georgia, serif; margin-bottom: 6px; }
+  .modal-sub { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+  .modal-box textarea { width: 100%; min-height: 160px; background: var(--bg3); border: 1px solid var(--border-warm); border-radius: 8px; color: var(--text); padding: 12px; font-family: inherit; font-size: 13px; resize: vertical; outline: none; }
+  .modal-box textarea:focus { border-color: var(--accent); }
+  .modal-actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .btn { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.15s; }
+  .btn-primary { background: var(--accent); color: #faf9f5; }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-secondary { background: var(--bg3); color: var(--text); border: 1px solid var(--border-warm); }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-danger { background: rgba(181,51,51,0.1); color: var(--red); border: 1px solid rgba(181,51,51,0.2); }
+  .copy-confirm { font-size: 12px; color: var(--green); margin-top: 8px; display: none; }
+  .copy-confirm.show { display: block; }
+
+  /* NOTES EXPORT */
+  #notes-export-box { display: none; background: var(--bg3); border: 1px solid var(--border-warm); border-radius: 8px; padding: 14px; margin-top: 14px; font-family: monospace; font-size: 12px; color: var(--text); white-space: pre-wrap; max-height: 200px; overflow-y: auto; }
+
+  /* PILLARS */
+  .pillar-card { background: var(--bg2); border: 1px solid var(--border-warm); border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; box-shadow: rgba(0,0,0,0.04) 0px 2px 8px; }
+
+  /* APPENDIX */
+  .appendix-box { background: var(--bg3); border: 1px solid var(--border-warm); border-radius: 8px; padding: 16px 20px; margin: 14px 0; }
+  .appendix-box ol { padding-left: 20px; }
+  .appendix-box li { margin-bottom: 10px; }
+  .appendix-box .doc-url { font-size: 12px; color: var(--accent); font-family: monospace; }
+  .q-list { list-style: decimal; padding-left: 20px; }
+  .q-list li { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .q-list li::before { color: var(--accent); }
+
+  /* ENTRY MATRIX */
+  .entry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; margin: 12px 0; }
+  .entry-card { background: var(--bg3); border: 1px solid var(--border-warm); border-radius: 8px; padding: 12px 14px; }
+  .entry-card .org-type { font-size: 11px; font-weight: 700; color: var(--accent2); text-transform: uppercase; margin-bottom: 6px; }
+  .entry-card .repos { font-size: 12.5px; color: var(--text); margin-bottom: 4px; }
+  .entry-card .repos code { background: rgba(201,100,66,0.08); color: var(--accent); }
+  .entry-card .why { font-size: 11.5px; color: var(--muted); }
+
+  /* HN SIGNAL */
+  .hn-bar { display: flex; align-items: center; gap: 12px; margin: 4px 0; }
+  .hn-label { width: 160px; font-size: 12.5px; color: var(--text); flex-shrink: 0; }
+  .hn-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+  .hn-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .hn-count { font-size: 12px; color: var(--muted); width: 60px; text-align: right; flex-shrink: 0; }
+  .hn-count.high { color: var(--green); font-weight: 600; }
+
+  /* DIMENSIONS GRID */
+  .dim-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 14px 0; }
+  .dim-card { background: var(--bg3); border: 1px solid var(--border-warm); border-radius: 8px; padding: 12px 14px; }
+  .dim-card .dim-name { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .dim-card .dim-desc { font-size: 11.5px; color: var(--muted); margin-bottom: 6px; }
+  .dim-card .era { font-size: 11px; }
+  .dim-card .era span { color: var(--muted); }
+  .dim-card .era strong { color: var(--text); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-warm); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  /* TOAST */
+  #toast { position: fixed; bottom: 80px; right: 28px; background: var(--green); color: #fff; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; z-index: 400; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  #toast.show { opacity: 1; }
+
+  @media (max-width: 768px) {
+    #sidebar { display: none; }
+    #main { margin-left: 0; padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-title">RAI Knowledge Map</div>
+  <a class="sidebar-link" href="#next-actions">⚡ Next Actions</a>
+  <a class="sidebar-link" href="#dimensions">📐 Dimensions</a>
+  <div class="sidebar-section">10 Pillars</div>
+  <a class="sidebar-link" href="#pillar1">1 · GitHub Repos</a>
+  <a class="sidebar-link" href="#pillar2">2 · Thought Leaders</a>
+  <a class="sidebar-link" href="#pillar3">3 · Academic Research</a>
+  <a class="sidebar-link" href="#pillar4">4 · Policy &amp; Govt</a>
+  <a class="sidebar-link" href="#pillar5">5 · Seminal Books</a>
+  <a class="sidebar-link" href="#pillar6">6 · AI Labs</a>
+  <a class="sidebar-link" href="#pillar7">7 · Consulting Orgs</a>
+  <a class="sidebar-link" href="#pillar8">8 · Explainers</a>
+  <a class="sidebar-link" href="#pillar9">9 · Startups</a>
+  <a class="sidebar-link" href="#pillar10">10 · Futures</a>
+  <div class="sidebar-section">Research Kits</div>
+  <a class="sidebar-link" href="#appendix-a">A · Policy Kit</a>
+  <a class="sidebar-link" href="#appendix-b">B · AI Labs Kit</a>
+  <a class="sidebar-link" href="#appendix-c">C · Consulting Kit</a>
+  <a class="sidebar-link" href="#appendix-d">D · Startups Kit</a>
+  <a class="sidebar-link" href="#appendix-e">E · Markets Kit</a>
+  <div style="padding:16px;margin-top:8px;border-top:1px solid var(--border)">
+    <button class="btn btn-secondary" style="width:100%;font-size:12px" onclick="showAllNotes()">📋 Export Notes</button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <h1>Responsible AI: Practitioner Knowledge Map</h1>
+    <div class="doc-meta">
+      <span>Generated <strong>2026-06-08</strong></span>
+      <span>Method <strong>CLI-grounded (GitHub + arXiv + HackerNews + YouTube)</strong></span>
+      <span>Scope <strong>10 pillars × 8 RAI dimensions</strong></span>
+    </div>
+    <div class="verify-note">
+      ⚠️ <strong>Verification:</strong> GitHub, arXiv, HN, YouTube data = tool-verified this session. Twitter @handles marked <strong>[UV]</strong> = unverified — confirm at x.com before following.
+    </div>
+  </div>
+
+  <!-- NEXT ACTIONS -->
+  <div id="next-actions">
+    <div class="actions-title">⚡ Your Next Actions</div>
+    <div id="action-list">
+      <div class="action-item">
+        <input type="checkbox" id="a1" onchange="saveAction(this)">
+        <label for="a1">Open NotebookLM → upload Appendix A URLs (7 policy docs: EU AI Act, NIST RMF, UNESCO, OECD, Singapore, India, US OSTP) → run 5 standard questions<span class="action-tag tag-notebooklm">NotebookLM</span></label>
+      </div>
+      <div class="action-item">
+        <input type="checkbox" id="a2" onchange="saveAction(this)">
+        <label for="a2">Open NotebookLM → upload Appendix B URLs (6 AI lab docs: Anthropic, OpenAI, DeepMind, Meta) → run 5 standard questions<span class="action-tag tag-notebooklm">NotebookLM</span></label>
+      </div>
+      <div class="action-item">
+        <input type="checkbox" id="a3" onchange="saveAction(this)">
+        <label for="a3">Open NotebookLM → upload Appendix C URLs (5 consulting org docs) → run 5 standard questions<span class="action-tag tag-notebooklm">NotebookLM</span></label>
+      </div>
+      <div class="action-item">
+        <input type="checkbox" id="a4" onchange="saveAction(this)">
+        <label for="a4">Verify @handles marked [UV] in Pillar 2 at x.com before following or adding to any reference list<span class="action-tag tag-you">Manual</span></label>
+      </div>
+      <div class="action-item">
+        <input type="checkbox" id="a5" onchange="saveAction(this)">
+        <label for="a5">Verify arXiv ID <code>1104.3913</code> (Dwork et al. "Fairness through Awareness") at arxiv.org/abs/1104.3913<span class="action-tag tag-you">Manual</span></label>
+      </div>
+      <div class="action-item">
+        <input type="checkbox" id="a6" onchange="saveAction(this)">
+        <label for="a6">Update the GitHub organization's Responsible AI page with curated content from this map (repos, books, papers, thought leaders)<span class="action-tag tag-github">GitHub</span></label>
+      </div>
+      <div class="action-item">
+        <input type="checkbox" id="a7" onchange="saveAction(this)">
+        <label for="a7">Decide which GitHub repos to star/fork for your own practice (use the Practitioner Entry Points matrix in Pillar 1C as guide)<span class="action-tag tag-you">Manual</span></label>
+      </div>
+      <div class="action-item">
+        <input type="checkbox" id="a8" onchange="saveAction(this)">
+        <label for="a8">Review thought leader list (Pillar 2B) → identify 3–5 people whose work most aligns with your practice domain → follow + read their key publication<span class="action-tag tag-you">Manual</span></label>
+      </div>
+      <div class="action-item">
+        <input type="checkbox" id="a9" onchange="saveAction(this)">
+        <label for="a9">Choose reading sequence from Pillar 5D based on your current persona (non-technical / technical / policy) → get first book<span class="action-tag tag-you">Manual</span></label>
+      </div>
+      <div class="action-item">
+        <input type="checkbox" id="a10" onchange="saveAction(this)">
+        <label for="a10">Share feedback on this knowledge map with Claude (use the Feedback button below) to refine, add missing areas, or prioritize next research sprint<span class="action-tag tag-claude">Claude</span></label>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:11.5px;color:var(--muted)">Checkboxes persist in browser. <span id="action-progress" style="color:var(--green);font-weight:600"></span></div>
+  </div>
+
+  <!-- DIMENSIONS -->
+  <h2 id="dimensions">
+    <div class="section-header">
+      RAI Dimensions Reference
+      <button class="notes-toggle" onclick="toggleNote('dimensions')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-dimensions"><textarea placeholder="Your notes on RAI dimensions..." onblur="saveNote('dimensions', this.value)" oninput="markNoteToggle('dimensions')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <div class="dim-grid">
+    <div class="dim-card"><div class="dim-name">Fairness &amp; Bias</div><div class="dim-desc">Equitable outcomes across groups</div><div class="era"><span>Classical ML: </span><strong>AIF360, Fairlearn</strong><br><span>LLM era: </span><strong>BiasGRPO, red teaming</strong></div></div>
+    <div class="dim-card"><div class="dim-name">Explainability (XAI)</div><div class="dim-desc">Why did the model decide this?</div><div class="era"><span>Classical ML: </span><strong>SHAP, LIME, EBMs</strong><br><span>LLM era: </span><strong>Attention maps, chain-of-thought</strong></div></div>
+    <div class="dim-card"><div class="dim-name">Privacy</div><div class="dim-desc">Data protection, minimization</div><div class="era"><span>Classical ML: </span><strong>Opacus, DP-SGD, PySyft</strong><br><span>LLM era: </span><strong>Federated LLM fine-tuning</strong></div></div>
+    <div class="dim-card"><div class="dim-name">Safety &amp; Alignment</div><div class="dim-desc">Preventing harmful outputs</div><div class="era"><span>Classical ML: </span><strong>Adversarial testing, ART</strong><br><span>LLM era: </span><strong>Guardrails, RLHF, Constitutional AI</strong></div></div>
+    <div class="dim-card"><div class="dim-name">Robustness</div><div class="dim-desc">Resist attacks &amp; distribution shift</div><div class="era"><span>Classical ML: </span><strong>CleverHans, ART</strong><br><span>LLM era: </span><strong>Red teaming, PyRIT</strong></div></div>
+    <div class="dim-card"><div class="dim-name">Governance</div><div class="dim-desc">Oversight, accountability, audit</div><div class="era"><span>Classical ML: </span><strong>Model cards, datasheets</strong><br><span>LLM era: </span><strong>AI policies, RSPs</strong></div></div>
+    <div class="dim-card"><div class="dim-name">Sustainability</div><div class="dim-desc">Environmental cost of compute</div><div class="era"><span>Classical ML: </span><strong>CodeCarbon</strong><br><span>LLM era: </span><strong>Efficiency-first model selection</strong></div></div>
+    <div class="dim-card"><div class="dim-name">Social Impact</div><div class="dim-desc">Societal effects at scale</div><div class="era"><span>Classical ML: </span><strong>Impact assessments</strong><br><span>LLM era: </span><strong>Foundation model risk evaluations</strong></div></div>
+  </div>
+
+  <!-- PILLAR 1 -->
+  <h2 id="pillar1">
+    <div class="section-header">
+      Pillar 1: Code, Tools &amp; GitHub Repos
+      <button class="notes-toggle" onclick="toggleNote('pillar1')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-pillar1"><textarea placeholder="Your notes on GitHub repos..." onblur="saveNote('pillar1', this.value)" oninput="markNoteToggle('pillar1')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <blockquote><strong>Credibility scoring:</strong> composite of org affiliation + fork/star ratio + recency + academic backing + CI + docs.<br><strong>Fork/star ratio</strong> is the strongest active-use signal: &gt;0.15 = actively used; &lt;0.05 = bookmark-only.</blockquote>
+
+  <h3>1A — Tier 1: Institutionally Backed &amp; Maintained</h3>
+
+  <h4>Explainability / XAI</h4>
+  <div class="table-wrap"><table>
+    <tr><th>Repo</th><th>Stars</th><th>Fork ratio</th><th>Org</th><th>Updated</th></tr>
+    <tr><td><a href="https://github.com/slundberg/shap" target="_blank">slundberg/shap</a></td><td class="stars">25.5K</td><td class="ratio-high">0.15</td><td>Lundberg (UW)</td><td>2026-06</td></tr>
+    <tr><td><a href="https://github.com/marcotcr/lime" target="_blank">marcotcr/lime</a></td><td class="stars">12.1K</td><td class="ratio-high">0.15</td><td>Ribeiro (UW)</td><td>2026-06</td></tr>
+    <tr><td><a href="https://github.com/interpretml/interpret" target="_blank">interpretml/interpret</a></td><td class="stars">6.9K</td><td class="ratio-med">0.11</td><td>Microsoft</td><td>2026-06</td></tr>
+    <tr><td><a href="https://github.com/Trusted-AI/AIX360" target="_blank">Trusted-AI/AIX360</a></td><td class="stars">1.8K</td><td class="ratio-high">0.18</td><td>IBM Research</td><td>2026-06</td></tr>
+    <tr><td><a href="https://github.com/MAIF/shapash" target="_blank">MAIF/shapash</a></td><td class="stars">3.2K</td><td class="ratio-med">0.11</td><td>MAIF (FR insurer)</td><td>2026-06</td></tr>
+    <tr><td><a href="https://github.com/ModelOriented/DALEX" target="_blank">ModelOriented/DALEX</a></td><td class="stars">1.5K</td><td class="ratio-med">0.12</td><td>Warsaw Univ. of Technology</td><td>2026-06</td></tr>
+    <tr><td><a href="https://github.com/PAIR-code/lit" target="_blank">PAIR-code/LIT</a></td><td class="stars">3.7K</td><td class="ratio-med">0.10</td><td>Google PAIR</td><td>2026-06</td></tr>
+  </table></div>
+
+  <h4>Fairness &amp; Bias Mitigation</h4>
+  <div class="table-wrap"><table>
+    <tr><th>Repo</th><th>Stars</th><th>Fork ratio</th><th>Org</th><th>Notes</th></tr>
+    <tr><td><a href="https://github.com/Trusted-AI/AIF360" target="_blank">Trusted-AI/AIF360</a></td><td class="stars">2.8K</td><td class="ratio-high" title="Highest fork ratio = most actively used">0.32 🔥</td><td>IBM Research</td><td>Highest fork ratio → most actively used</td></tr>
+    <tr><td><a href="https://github.com/fairlearn/fairlearn" target="_blank">fairlearn/fairlearn</a></td><td class="stars">2.2K</td><td class="ratio-high">0.22</td><td>Microsoft</td><td>Clean API, well-documented</td></tr>
+    <tr><td><a href="https://github.com/microsoft/responsible-ai-toolbox" target="_blank">microsoft/responsible-ai-toolbox</a></td><td class="stars">1.8K</td><td class="ratio-high">0.27</td><td>Microsoft</td><td>Dashboard UI — demo-able to stakeholders</td></tr>
+  </table></div>
+
+  <h4>Privacy-Preserving AI</h4>
+  <div class="table-wrap"><table>
+    <tr><th>Repo</th><th>Stars</th><th>Fork ratio</th><th>Org</th><th>Notes</th></tr>
+    <tr><td><a href="https://github.com/pytorch/opacus" target="_blank">pytorch/opacus</a></td><td class="stars">1.9K</td><td class="ratio-high">0.21</td><td>Meta (PyTorch)</td><td>DP-SGD for PyTorch</td></tr>
+    <tr><td><a href="https://github.com/google/differential-privacy" target="_blank">google/differential-privacy</a></td><td class="stars">3.3K</td><td class="ratio-high">0.18</td><td>Google</td><td>Multi-language DP libraries</td></tr>
+    <tr><td><a href="https://github.com/tensorflow/privacy" target="_blank">tensorflow/privacy</a></td><td class="stars">2.0K</td><td class="ratio-high">0.23</td><td>Google (TF)</td><td>TF-specific DP</td></tr>
+    <tr><td><a href="https://github.com/OpenMined/PySyft" target="_blank">OpenMined/PySyft</a></td><td class="stars">9.9K</td><td class="ratio-high">0.20</td><td>OpenMined</td><td>Federated learning + privacy</td></tr>
+    <tr><td><a href="https://github.com/secretflow/secretflow" target="_blank">secretflow/secretflow</a></td><td class="stars">2.7K</td><td class="ratio-med">0.10</td><td>Ant Group</td><td>Privacy-preserving ML framework</td></tr>
+  </table></div>
+
+  <h4>Safety, Robustness &amp; Red Teaming</h4>
+  <div class="table-wrap"><table>
+    <tr><th>Repo</th><th>Stars</th><th>Fork ratio</th><th>Org</th><th>Notes</th></tr>
+    <tr><td><a href="https://github.com/Trusted-AI/adversarial-robustness-toolbox" target="_blank">Trusted-AI/ART</a></td><td class="stars">6.0K</td><td class="ratio-high">0.22</td><td>IBM Research</td><td>Attacks + defenses, classical ML</td></tr>
+    <tr><td><a href="https://github.com/cleverhans-lab/cleverhans" target="_blank">cleverhans-lab/cleverhans</a></td><td class="stars">6.4K</td><td class="ratio-high">0.22</td><td>Goodfellow et al. / CMU</td><td>Adversarial examples, research-grade</td></tr>
+    <tr><td><a href="https://github.com/microsoft/PyRIT" target="_blank">microsoft/PyRIT</a></td><td class="stars">3.9K</td><td class="ratio-high">0.17</td><td>Microsoft</td><td><span class="badge badge-new">NEW 2024</span> Gen AI red teaming</td></tr>
+    <tr><td><a href="https://github.com/PKU-Alignment/safe-rlhf" target="_blank">PKU-Alignment/safe-rlhf</a></td><td class="stars">1.6K</td><td class="ratio-med">0.12</td><td>Peking University</td><td>Safe RLHF with constraint alignment</td></tr>
+  </table></div>
+
+  <h4>LLM Guardrails &amp; Safety</h4>
+  <div class="table-wrap"><table>
+    <tr><th>Repo</th><th>Stars</th><th>Fork ratio</th><th>Org</th><th>Notes</th></tr>
+    <tr><td><a href="https://github.com/guardrails-ai/guardrails" target="_blank">guardrails-ai/guardrails</a></td><td class="stars">7.0K</td><td class="ratio-low">0.09</td><td>Guardrails AI</td><td>Output validation, schema enforcement</td></tr>
+    <tr><td><a href="https://github.com/NVIDIA/NeMo-Guardrails" target="_blank">NVIDIA/NeMo-Guardrails</a></td><td class="stars">6.4K</td><td class="ratio-med">0.11</td><td>NVIDIA</td><td>Colang DSL for conversation flows</td></tr>
+    <tr><td><a href="https://github.com/openai/evals" target="_blank">openai/evals</a></td><td class="stars">18.6K</td><td class="ratio-high">0.16</td><td>OpenAI</td><td>LLM evaluation framework + benchmark registry</td></tr>
+    <tr><td><a href="https://github.com/Giskard-AI/giskard-oss" target="_blank">Giskard-AI/giskard-oss</a></td><td class="stars">5.4K</td><td class="ratio-med">0.11</td><td>Giskard AI</td><td>LLM agent testing, vulnerability scanning</td></tr>
+  </table></div>
+
+  <h4>Evaluation, Testing &amp; Monitoring</h4>
+  <div class="table-wrap"><table>
+    <tr><th>Repo</th><th>Stars</th><th>Fork ratio</th><th>Org</th><th>Notes</th></tr>
+    <tr><td><a href="https://github.com/deepchecks/deepchecks" target="_blank">deepchecks/deepchecks</a></td><td class="stars">4.0K</td><td class="ratio-low">0.07</td><td>Deepchecks</td><td>Continuous validation of ML models</td></tr>
+    <tr><td><a href="https://github.com/whylabs/whylogs" target="_blank">whylabs/whylogs</a></td><td class="stars">2.8K</td><td class="ratio-low">0.05</td><td>WhyLabs</td><td>Data/ML logging, drift detection</td></tr>
+    <tr><td><a href="https://github.com/microsoft/agent-governance-toolkit" target="_blank">microsoft/agent-governance-toolkit</a></td><td class="stars">4.1K</td><td class="ratio-high">0.15</td><td>Microsoft</td><td><span class="badge badge-new">NEW 2025</span> AI agent governance</td></tr>
+  </table></div>
+
+  <h4>Sustainability</h4>
+  <div class="table-wrap"><table>
+    <tr><th>Repo</th><th>Stars</th><th>Fork ratio</th><th>Org</th><th>Notes</th></tr>
+    <tr><td><a href="https://github.com/mlco2/codecarbon" target="_blank">mlco2/codecarbon</a></td><td class="stars">1.9K</td><td class="ratio-high">0.16</td><td>Mila + universities</td><td>CO₂ tracking for ML training</td></tr>
+  </table></div>
+
+  <h3>1B — Tier 2: Curated Discovery Lists</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Repo</th><th>Stars</th><th>Description</th></tr>
+    <tr><td><a href="https://github.com/EthicalML/awesome-production-machine-learning" target="_blank">EthicalML/awesome-production-ml</a></td><td class="stars">20.6K</td><td>Broadest curated list: monitoring, versioning, fairness, privacy</td></tr>
+    <tr><td><a href="https://github.com/jphall663/awesome-machine-learning-interpretability" target="_blank">jphall663/awesome-ml-interpretability</a></td><td class="stars">4.0K</td><td>Curated interpretability resources + responsible ML practices</td></tr>
+  </table></div>
+
+  <h3>1C — Practitioner Entry Points by Org Type</h3>
+  <div class="entry-grid">
+    <div class="entry-card"><div class="org-type">Solo / Startup</div><div class="repos"><code>guardrails-ai</code> + <code>shap</code> + <code>codecarbon</code></div><div class="why">Quick wins: output safety + explain one prediction + track emissions</div></div>
+    <div class="entry-card"><div class="org-type">Product Team</div><div class="repos"><code>giskard-oss</code> + <code>deepchecks</code> + <code>PyRIT</code></div><div class="why">Test before ship: LLM vulns + ML validation + red team</div></div>
+    <div class="entry-card"><div class="org-type">Mid-size Company</div><div class="repos"><code>AIF360</code> + <code>fairlearn</code> + <code>responsible-ai-toolbox</code></div><div class="why">Fairness audit + dashboard for stakeholders</div></div>
+    <div class="entry-card"><div class="org-type">Enterprise / Regulated</div><div class="repos"><code>ART</code> + <code>opacus</code> + <code>responsible-ai-toolbox</code></div><div class="why">Full stack: robustness + DP + explainability dashboard</div></div>
+    <div class="entry-card"><div class="org-type">LLM Product Builder</div><div class="repos"><code>NeMo-Guardrails</code> + <code>evals</code> + <code>PyRIT</code></div><div class="why">Conversation control + evaluation + red team</div></div>
+    <div class="entry-card"><div class="org-type">Research</div><div class="repos"><code>SHAP</code> + <code>AIX360</code> + <code>AIF360</code> + <code>cleverhans</code></div><div class="why">Full algorithmic toolkit</div></div>
+  </div>
+
+  <!-- PILLAR 2 -->
+  <h2 id="pillar2">
+    <div class="section-header">
+      Pillar 2: Thought Leaders
+      <button class="notes-toggle" onclick="toggleNote('pillar2')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-pillar2"><textarea placeholder="Who to follow, key positions, your thoughts..." onblur="saveNote('pillar2', this.value)" oninput="markNoteToggle('pillar2')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+
+  <h3>2A — HackerNews RAI Signal (last 90 days)</h3>
+  <div style="margin:14px 0">
+    <div class="hn-bar"><div class="hn-label">AI Safety</div><div class="hn-track"><div class="hn-fill" style="width:100%"></div></div><div class="hn-count high">142 hits</div></div>
+    <div class="hn-bar"><div class="hn-label">AI Governance</div><div class="hn-track"><div class="hn-fill" style="width:72%"></div></div><div class="hn-count high">103 hits</div></div>
+    <div class="hn-bar"><div class="hn-label">AI Regulation</div><div class="hn-track"><div class="hn-fill" style="width:23%"></div></div><div class="hn-count">33 hits</div></div>
+    <div class="hn-bar"><div class="hn-label">Responsible AI</div><div class="hn-track"><div class="hn-fill" style="width:22%"></div></div><div class="hn-count">32 hits</div></div>
+    <div class="hn-bar"><div class="hn-label">ML Bias</div><div class="hn-track"><div class="hn-fill" style="width:12%"></div></div><div class="hn-count">17 hits</div></div>
+    <div class="hn-bar"><div class="hn-label">Algorithmic Fairness</div><div class="hn-track"><div class="hn-fill" style="width:1%"></div></div><div class="hn-count">1 hit</div></div>
+  </div>
+  <blockquote><strong>Key insight:</strong> AI Safety (142) and AI Governance (103) dominate HN. "Algorithmic Fairness" (1 hit) is almost invisible to tech practitioners — a gap the fairness academic community hasn't bridged yet.</blockquote>
+  <p style="margin:10px 0;font-size:13px"><strong>Top HN stories (verified):</strong></p>
+  <ul>
+    <li><a href="https://news.ycombinator.com/item?id=48129561" target="_blank">"The other half of AI safety"</a> — 97pts — safety beyond model alignment</li>
+    <li><a href="https://news.ycombinator.com/item?id=48302940" target="_blank">"Illinois Lawmakers Just Passed America's Strongest AI Safety Bill"</a> — 14pts</li>
+    <li><a href="https://news.ycombinator.com/item?id=48364520" target="_blank">"Colorado Rolls Back Landmark AI Governance Law"</a> — 8pts — regulatory volatility signal</li>
+    <li><a href="https://news.ycombinator.com/item?id=48273162" target="_blank">"Vatican-Anthropic relationship reshaping AI ethics debate"</a> — 21pts</li>
+    <li><a href="https://news.ycombinator.com/item?id=48252405" target="_blank">"AI Governance 2026: I Almost Quit over This Shit"</a> — practitioner frustration as field signal</li>
+  </ul>
+
+  <h3>2B — Key Figures by Type</h3>
+  <blockquote>⚠️ All @handles marked <span class="badge badge-uv">[UV]</span> = unverified. Confirm at x.com before following or adding to any reference list.</blockquote>
+  <div class="table-wrap"><table>
+    <tr><th>Type</th><th>Person</th><th>Affiliation &amp; Key Work</th><th>Handle</th></tr>
+    <tr><td rowspan="3" style="color:var(--accent2);font-weight:600;vertical-align:top">Philosophers/<br>Ethicists</td><td>Shannon Vallor</td><td>Edinburgh Futures Institute — Technology and the Virtues</td><td><span class="badge badge-uv">@ShannonVallor [UV]</span></td></tr>
+    <tr><td>Luciano Floridi</td><td>Yale / Oxford Internet Institute — Information ethics</td><td><span class="badge badge-uv">@Floridi [UV]</span></td></tr>
+    <tr><td>Virginia Dignum</td><td>Umeå University / UNICEF — Value alignment, FATE</td><td><span class="badge badge-uv">@vdignum [UV]</span></td></tr>
+    <tr><td rowspan="3" style="color:var(--accent2);font-weight:600;vertical-align:top">Policymakers/<br>Regulators</td><td>Marietje Schaake</td><td>Stanford Cyber / former MEP — EU AI Act architect</td><td><span class="badge badge-uv">@MarietjeSchaake [UV]</span></td></tr>
+    <tr><td>Kate Crawford</td><td>NYU AI Now Institute — Atlas of AI, political economy</td><td><span class="badge badge-uv">@katecrawford [UV]</span></td></tr>
+    <tr><td>Stuart Russell</td><td>Berkeley CAIS — Human Compatible, CAIS</td><td><span class="badge badge-uv">@StuartJRussell [UV]</span></td></tr>
+    <tr><td rowspan="4" style="color:var(--accent2);font-weight:600;vertical-align:top">ML Safety/<br>Alignment</td><td>Jan Leike</td><td>Anthropic (ex-OpenAI Superalignment) — RLHF, scalable oversight</td><td><span class="badge badge-uv">@janleike [UV]</span></td></tr>
+    <tr><td>Dario Amodei</td><td>Anthropic — RSP, Constitutional AI</td><td><span class="badge badge-uv">@DarioAmodei [UV]</span></td></tr>
+    <tr><td>Chris Olah</td><td>Anthropic — Neural network interpretability pioneer</td><td><span class="badge badge-uv">@ch402 [UV]</span></td></tr>
+    <tr><td>Paul Christiano</td><td>ARC — Debate, IDA; LessWrong + blog</td><td>—</td></tr>
+    <tr><td rowspan="6" style="color:var(--accent2);font-weight:600;vertical-align:top">Fairness<br>Researchers</td><td>Timnit Gebru</td><td>DAIR Institute — Stochastic Parrots, Datasheets for Datasets</td><td><span class="badge badge-uv">@timnitGebru [UV]</span></td></tr>
+    <tr><td>Joy Buolamwini</td><td>Algorithmic Justice League / MIT — Gender Shades</td><td><span class="badge badge-uv">@jovialjoy [UV]</span></td></tr>
+    <tr><td>Arvind Narayanan &amp; Sayash Kapoor</td><td>Princeton — AI Snake Oil</td><td><span class="badge badge-uv">@random_walker [UV]</span></td></tr>
+    <tr><td>Solon Barocas</td><td>Cornell — fairmlbook.org co-author, ACM FAccT founder</td><td><span class="badge badge-uv">@sbarocas [UV]</span></td></tr>
+    <tr><td>Moritz Hardt</td><td>UC Berkeley → Simons — Equality of Opportunity paper</td><td><span class="badge badge-uv">@mrtz [UV]</span></td></tr>
+    <tr><td>Margaret Mitchell</td><td>Hugging Face — Model Cards pioneer, former Google</td><td><span class="badge badge-uv">@mmitchell_ai [UV]</span></td></tr>
+    <tr><td rowspan="5" style="color:var(--accent2);font-weight:600;vertical-align:top">Social<br>Scientists</td><td>Safiya Umoja Noble</td><td>UCLA — Algorithms of Oppression</td><td>—</td></tr>
+    <tr><td>Ruha Benjamin</td><td>Princeton — Race After Technology</td><td>—</td></tr>
+    <tr><td>Virginia Eubanks</td><td>UAlbany — Automating Inequality</td><td>—</td></tr>
+    <tr><td>Cathy O'Neil</td><td>Author — Weapons of Math Destruction</td><td><span class="badge badge-uv">@mathbabedotorg [UV]</span></td></tr>
+    <tr><td>Meredith Broussard</td><td>NYU — Artificial Unintelligence</td><td>—</td></tr>
+    <tr><td rowspan="3" style="color:var(--accent2);font-weight:600;vertical-align:top">Practitioners/<br>Explainers</td><td>Cassie Kozyrkov</td><td>Google CDO (now independent) — best ML decision science explainer</td><td><span class="badge badge-uv">@quaesita [UV]</span></td></tr>
+    <tr><td>Rachel Thomas</td><td>fast.ai / USF — practical AI ethics</td><td><span class="badge badge-uv">@math_rachel [UV]</span></td></tr>
+    <tr><td>Chip Huyen</td><td>ML systems — ML Interviews, FSDL</td><td><span class="badge badge-uv">@chipro [UV]</span></td></tr>
+    <tr><td rowspan="3" style="color:var(--accent2);font-weight:600;vertical-align:top">Critics/<br>Hype-Correctors</td><td>Gary Marcus</td><td>NYU / Robust AI — persistent AI skeptic</td><td><span class="badge badge-uv">@GaryMarcus [UV]</span></td></tr>
+    <tr><td>Emily Bender</td><td>UW Linguistics — "Stochastic Parrots", Octopus Test</td><td><span class="badge badge-uv">@emilymbender [UV]</span></td></tr>
+    <tr><td>Meredith Whitaker</td><td>Signal Foundation / AI Now Institute co-founder</td><td><span class="badge badge-uv">@mer__edith [UV]</span></td></tr>
+  </table></div>
+
+  <!-- PILLAR 3 -->
+  <h2 id="pillar3">
+    <div class="section-header">
+      Pillar 3: Academic Research
+      <button class="notes-toggle" onclick="toggleNote('pillar3')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-pillar3"><textarea placeholder="Papers to read, venue subscriptions, lab researchers to follow..." onblur="saveNote('pillar3', this.value)" oninput="markNoteToggle('pillar3')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <blockquote>⚠️ arXiv = preprint (not peer-reviewed). Papers often appear on arXiv first, then ACM FAccT / NeurIPS / journals.</blockquote>
+
+  <h3>3A — Seminal Papers (tool-verified IDs)</h3>
+  <div class="table-wrap"><table>
+    <tr><th>arXiv ID</th><th>Title</th><th>Authors</th><th>Year</th><th>Dimension</th></tr>
+    <tr><td><a href="https://arxiv.org/abs/1610.02413" target="_blank">1610.02413</a></td><td>Equality of Opportunity in Supervised Learning</td><td>Moritz Hardt, Eric Price, Nathan Srebro</td><td>2016</td><td>Fairness</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/2112.04359" target="_blank">2112.04359</a></td><td>Ethical and social risks of harm from Language Models</td><td>Weidinger et al. (DeepMind)</td><td>2021</td><td>Safety/Harm</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/2212.09251" target="_blank">2212.09251</a></td><td>Discovering LM Behaviors with Model-Written Evaluations</td><td>Perez et al. (Anthropic)</td><td>2022</td><td>Evaluation</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/1606.06565" target="_blank">1606.06565</a></td><td>Concrete Problems in AI Safety</td><td>Amodei, Olah et al.</td><td>2016</td><td>Safety</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/1104.3913" target="_blank">1104.3913</a> <span style="color:var(--yellow);font-size:11px">verify</span></td><td>Fairness through Awareness</td><td>Dwork et al.</td><td>2012</td><td>Fairness</td></tr>
+  </table></div>
+
+  <h3>3B — Recent Papers (topic-query verified, 2025–2026)</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Title</th><th>Authors</th><th>Date</th><th>Dimension</th></tr>
+    <tr><td>Misaligned AI as a New Insider Risk</td><td>Pistillo, Stix</td><td>Jun 2026</td><td>Safety/Governance</td></tr>
+    <tr><td>BiasGRPO: Stabilizing Bias Mitigation in High-Variance Reward Landscapes</td><td>Reddy, Yang</td><td>Jun 2026</td><td>Fairness (LLM)</td></tr>
+    <tr><td>Prioritization of Risks from AI: A Delphi Study</td><td>Saeri, Graham</td><td>Jun 2026</td><td>Governance</td></tr>
+    <tr><td>Fairness of Explanations in AI: A Unifying Framework</td><td>Popoola, Sheppard</td><td>May 2026</td><td>Fairness + XAI</td></tr>
+    <tr><td>Generative Models Erode Human Temporal Learning Through Market Selection</td><td>Cao</td><td>Jun 2026</td><td>Social Impact</td></tr>
+  </table></div>
+
+  <h3>3C — Free Textbooks</h3>
+  <ul>
+    <li><strong><a href="https://fairmlbook.org" target="_blank">Fairness and Machine Learning</a></strong> — Barocas, Hardt, Narayanan — best technical fairness reference</li>
+    <li><strong><a href="https://christophm.github.io/interpretable-ml-book" target="_blank">Interpretable Machine Learning</a></strong> — Christoph Molnar — comprehensive XAI methods</li>
+    <li><strong><a href="https://arxiv.org/abs/1606.06565" target="_blank">Concrete Problems in AI Safety</a></strong> — Amodei et al. — foundational safety taxonomy</li>
+  </ul>
+
+  <h3>3D — Key Venues</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Venue</th><th>Type</th><th>Focus</th><th>Cadence</th></tr>
+    <tr><td><strong>ACM FAccT</strong></td><td>Peer-reviewed conf</td><td>Fairness, Accountability, Transparency</td><td>Annual (June)</td></tr>
+    <tr><td><strong>NeurIPS safety track</strong></td><td>Top ML conference</td><td>Safety, alignment, robustness</td><td>Annual (Dec)</td></tr>
+    <tr><td><strong>AIES</strong> (AAAI/ACM)</td><td>Conference</td><td>AI, Ethics, Society</td><td>Annual</td></tr>
+    <tr><td><strong>Nature Machine Intelligence</strong></td><td>Journal</td><td>Broad AI, societal impact</td><td>Monthly</td></tr>
+    <tr><td><strong>AI &amp; Society</strong> (Springer)</td><td>Journal</td><td>Interdisciplinary AI ethics</td><td>Quarterly</td></tr>
+    <tr><td><strong>Big Data &amp; Society</strong></td><td>Journal</td><td>Data, power, society</td><td>Open access</td></tr>
+  </table></div>
+
+  <h3>3E — Key Research Groups</h3>
+  <ul>
+    <li><strong>Stanford HAI</strong> — hai.stanford.edu — broad RAI, policy + technical</li>
+    <li><strong>MIT CSAIL</strong> — AI safety, fairness in ML</li>
+    <li><strong>CMU Software Engineering Institute</strong> — AI assurance</li>
+    <li><strong>Oxford Internet Institute</strong> — digital ethics, policy</li>
+    <li><strong>Alan Turing Institute</strong> (UK) — trustworthy AI, policy-practice bridge</li>
+    <li><strong>DAIR Institute</strong> (Timnit Gebru) — independent AI ethics, centering marginalized communities</li>
+  </ul>
+
+  <!-- PILLAR 4 -->
+  <h2 id="pillar4">
+    <div class="section-header">
+      Pillar 4: Government &amp; Policy Institutions
+      <button class="notes-toggle" onclick="toggleNote('pillar4')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-pillar4"><textarea placeholder="Relevant frameworks for your region/sector, compliance priorities..." onblur="saveNote('pillar4', this.value)" oninput="markNoteToggle('pillar4')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <blockquote>Full upload kit for NotebookLM synthesis in <a href="#appendix-a">Appendix A</a>.</blockquote>
+  <div class="table-wrap"><table>
+    <tr><th>Framework</th><th>Region</th><th>Year</th><th>Key requirement for AI practitioners</th></tr>
+    <tr><td><strong>EU AI Act</strong></td><td>EU</td><td>2024</td><td>Risk classification (unacceptable/high/limited/minimal); high-risk = FRIA + technical docs + human oversight</td></tr>
+    <tr><td><strong>NIST AI RMF</strong></td><td>US</td><td>2023</td><td>Govern-Map-Measure-Manage cycle; voluntary but US gov adoption path</td></tr>
+    <tr><td><strong>UNESCO Recommendation</strong></td><td>Global</td><td>2021</td><td>Ethics framework; 11 key values; adopted by 193 member states</td></tr>
+    <tr><td><strong>OECD AI Principles</strong></td><td>Global</td><td>2019</td><td>5 principles + 5 policy recs; G20 endorsed; most widely referenced globally</td></tr>
+    <tr><td><strong>AI Bill of Rights (OSTP)</strong></td><td>US</td><td>2022</td><td>5 protections blueprint; non-binding but influential in practice</td></tr>
+    <tr><td><strong>NITI Aayog RAI for All</strong></td><td>India</td><td>2021</td><td>7 principles; sector guidance docs; public sector adoption framework</td></tr>
+    <tr><td><strong>Singapore IMDA MGA v2</strong></td><td>Singapore</td><td>2020</td><td>Governance framework + self-assessment guide; <strong>most practitioner-friendly</strong></td></tr>
+    <tr><td><strong>UK DSIT Principles</strong></td><td>UK</td><td>2023</td><td>Safety, security, robustness; explainability; fairness; accountability</td></tr>
+    <tr><td><strong>Hiroshima AI Process</strong></td><td>G7</td><td>2023</td><td>International LLM governance; foundation model conduct codes</td></tr>
+    <tr><td><strong>UNESCO Ethics of AI</strong></td><td>Global</td><td>2021</td><td>Broadest coverage; links AI to human rights framework</td></tr>
+  </table></div>
+
+  <!-- PILLAR 5 -->
+  <h2 id="pillar5">
+    <div class="section-header">
+      Pillar 5: Seminal Books
+      <button class="notes-toggle" onclick="toggleNote('pillar5')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-pillar5"><textarea placeholder="Books you've read, want to read, your ratings/thoughts..." onblur="saveNote('pillar5', this.value)" oninput="markNoteToggle('pillar5')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+
+  <h3>5A — Social Critique (non-technical entry point)</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Book</th><th>Author</th><th>Year</th><th>Core argument</th></tr>
+    <tr><td><strong>Weapons of Math Destruction</strong></td><td>Cathy O'Neil</td><td>2016</td><td>Algorithmic systems entrench inequality at scale</td></tr>
+    <tr><td><strong>Algorithms of Oppression</strong></td><td>Safiya Umoja Noble</td><td>2018</td><td>Search engines embed racial and gender bias</td></tr>
+    <tr><td><strong>Race After Technology</strong></td><td>Ruha Benjamin</td><td>2019</td><td>"Default settings" of tech encode discrimination</td></tr>
+    <tr><td><strong>Automating Inequality</strong></td><td>Virginia Eubanks</td><td>2018</td><td>Welfare surveillance systems punish the poor</td></tr>
+    <tr><td><strong>Technically Wrong</strong></td><td>Sara Wachter-Boettcher</td><td>2017</td><td>UX design embeds biases against users</td></tr>
+    <tr><td><strong>Atlas of AI</strong></td><td>Kate Crawford</td><td>2021</td><td>Political economy: AI as extraction system</td></tr>
+    <tr><td><strong>The Age of Surveillance Capitalism</strong></td><td>Shoshana Zuboff</td><td>2019</td><td>Behavior modification as the business model</td></tr>
+  </table></div>
+
+  <h3>5B — Technical Depth</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Book</th><th>Author</th><th>Year</th><th>Core argument</th></tr>
+    <tr><td><strong>The Alignment Problem</strong></td><td>Brian Christian</td><td>2020</td><td>AI systems optimizing wrong objectives; how to fix</td></tr>
+    <tr><td><strong>Human Compatible</strong></td><td>Stuart Russell</td><td>2019</td><td>AI should be uncertain about human values; defer to us</td></tr>
+    <tr><td><strong>Unmasking AI</strong></td><td>Joy Buolamwini</td><td>2023</td><td>Facial recognition bias; personal + political journey</td></tr>
+    <tr><td><strong>AI Snake Oil</strong></td><td>Narayanan &amp; Kapoor</td><td>2024</td><td>Distinguishing genuine AI capability from hype</td></tr>
+    <tr><td><strong>Fairness and Machine Learning</strong></td><td>Barocas, Hardt, Narayanan</td><td>2023</td><td><a href="https://fairmlbook.org" target="_blank">Free textbook</a> — best technical fairness reference</td></tr>
+  </table></div>
+
+  <h3>5C — Governance &amp; Practice</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Book</th><th>Author</th><th>Year</th><th>Core argument</th></tr>
+    <tr><td><strong>Power and Prediction</strong></td><td>Agrawal, Gans, Goldfarb</td><td>2022</td><td>AI shifts power via prediction; incumbents vs disruption</td></tr>
+    <tr><td><strong>Interpretable ML</strong></td><td>Christoph Molnar</td><td>2022</td><td><a href="https://christophm.github.io/interpretable-ml-book" target="_blank">Free textbook</a> — comprehensive XAI methods guide</td></tr>
+  </table></div>
+
+  <h3>5D — Reading Sequences by Persona</h3>
+  <div class="entry-grid">
+    <div class="entry-card"><div class="org-type">Non-technical Practitioner</div><div class="why" style="line-height:1.8">O'Neil → Crawford → Buolamwini → Christian → NIST AI RMF</div></div>
+    <div class="entry-card"><div class="org-type">Technical Practitioner</div><div class="why" style="line-height:1.8">Barocas/Hardt (free) → Molnar (free) → Narayanan &amp; Kapoor</div></div>
+    <div class="entry-card"><div class="org-type">Policy / Governance</div><div class="why" style="line-height:1.8">Eubanks → Crawford → Noble → OECD AI Principles → EU AI Act</div></div>
+  </div>
+
+  <!-- PILLAR 6 -->
+  <h2 id="pillar6">
+    <div class="section-header">
+      Pillar 6: AI Lab Perspectives
+      <button class="notes-toggle" onclick="toggleNote('pillar6')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-pillar6"><textarea placeholder="Which lab's approach resonates most, differences in philosophy..." onblur="saveNote('pillar6', this.value)" oninput="markNoteToggle('pillar6')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <blockquote>Full upload kit for NotebookLM synthesis in <a href="#appendix-b">Appendix B</a>.</blockquote>
+  <div class="table-wrap"><table>
+    <tr><th>Lab</th><th>Key RAI Output</th><th>What They Emphasize</th><th>Access</th></tr>
+    <tr><td><strong>Anthropic</strong></td><td>Constitutional AI, Claude's Character, RSP</td><td>Self-correction, helpfulness-harmlessness balance</td><td><a href="https://anthropic.com/research" target="_blank">anthropic.com/research</a></td></tr>
+    <tr><td><strong>OpenAI</strong></td><td>GPT-4 System Card, Preparedness Framework</td><td>Red teaming, capability thresholds, safety evaluations</td><td><a href="https://openai.com/safety" target="_blank">openai.com/safety</a></td></tr>
+    <tr><td><strong>Google DeepMind</strong></td><td>Gemini Tech Report, Sparrow principles</td><td>Dual use, capability evaluation, responsible deployment</td><td><a href="https://deepmind.google/responsible" target="_blank">deepmind.google/responsible</a></td></tr>
+    <tr><td><strong>Meta AI</strong></td><td>Purple Llama, LlamaGuard, AI Red Team</td><td>Open source + safety, classifier-based guardrails</td><td><a href="https://ai.meta.com/responsible-use" target="_blank">ai.meta.com/responsible-use</a></td></tr>
+    <tr><td><strong>Mistral</strong></td><td>EU-aligned open models, La Plateforme safety</td><td>EU AI Act alignment, open weights governance</td><td><a href="https://mistral.ai" target="_blank">mistral.ai</a></td></tr>
+    <tr><td><strong>Hugging Face</strong></td><td>Model Cards Toolkit, BigScience BLOOM</td><td>Community-scale transparency, open source governance</td><td><a href="https://huggingface.co/responsible" target="_blank">huggingface.co/responsible</a></td></tr>
+    <tr><td><strong>Microsoft</strong></td><td>RAI Standard, RAI Toolbox, agent governance</td><td>Enterprise deployment, accountability tools</td><td><a href="https://microsoft.com/responsible-ai" target="_blank">microsoft.com/responsible-ai</a></td></tr>
+    <tr><td><strong>IBM</strong></td><td>AI Ethics Board, Trusted AI org (AIF360/AIX360/ART)</td><td>Three pillars together: fairness + explainability + robustness</td><td><a href="https://ibm.com/artificial-intelligence/ethics" target="_blank">ibm.com/ai/ethics</a></td></tr>
+  </table></div>
+
+  <!-- PILLAR 7 -->
+  <h2 id="pillar7">
+    <div class="section-header">
+      Pillar 7: Consulting &amp; Implementation Orgs
+      <button class="notes-toggle" onclick="toggleNote('pillar7')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-pillar7"><textarea placeholder="Frameworks useful for client work, vocabulary to borrow..." onblur="saveNote('pillar7', this.value)" oninput="markNoteToggle('pillar7')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <blockquote>⚠️ <strong>Calibration:</strong> Consulting RAI reports = high on vocabulary and frameworks, low on technical implementation. Use for client-facing language and stakeholder communication. Cross-check claims against academic sources.</blockquote>
+  <div class="table-wrap"><table>
+    <tr><th>Org</th><th>Key RAI Asset</th><th>Best Used For</th></tr>
+    <tr><td><strong>McKinsey Global Institute</strong></td><td>"The State of AI" annual report; RAI implementation guide</td><td>Market framing, C-suite language</td></tr>
+    <tr><td><strong>Accenture</strong></td><td>RAI practice docs; 6-dimension maturity model</td><td>Enterprise transformation framing</td></tr>
+    <tr><td><strong>Deloitte</strong></td><td>AI Institute trustworthy AI reports</td><td>Risk and audit framing</td></tr>
+    <tr><td><strong>IBM</strong></td><td>Trusted AI org + AIF360/AIX360/ART (actual code)</td><td><strong>Best: consulting org with actual code assets</strong></td></tr>
+    <tr><td><strong>Palantir</strong></td><td>AIP platform; Ontology-based AI governance</td><td>High-stakes enterprise + government</td></tr>
+    <tr><td><strong>BCG Henderson Institute</strong></td><td>AI governance frameworks</td><td>Strategy-level framing</td></tr>
+    <tr><td><strong>PwC</strong></td><td>Responsible AI Toolkit</td><td>Audit and governance process templates</td></tr>
+    <tr><td><strong>WEF GAIGI</strong></td><td>Global AI Governance Initiative reports</td><td>Cross-border policy coordination</td></tr>
+    <tr><td><strong>Capgemini Research Institute</strong></td><td>AI and the Ethical Minefield</td><td>Sectoral risk analysis</td></tr>
+    <tr><td><strong>TCS</strong></td><td>Responsible AI framework</td><td>Indian/APAC enterprise framing</td></tr>
+  </table></div>
+
+  <h3>7A — Useful Vocabulary to Borrow</h3>
+  <ul>
+    <li><strong>"Human-in-the-loop" vs "Human-on-the-loop"</strong> — distinction matters for liability and oversight design</li>
+    <li><strong>"AI confidence scoring"</strong> for decision deferral thresholds</li>
+    <li><strong>"RAI impact assessment"</strong> as a pre-launch gate</li>
+    <li><strong>Maturity: Awareness → Piloting → Scaling → Institutionalized</strong> (McKinsey framing)</li>
+    <li><strong>6-dimension RAI maturity:</strong> Strategy, Governance, People, Process, Tech, Culture (Accenture)</li>
+  </ul>
+
+  <!-- PILLAR 8 -->
+  <h2 id="pillar8">
+    <div class="section-header">
+      Pillar 8: Explainers — YouTube, Blogs &amp; Newsletters
+      <button class="notes-toggle" onclick="toggleNote('pillar8')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-pillar8"><textarea placeholder="Channels you like, content that clicked, explainers to share with colleagues..." onblur="saveNote('pillar8', this.value)" oninput="markNoteToggle('pillar8')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+
+  <h3>8A — YouTube (tool-verified, June 2026)</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Video</th><th>Channel</th><th>Dimension</th></tr>
+    <tr><td><a href="https://youtu.be/w_3L1Bf2P_g" target="_blank">Introduction to Responsible AI</a></td><td>Google Cloud</td><td>Broad RAI</td></tr>
+    <tr><td><a href="https://youtu.be/yh-3WU1FKrk" target="_blank">What is Responsible AI? A Guide to AI Governance</a></td><td>IBM Technology</td><td>Governance</td></tr>
+    <tr><td><a href="https://youtu.be/gV0_raKR2UQ" target="_blank">Algorithmic Bias and Fairness: Crash Course AI #18</a></td><td>CrashCourse</td><td>Fairness</td></tr>
+    <tr><td><a href="https://youtu.be/og67qeTZPYs" target="_blank">Algorithmic Bias in AI: What It Is and How to Fix It</a></td><td>IBM Technology</td><td>Fairness</td></tr>
+    <tr><td><a href="https://youtu.be/4nt2_b9IxAo" target="_blank">AI Safety Crash Course and Why should you care?</a></td><td>Daily AI Safety</td><td>Safety</td></tr>
+    <tr><td><a href="https://youtu.be/viyXQhPAqME" target="_blank">AI Ethics and Governance in Practice</a></td><td>The Alan Turing Institute</td><td>Governance</td></tr>
+    <tr><td><a href="https://youtu.be/nbnTvNEumZI" target="_blank">Tutorial on AI Alignment (part 1 of 2)</a></td><td>TILOS AI</td><td>Alignment</td></tr>
+    <tr><td><a href="https://youtu.be/sgcEcYoYRrA" target="_blank">How to Break Into AI Governance &amp; Ethics</a></td><td>Obi Ogbanufe PhD</td><td>Careers</td></tr>
+  </table></div>
+
+  <h3>8B — Blogs, Newsletters &amp; Written Resources</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Resource</th><th>Author/Org</th><th>Format</th><th>Focus</th></tr>
+    <tr><td><strong><a href="https://distill.pub" target="_blank">Distill.pub</a></strong></td><td>Community</td><td>Interactive articles</td><td>Interpretability, neural networks — deep but visual</td></tr>
+    <tr><td><strong><a href="https://jack-clark.net" target="_blank">Import AI</a></strong></td><td>Jack Clark (Anthropic co-founder)</td><td>Weekly newsletter</td><td>Curated AI news with RAI signal</td></tr>
+    <tr><td><strong><a href="https://thegradient.pub" target="_blank">The Gradient</a></strong></td><td>Stanford community</td><td>Blog</td><td>ML research explained accessibly</td></tr>
+    <tr><td><strong><a href="https://alignmentforum.org" target="_blank">AI Alignment Forum</a></strong></td><td>LessWrong community</td><td>Forum</td><td>Technical alignment research discussions</td></tr>
+    <tr><td><strong><a href="https://bounded-regret.ghost.io" target="_blank">Bounded Regret</a></strong></td><td>Moritz Hardt</td><td>Blog</td><td>Fairness, statistics, ML critique</td></tr>
+    <tr><td><strong><a href="https://www.fast.ai" target="_blank">fast.ai blog</a></strong></td><td>Howard, Rachel Thomas</td><td>Blog + course</td><td>Practical AI ethics, top-down learning</td></tr>
+    <tr><td><strong><a href="https://montrealethics.ai" target="_blank">Montreal AI Ethics Institute</a></strong></td><td>MAIEI</td><td>Newsletter + reports</td><td>Accessible weekly ethics digest</td></tr>
+    <tr><td><strong><a href="https://kozyrkov.medium.com" target="_blank">Quaesita (Medium)</a></strong></td><td>Cassie Kozyrkov</td><td>Blog</td><td>Decision science, ML explainer master</td></tr>
+  </table></div>
+
+  <h3>8C — By Learning Level</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Level</th><th>Resources</th></tr>
+    <tr><td><strong>Beginner</strong></td><td>CrashCourse AI #18 · Google Cloud Intro to RAI · Montreal AI Ethics digest</td></tr>
+    <tr><td><strong>Intermediate</strong></td><td>IBM Technology YouTube · fast.ai ethics course · Kozyrkov blog · The Gradient</td></tr>
+    <tr><td><strong>Advanced</strong></td><td>Distill.pub · Alignment Forum · Bounded Regret (Hardt) · fairmlbook.org</td></tr>
+    <tr><td><strong>Policy-focused</strong></td><td>Alan Turing Institute YouTube · Obi Ogbanufe PhD · OECD AI Policy Observatory</td></tr>
+  </table></div>
+
+  <!-- PILLAR 9 -->
+  <h2 id="pillar9">
+    <div class="section-header">
+      🚀 Pillar 9: RAI Startup Ecosystem
+      <button class="notes-toggle" onclick="toggleNote('pillar9')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-pillar9"><textarea placeholder="Startups worth tracking, investment signals, gaps you see..." onblur="saveNote('pillar9', this.value)" oninput="markNoteToggle('pillar9')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+
+  <p style="font-size:13px;margin-bottom:16px">Where VC allocates = where the ecosystem has decided academic tools leave unsolved problems. Startups are a 2-3 year leading indicator ahead of consulting frameworks.</p>
+  <div class="callout callout-warn" style="margin-bottom:16px">
+    <strong>Coverage note:</strong> US + EU/UK = rich signal. China / India / Israel / South Korea RAI startup visibility is genuinely thin — most activity lives inside large enterprises, not standalone startups.
+  </div>
+
+  <h3>9A — Problem Domains With Startup Traction</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Domain</th><th>What's Unsolved</th><th>Representative Startups</th></tr>
+    <tr><td><strong>LLM Safety &amp; Guardrails</strong></td><td>Prompt injection, jailbreaks, hallucination at scale</td><td>Lakera AI · Patronus AI · Guardrails AI</td></tr>
+    <tr><td><strong>ML Monitoring / Observability</strong></td><td>Production drift, data quality, unexplained behavior</td><td>Arthur AI · WhyLabs · Galileo AI · Fiddler AI</td></tr>
+    <tr><td><strong>Governance &amp; Compliance Automation</strong></td><td>EU AI Act / NIST RMF audit trails, policy-to-code gap</td><td>Credo AI · Holistic AI</td></tr>
+    <tr><td><strong>MLOps Security</strong></td><td>Model theft, adversarial inputs, supply chain integrity</td><td>Protect AI · Hidden Layer · Robust Intelligence</td></tr>
+    <tr><td><strong>Privacy-Preserving ML</strong></td><td>Federated learning, synthetic data at inference time</td><td>Primarily open-source; thin startup layer</td></tr>
+    <tr><td><strong>Fairness in High-Stakes Decisions</strong></td><td>Hiring, lending, credit — automated bias detection</td><td>Parity AI · Fairly AI</td></tr>
+  </table></div>
+
+  <h3>9B — HN-Confirmed Startups (Tool-Grounded, June 2026)</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Sourced from live HackerNews Algolia search. Funding stage intentionally omitted — highly time-stale.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Startup</th><th>Problem</th><th>HN Evidence</th><th>Geo</th></tr>
+    <tr><td><strong>Patronus AI</strong></td><td>LLM evaluation for regulated industries</td><td>"Patronus AI conjures up an LLM evaluation tool for regulated industries"</td><td>US</td></tr>
+    <tr><td><strong>Lakera AI</strong></td><td>LLM security — Gandalf red-teaming game</td><td>"New Gandalf from Lakera.ai" + Show HN posts</td><td>🇨🇭 Switzerland</td></tr>
+    <tr><td><strong>Arthur AI</strong></td><td>ML monitoring platform</td><td>"Arthur.ai raises $15M Series A to grow machine learning monitoring tool"</td><td>US</td></tr>
+    <tr><td><strong>WhyLabs</strong></td><td>Data + model monitoring</td><td>"Show HN: Data and Model Monitoring with WhyLabs"</td><td>US</td></tr>
+    <tr><td><strong>Galileo AI</strong></td><td>Hallucination detection metrics</td><td>"Galileo takes on detecting AI hallucinations, but new metrics are needed"</td><td>US</td></tr>
+    <tr><td><strong>Credo AI</strong></td><td>AI governance platform</td><td>"Generative AI Governance: A Market Overview"</td><td>US</td></tr>
+    <tr><td><strong>Fiddler AI</strong></td><td>Explainability + monitoring</td><td>"Fiddler AI Raises $30M Series C – Committing to the AI Control Plane"</td><td>US</td></tr>
+  </table></div>
+
+  <h3>9C — Geography Coverage</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Region</th><th>Signal</th><th>Notes</th></tr>
+    <tr><td><strong>US (SF/NY)</strong></td><td><span style="color:var(--green)">Rich</span></td><td>Dominant — most startups above</td></tr>
+    <tr><td><strong>EU (CH, UK)</strong></td><td><span style="color:var(--yellow)">Moderate</span></td><td>Lakera (Switzerland), Holistic AI (UK) — EU AI Act driving demand</td></tr>
+    <tr><td><strong>India</strong></td><td><span style="color:var(--muted)">Thin</span></td><td>Enterprise services adaptation; few standalone RAI startups</td></tr>
+    <tr><td><strong>China</strong></td><td><span style="color:var(--muted)">Opaque</span></td><td>Domestic governance tools exist; not visible in English sources</td></tr>
+    <tr><td><strong>Israel</strong></td><td><span style="color:var(--muted)">Adjacent</span></td><td>ML security angle (not RAI-specific); Start-Up Nation Central for discovery</td></tr>
+    <tr><td><strong>South Korea</strong></td><td><span style="color:var(--muted)">Thin</span></td><td>Naver/Kakao enterprise AI ethics; no prominent standalone startups</td></tr>
+  </table></div>
+
+  <!-- PILLAR 10 -->
+  <h2 id="pillar10">
+    <div class="section-header">
+      🔮 Pillar 10: Prediction Markets &amp; Futures
+      <button class="notes-toggle" onclick="toggleNote('pillar10')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-pillar10"><textarea placeholder="RAI bets worth tracking, probabilities that surprise you, forecasting signals..." onblur="saveNote('pillar10', this.value)" oninput="markNoteToggle('pillar10')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+
+  <p style="font-size:13px;margin-bottom:12px">Unlike white papers, markets express beliefs with skin-in-the-game. They aggregate the forecasting community's current view of RAI regulatory futures into a single probability.</p>
+  <div class="callout callout-info" style="margin-bottom:16px">
+    <strong>Pre-assessment (Speculative):</strong> Most AI prediction markets focus on capability milestones — not RAI governance outcomes. The bet-able RAI band is narrow: EU AI Act enforcement, US federal law, major incident triggers. This is a finding, not a gap to pad.
+  </div>
+
+  <h3>10A — Live Manifold Markets (Tool-Verified, June 2026)</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Sourced from Manifold Markets public API (/v0/search-markets). Probabilities accurate at pull date — check live links for current values.</p>
+
+  <h4>EU AI Act &amp; European Governance</h4>
+  <div class="table-wrap"><table>
+    <tr><th>%</th><th>Question</th></tr>
+    <tr><td><strong style="color:var(--yellow)">64%</strong></td><td><a href="https://manifold.markets/CalibratedGhosts/will-the-eu-publish-final-ai-act-ar" target="_blank">Will the EU publish final AI Act Article 73 incident guidance by Aug 2, 2026?</a></td></tr>
+    <tr><td><strong style="color:var(--yellow)">60%</strong></td><td><a href="https://manifold.markets/GnosticGirl/will-the-eu-ai-act-lead-to-an-enfor" target="_blank">Will the EU AI Act lead to an enforcement action against a frontier AI lab in 2026?</a></td></tr>
+    <tr><td><strong style="color:var(--muted)">20%</strong></td><td><a href="https://manifold.markets/JaundicedBaboon/by-2030-will-regulations-or-laws-ma" target="_blank">By 2030 will regulations make it prohibitively difficult to develop AI models in the EU?</a></td></tr>
+  </table></div>
+
+  <h4>US Federal &amp; State Regulation</h4>
+  <div class="table-wrap"><table>
+    <tr><th>%</th><th>Question</th></tr>
+    <tr><td><strong style="color:var(--yellow)">47%</strong></td><td><a href="https://manifold.markets/mitchellreynolds/will-the-us-enact-an-ai-safety-fede" target="_blank">Will the U.S. enact an AI safety federal statute or executive order in 2026?</a></td></tr>
+    <tr><td><strong style="color:var(--muted)">25%</strong></td><td><a href="https://manifold.markets/bens/will-new-york-pass-a-law-regulating" target="_blank">Will New York pass a law regulating AI giving professional advice (S-7263) in 2026?</a></td></tr>
+    <tr><td><strong style="color:var(--muted)">1%</strong></td><td><a href="https://manifold.markets/EricNeyman/will-texas-hb-1709-regulating-ai-pa" target="_blank">Will Texas HB 1709 / TRAIGA (regulating AI) become law in 2025?</a></td></tr>
+    <tr><td><strong style="color:var(--red)">0%</strong></td><td><a href="https://manifold.markets/ZviMowshowitz/will-california-bill-sb-1047-become" target="_blank">Will California AI regulation bill SB 1047 become law? <span class="badge" style="background:var(--muted)">Resolved: No</span></a></td></tr>
+  </table></div>
+
+  <div class="callout callout-info" style="margin:16px 0">
+    <strong>Key finding:</strong> RAI-specific governance markets exist and are active. They cluster tightly around <em>legislative milestones</em>, not technical standards (fairness metrics, XAI requirements, bias audit mandates). The forecasting community treats RAI as a <em>regulatory</em> question, not a <em>technical</em> question — a significant gap.
+  </div>
+
+  <h3>10B — Platform Comparison</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Platform</th><th>Signal Type</th><th>RAI Signal?</th><th>Notes</th></tr>
+    <tr><td><strong><a href="https://manifold.markets" target="_blank">Manifold Markets</a></strong></td><td>Play-money, active</td><td><span style="color:var(--yellow)">Moderate</span></td><td>Free API; AI governance questions present</td></tr>
+    <tr><td><strong><a href="https://metaculus.com" target="_blank">Metaculus</a></strong></td><td>Probabilistic, rigorous</td><td><span style="color:var(--green)">High</span></td><td>Auth required for API; academic community; best quality</td></tr>
+    <tr><td><strong><a href="https://polymarket.com" target="_blank">Polymarket</a></strong></td><td>Real-money, crypto</td><td><span style="color:var(--muted)">Low</span></td><td>High-profile events only; thin RAI content</td></tr>
+    <tr><td><strong><a href="https://aiimpacts.org" target="_blank">AI Impacts</a></strong></td><td>Research-grade forecasts</td><td><span style="color:var(--green)">High</span></td><td>Best for AI capability + timeline tracking</td></tr>
+    <tr><td><strong><a href="https://epochai.org" target="_blank">Epoch AI</a></strong></td><td>Compute/capability models</td><td><span style="color:var(--accent)">Indirect</span></td><td>Empirical compute trend forecasting</td></tr>
+  </table></div>
+
+  <h3>10C — Futurist Voices (Type H)</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Distinct from ML researchers — work on forecasting, timelines, existential risk. All handles [UV].</p>
+  <div class="table-wrap"><table>
+    <tr><th>Name</th><th>Affiliation</th><th>Position</th></tr>
+    <tr><td><strong>Nick Bostrom</strong></td><td>Oxford FHI</td><td>Existential risk; Superintelligence (2014)</td></tr>
+    <tr><td><strong>Stuart Armstrong</strong></td><td>FHI</td><td>AI timelines forecasting methodology</td></tr>
+    <tr><td><strong>Eliezer Yudkowsky</strong> [UV]</td><td>MIRI / LessWrong</td><td>Pessimist on alignment; high-influence in EA</td></tr>
+    <tr><td><strong>Robin Hanson</strong> [UV]</td><td>GMU Economics</td><td>Prediction markets theory (futarchy); AI economics</td></tr>
+    <tr><td><strong>Philip Tetlock</strong></td><td>Penn / Superforecasting</td><td>Forecasting accuracy methodology; calibration</td></tr>
+    <tr><td><strong>Katja Grace</strong></td><td>AI Impacts / MIRI</td><td>Empirical AI progress tracking; timeline surveys</td></tr>
+  </table></div>
+
+  <!-- APPENDIX A -->
+
+  <h2 id="appendix-a">
+    <div class="section-header">
+      Appendix A — NotebookLM Kit: Government &amp; Policy
+      <button class="notes-toggle" onclick="toggleNote('appendix-a')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-appendix-a"><textarea placeholder="Which policy frameworks most relevant to your work, notes from NotebookLM synthesis..." onblur="saveNote('appendix-a', this.value)" oninput="markNoteToggle('appendix-a')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <p style="margin-bottom:12px;font-size:13px">Upload these to a single NotebookLM notebook → run the 5 standard questions below.</p>
+  <div class="appendix-box">
+    <ol>
+      <li><strong>EU AI Act</strong><br><span class="doc-url"><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" target="_blank">https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689</a></span></li>
+      <li><strong>NIST AI Risk Management Framework</strong><br><span class="doc-url"><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf" target="_blank">https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf</a></span></li>
+      <li><strong>UNESCO Recommendation on Ethics of AI</strong><br><span class="doc-url"><a href="https://unesdoc.unesco.org/ark:/48223/pf0000380455" target="_blank">https://unesdoc.unesco.org/ark:/48223/pf0000380455</a></span></li>
+      <li><strong>OECD AI Principles</strong><br><span class="doc-url"><a href="https://oecd.ai/en/ai-principles" target="_blank">https://oecd.ai/en/ai-principles</a></span></li>
+      <li><strong>Singapore IMDA Model AI Governance Framework v2</strong><br><span class="doc-url"><a href="https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Resource-for-Organisation/AI/SGModelAIGovFramework2.pdf" target="_blank">pdpc.gov.sg — SGModelAIGovFramework2.pdf</a></span></li>
+      <li><strong>NITI Aayog Responsible AI for All (India)</strong><br><span class="doc-url"><a href="https://niti.gov.in/sites/default/files/2021-02/Responsible-AI-22022021.pdf" target="_blank">niti.gov.in — Responsible-AI-22022021.pdf</a></span></li>
+      <li><strong>US AI Bill of Rights Blueprint</strong><br><span class="doc-url"><a href="https://www.whitehouse.gov/wp-content/uploads/2022/10/Blueprint-for-an-AI-Bill-of-Rights.pdf" target="_blank">whitehouse.gov — Blueprint-for-an-AI-Bill-of-Rights.pdf</a></span></li>
+    </ol>
+  </div>
+  <h3>Standard Question Set</h3>
+  <ol class="q-list">
+    <li>"What are the key compliance obligations for AI developers and deployers?"</li>
+    <li>"Which sectors or use cases are considered high-risk and require extra scrutiny?"</li>
+    <li>"How is transparency/explainability defined and what is required?"</li>
+    <li>"What oversight or audit mechanisms are specified?"</li>
+    <li>"How does this compare to [EU AI Act / NIST RMF] in terms of enforcement approach?"</li>
+  </ol>
+
+  <!-- APPENDIX B -->
+  <h2 id="appendix-b">
+    <div class="section-header">
+      Appendix B — NotebookLM Kit: AI Lab Perspectives
+      <button class="notes-toggle" onclick="toggleNote('appendix-b')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-appendix-b"><textarea placeholder="Lab philosophy comparisons, key differences you noticed..." onblur="saveNote('appendix-b', this.value)" oninput="markNoteToggle('appendix-b')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <div class="appendix-box">
+    <ol>
+      <li><strong>Anthropic — Constitutional AI paper</strong><br><span class="doc-url"><a href="https://arxiv.org/pdf/2212.15006" target="_blank">https://arxiv.org/pdf/2212.15006</a></span></li>
+      <li><strong>Anthropic — Claude's Character (model spec)</strong><br><span class="doc-url"><a href="https://anthropic.com/claude/character" target="_blank">https://anthropic.com/claude/character</a></span></li>
+      <li><strong>OpenAI — GPT-4 System Card</strong><br><span class="doc-url"><a href="https://cdn.openai.com/papers/gpt-4-system-card.pdf" target="_blank">https://cdn.openai.com/papers/gpt-4-system-card.pdf</a></span></li>
+      <li><strong>OpenAI — Preparedness Framework</strong><br><span class="doc-url"><a href="https://cdn.openai.com/openai-preparedness-framework-beta.pdf" target="_blank">https://cdn.openai.com/openai-preparedness-framework-beta.pdf</a></span></li>
+      <li><strong>DeepMind — Ethical and Social Risks of LMs</strong><br><span class="doc-url"><a href="https://arxiv.org/pdf/2112.04359" target="_blank">https://arxiv.org/pdf/2112.04359</a></span></li>
+      <li><strong>Meta — Purple Llama overview</strong><br><span class="doc-url"><a href="https://ai.meta.com/blog/purple-llama-open-trust-safety-generative-ai/" target="_blank">ai.meta.com — purple-llama blog post</a></span></li>
+    </ol>
+  </div>
+  <h3>Standard Question Set</h3>
+  <ol class="q-list">
+    <li>"What RAI values does this lab prioritize and in what order?"</li>
+    <li>"What technical mechanisms do they use for safety and alignment?"</li>
+    <li>"How do they define and measure harm?"</li>
+    <li>"What is their position on open vs. closed model deployment?"</li>
+    <li>"How do they handle conflicts between helpfulness and safety?"</li>
+  </ol>
+
+  <!-- APPENDIX C -->
+  <h2 id="appendix-c">
+    <div class="section-header">
+      Appendix C — NotebookLM Kit: Consulting Frameworks
+      <button class="notes-toggle" onclick="toggleNote('appendix-c')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-appendix-c"><textarea placeholder="Frameworks useful for your practice, vocabulary to adopt..." onblur="saveNote('appendix-c', this.value)" oninput="markNoteToggle('appendix-c')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <div class="appendix-box">
+    <ol>
+      <li><strong>McKinsey — "The State of AI" (most recent)</strong><br><span class="doc-url"><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank">mckinsey.com — The State of AI</a></span></li>
+      <li><strong>Accenture — Responsible AI framework</strong><br><span class="doc-url"><a href="https://www.accenture.com/us-en/services/applied-intelligence/ai-ethics-governance" target="_blank">accenture.com — AI Ethics &amp; Governance</a></span></li>
+      <li><strong>Deloitte — Trustworthy AI</strong><br><span class="doc-url"><a href="https://www2.deloitte.com/us/en/pages/deloitte-analytics/articles/trustworthy-ai.html" target="_blank">deloitte.com — Trustworthy AI</a></span></li>
+      <li><strong>WEF — Global AI Governance Initiative</strong><br><span class="doc-url"><a href="https://www.weforum.org/initiatives/ai-governance-alliance/" target="_blank">weforum.org — AI Governance Alliance</a></span></li>
+      <li><strong>IBM — AI Ethics resources</strong><br><span class="doc-url"><a href="https://www.ibm.com/artificial-intelligence/ethics" target="_blank">ibm.com — AI Ethics</a></span></li>
+    </ol>
+  </div>
+  <h3>Standard Question Set</h3>
+  <ol class="q-list">
+    <li>"What maturity model or framework do they use for RAI?"</li>
+    <li>"What specific tools, templates, or processes do they offer?"</li>
+    <li>"What risks do they identify as most critical for enterprise AI?"</li>
+    <li>"How do they handle the tension between AI performance and fairness?"</li>
+    <li>"What ROI/business case do they make for responsible AI investment?"</li>
+  </ol>
+
+  <!-- APPENDIX D -->
+  <h2 id="appendix-d">
+    <div class="section-header">
+      Appendix D — Research Kit: Startup Ecosystem
+      <button class="notes-toggle" onclick="toggleNote('appendix-d')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-appendix-d"><textarea placeholder="Startups found in directories, funding signals, gaps vs. open-source..." onblur="saveNote('appendix-d', this.value)" oninput="markNoteToggle('appendix-d')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <p style="font-size:13px;margin-bottom:12px">No CLI available for startup directories. Use these URLs manually or via NotebookLM for each geography.</p>
+  <div class="appendix-box">
+    <ol>
+      <li><strong>YCombinator Companies</strong><br><span class="doc-url"><a href="https://ycombinator.com/companies?query=responsible+ai" target="_blank">ycombinator.com/companies?query=responsible+ai</a></span><br><em>Also search: AI safety, AI governance, fairness, ML monitoring, LLM safety</em></li>
+      <li><strong>EU Startups — Dealroom</strong><br><span class="doc-url"><a href="https://dealroom.co" target="_blank">dealroom.co</a></span> — search "responsible AI" + filter Europe</li>
+      <li><strong>India — Tracxn AI Ethics</strong><br><span class="doc-url"><a href="https://tracxn.com" target="_blank">tracxn.com</a></span> → AI Ethics vertical</li>
+      <li><strong>Israel — Start-Up Nation Central</strong><br><span class="doc-url"><a href="https://startup.nation-central.com" target="_blank">startup.nation-central.com</a></span> → filter AI</li>
+      <li><strong>Global Funding — CB Insights</strong><br><span class="doc-url"><a href="https://cbinsights.com/research/artificial-intelligence-ethics-startups/" target="_blank">cbinsights.com — AI ethics startups</a></span></li>
+    </ol>
+  </div>
+  <h3>Standard Research Questions</h3>
+  <ol class="q-list">
+    <li>"What specific compliance or safety problem does this startup solve?"</li>
+    <li>"SaaS / usage-based / enterprise license — what's their go-to-market?"</li>
+    <li>"Which geography / regulatory environment do they primarily serve?"</li>
+    <li>"How do they differentiate from open-source tools (AIF360, Guardrails AI, etc.)?"</li>
+    <li>"What's the actual value capture vs. what the open-source community offers free?"</li>
+  </ol>
+
+  <!-- APPENDIX E -->
+  <h2 id="appendix-e">
+    <div class="section-header">
+      Appendix E — Research Kit: Prediction Markets &amp; Futures
+      <button class="notes-toggle" onclick="toggleNote('appendix-e')">📝 Note</button>
+    </div>
+  </h2>
+  <div class="notes-area" id="note-appendix-e"><textarea placeholder="Active market questions, probability shifts, RAI questions you want to create..." onblur="saveNote('appendix-e', this.value)" oninput="markNoteToggle('appendix-e')"></textarea><div class="notes-meta">Saved locally in browser.</div></div>
+  <p style="font-size:13px;margin-bottom:12px">Manifold has a free public API. Metaculus requires a free account. Polymarket covers only major policy events.</p>
+  <div class="appendix-box">
+    <ol>
+      <li><strong>Manifold Markets — AI governance search</strong><br><span class="doc-url"><a href="https://manifold.markets/search?q=AI+regulation" target="_blank">manifold.markets/search?q=AI+regulation</a></span></li>
+      <li><strong>Metaculus — AI questions</strong><br><span class="doc-url"><a href="https://metaculus.com/questions/?search=AI+regulation" target="_blank">metaculus.com/questions/?search=AI+regulation</a></span><br><em>Best quality; free account required</em></li>
+      <li><strong>AI Impacts — forecasts</strong><br><span class="doc-url"><a href="https://aiimpacts.org/forecasts/" target="_blank">aiimpacts.org/forecasts/</a></span></li>
+      <li><strong>Epoch AI — compute trends</strong><br><span class="doc-url"><a href="https://epochai.org/data" target="_blank">epochai.org/data</a></span></li>
+      <li><strong>Good Judgment Open</strong><br><span class="doc-url"><a href="https://gjopen.com" target="_blank">gjopen.com</a></span> — superforecaster community; search AI safety</li>
+    </ol>
+  </div>
+  <h3>Standard Research Questions</h3>
+  <ol class="q-list">
+    <li>"What AI governance questions are active with &gt;100 forecasters?"</li>
+    <li>"What is the current probability range for EU AI Act full enforcement by 2026?"</li>
+    <li>"Are there RAI-specific questions beyond legislative milestones (fairness audits, XAI standards)?"</li>
+    <li>"How have probabilities shifted in the last 6 months — what changed consensus?"</li>
+    <li>"What RAI outcomes are NOT yet bet-able — and why not?"</li>
+  </ol>
+
+  <div style="margin-top:60px;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);text-align:center">
+    Generated 2026-06-08 · Updated 2026-06-08 (Pillars 9–10 added) · HN + Manifold API tool-verified · @handles marked [UV] = unverified
+  </div>
+
+</main>
+
+<!-- FEEDBACK BUTTON -->
+<button id="feedback-btn" onclick="openFeedback()">💬 Feedback for Claude</button>
+
+<!-- FEEDBACK MODAL -->
+<div id="feedback-modal">
+  <div class="modal-box">
+    <div class="modal-title">Share Feedback with Claude</div>
+    <div class="modal-sub">Type your feedback below — additions, corrections, gaps, next priorities. Click "Copy for Claude" then paste into your next Claude message.</div>
+    <textarea id="feedback-text" placeholder="Examples:&#10;- Missing: [topic/person/repo] should be added&#10;- Wrong: [item] has incorrect [detail]&#10;- Priority: I want to go deeper on [pillar]&#10;- GitHub org page: I want to update [url] with these sections&#10;- Next step: can you help me with [task]"></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="copyFeedback()">📋 Copy for Claude</button>
+      <button class="btn btn-secondary" onclick="showExportedNotes()">📝 Include My Notes</button>
+      <button class="btn btn-secondary" onclick="closeFeedback()">Cancel</button>
+    </div>
+    <div class="copy-confirm" id="copy-confirm">✅ Copied! Paste into Claude chat.</div>
+    <div id="notes-export-box"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+  // ── NOTES ──────────────────────────────────────────────────────
+  const STORAGE_KEY = 'rai-map-notes';
+  const ACTION_KEY  = 'rai-map-actions';
+
+  function loadNotes() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; }
+  }
+  function saveNote(id, val) {
+    const notes = loadNotes();
+    notes[id] = val;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+    markNoteToggle(id);
+  }
+  function toggleNote(id) {
+    const area = document.getElementById('note-' + id);
+    const btn  = area.previousElementSibling.querySelector('.notes-toggle');
+    area.classList.toggle('open');
+    if (area.classList.contains('open')) {
+      const notes = loadNotes();
+      const ta = area.querySelector('textarea');
+      ta.value = notes[id] || '';
+    }
+  }
+  function markNoteToggle(id) {
+    const notes = loadNotes();
+    const area  = document.getElementById('note-' + id);
+    if (!area) return;
+    const btn = area.previousElementSibling.querySelector('.notes-toggle');
+    if (btn) btn.classList.toggle('has-note', !!(notes[id] && notes[id].trim()));
+  }
+  // Mark all on load
+  window.addEventListener('load', () => {
+    const notes = loadNotes();
+    Object.keys(notes).forEach(id => { if (notes[id]) markNoteToggle(id); });
+    loadActions();
+    updateActionProgress();
+  });
+
+  // ── ACTIONS ────────────────────────────────────────────────────
+  function saveAction(cb) {
+    const actions = loadActions(true);
+    actions[cb.id] = cb.checked;
+    localStorage.setItem(ACTION_KEY, JSON.stringify(actions));
+    const label = cb.parentElement.querySelector('label');
+    if (label) label.classList.toggle('done', cb.checked);
+    updateActionProgress();
+  }
+  function loadActions(raw) {
+    try {
+      const data = JSON.parse(localStorage.getItem(ACTION_KEY) || '{}');
+      if (raw) return data;
+      // Apply to checkboxes
+      Object.keys(data).forEach(id => {
+        const cb = document.getElementById(id);
+        if (cb) {
+          cb.checked = data[id];
+          const label = cb.parentElement.querySelector('label');
+          if (label) label.classList.toggle('done', data[id]);
+        }
+      });
+      return data;
+    } catch { return {}; }
+  }
+  function updateActionProgress() {
+    const cbs = document.querySelectorAll('#action-list input[type=checkbox]');
+    const done = Array.from(cbs).filter(c => c.checked).length;
+    const el = document.getElementById('action-progress');
+    if (el) el.textContent = done + ' / ' + cbs.length + ' actions complete';
+  }
+
+  // ── FEEDBACK ───────────────────────────────────────────────────
+  function openFeedback()  { document.getElementById('feedback-modal').classList.add('open'); }
+  function closeFeedback() { document.getElementById('feedback-modal').classList.remove('open'); document.getElementById('copy-confirm').classList.remove('show'); }
+  document.getElementById('feedback-modal').addEventListener('click', function(e) { if (e.target === this) closeFeedback(); });
+
+  function copyFeedback() {
+    const text = document.getElementById('feedback-text').value.trim();
+    if (!text) { showToast('Type some feedback first'); return; }
+    const formatted = `=== RAI Knowledge Map Feedback ===\nDate: ${new Date().toISOString().slice(0,10)}\n\n${text}\n\n=== End Feedback ===`;
+    navigator.clipboard.writeText(formatted).then(() => {
+      document.getElementById('copy-confirm').classList.add('show');
+      showToast('Copied to clipboard!');
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = formatted;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      document.getElementById('copy-confirm').classList.add('show');
+      showToast('Copied!');
+    });
+  }
+
+  function showExportedNotes() {
+    const notes = loadNotes();
+    const box = document.getElementById('notes-export-box');
+    const keys = Object.keys(notes).filter(k => notes[k] && notes[k].trim());
+    if (!keys.length) { box.style.display = 'block'; box.textContent = '(No notes saved yet)'; return; }
+    let out = '=== My Notes ===\n';
+    keys.forEach(k => { out += `\n[${k}]\n${notes[k].trim()}\n`; });
+    box.style.display = 'block';
+    box.textContent = out;
+    // Append to feedback textarea
+    const ta = document.getElementById('feedback-text');
+    if (!ta.value.includes('My Notes')) ta.value += '\n\n' + out;
+  }
+
+  function showAllNotes() {
+    const notes = loadNotes();
+    const keys = Object.keys(notes).filter(k => notes[k] && notes[k].trim());
+    if (!keys.length) { showToast('No notes yet — add notes per section'); return; }
+    let out = '=== RAI Knowledge Map — Exported Notes ===\nDate: ' + new Date().toISOString().slice(0,10) + '\n\n';
+    keys.forEach(k => { out += `[${k}]\n${notes[k].trim()}\n\n`; });
+    navigator.clipboard.writeText(out).then(() => showToast('Notes copied to clipboard!')).catch(() => {});
+    document.getElementById('feedback-modal').classList.add('open');
+    document.getElementById('feedback-text').value = out;
+  }
+
+  // ── TOAST ──────────────────────────────────────────────────────
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // ── SIDEBAR ACTIVE ─────────────────────────────────────────────
+  const links = document.querySelectorAll('.sidebar-link[href^="#"]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector('.sidebar-link[href="#' + e.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-10% 0px -70% 0px' });
+  document.querySelectorAll('h2[id]').forEach(h => observer.observe(h));
+</script>
+</body>
+</html>
