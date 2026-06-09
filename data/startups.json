@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "asOf": "2026-06",
+  "note": "Where VC allocates signals where academic tools leave unsolved problems. Startups are a 2–3 year leading indicator ahead of consulting frameworks.",
+  "coverage": "US + EU/UK = rich signal. China, India, Israel, and South Korea RAI startup visibility is thin — most activity lives inside large enterprises.",
+  "domains": [
+    {
+      "domain": "LLM Safety & Guardrails",
+      "unsolved": "Prompt injection, jailbreaks, hallucination at scale",
+      "examples": "Lakera AI · Patronus AI · Guardrails AI",
+      "dimension": "safety",
+      "portalLink": "#tools-llm"
+    },
+    {
+      "domain": "ML Monitoring / Observability",
+      "unsolved": "Production drift, data quality, unexplained behavior",
+      "examples": "Arthur AI · WhyLabs · Galileo AI · Fiddler AI",
+      "dimension": "governance"
+    },
+    {
+      "domain": "Governance & Compliance Automation",
+      "unsolved": "EU AI Act / NIST RMF audit trails, policy-to-code gap",
+      "examples": "Credo AI · Holistic AI",
+      "dimension": "governance",
+      "portalLink": "#policy"
+    },
+    {
+      "domain": "MLOps Security",
+      "unsolved": "Model theft, adversarial inputs, supply chain integrity",
+      "examples": "Protect AI · Hidden Layer · Robust Intelligence",
+      "dimension": "robustness",
+      "portalLink": "#tools-safety"
+    },
+    {
+      "domain": "Privacy-Preserving ML",
+      "unsolved": "Federated learning, synthetic data at inference time",
+      "examples": "Primarily open-source; thin startup layer",
+      "dimension": "privacy",
+      "portalLink": "#tools-privacy"
+    },
+    {
+      "domain": "Fairness in High-Stakes Decisions",
+      "unsolved": "Hiring, lending, credit — automated bias detection",
+      "examples": "Parity AI · Fairly AI",
+      "dimension": "fairness",
+      "portalLink": "#tools-fairness"
+    }
+  ]
+}

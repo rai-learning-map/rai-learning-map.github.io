@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "calibration": "Consulting RAI reports are high on vocabulary and frameworks, low on technical implementation. Use for client-facing language and stakeholder communication. Cross-check claims against academic sources.",
+  "orgs": [
+    { "name": "McKinsey Global Institute", "asset": "The State of AI annual report; RAI implementation guide", "bestFor": "Market framing, C-suite language" },
+    { "name": "Accenture", "asset": "RAI practice docs; 6-dimension maturity model", "bestFor": "Enterprise transformation framing" },
+    { "name": "Deloitte", "asset": "AI Institute trustworthy AI reports", "bestFor": "Risk and audit framing" },
+    { "name": "IBM", "asset": "Trusted AI org + AIF360/AIX360/ART (actual code)", "bestFor": "Best: consulting org with real code assets", "portalLink": "#tools" },
+    { "name": "Palantir", "asset": "AIP platform; ontology-based AI governance", "bestFor": "High-stakes enterprise + government" },
+    { "name": "BCG Henderson Institute", "asset": "AI governance frameworks", "bestFor": "Strategy-level framing" },
+    { "name": "PwC", "asset": "Responsible AI Toolkit", "bestFor": "Audit and governance process templates" },
+    { "name": "WEF GAIGI", "asset": "Global AI Governance Initiative reports", "bestFor": "Cross-border policy coordination" },
+    { "name": "Capgemini Research Institute", "asset": "AI and the Ethical Minefield", "bestFor": "Sectoral risk analysis" },
+    { "name": "TCS", "asset": "Responsible AI framework", "bestFor": "Indian/APAC enterprise framing" }
+  ],
+  "vocabulary": [
+    { "term": "Human-in-the-loop vs human-on-the-loop", "note": "Distinction matters for liability and oversight design" },
+    { "term": "AI confidence scoring", "note": "Decision deferral thresholds" },
+    { "term": "RAI impact assessment", "note": "Pre-launch gate before deployment" },
+    { "term": "Maturity: Awareness → Piloting → Scaling → Institutionalized", "note": "McKinsey framing" },
+    { "term": "6-dimension RAI maturity", "note": "Strategy, Governance, People, Process, Tech, Culture (Accenture)" }
+  ]
+}

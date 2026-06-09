@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "asOf": "2026-06",
+  "source": "Hacker News Algolia search, last 90 days",
+  "topics": [
+    { "label": "AI Safety", "hits": 142, "pct": 100 },
+    { "label": "AI Governance", "hits": 103, "pct": 72 },
+    { "label": "AI Regulation", "hits": 33, "pct": 23 },
+    { "label": "Responsible AI", "hits": 32, "pct": 22 },
+    { "label": "ML Bias", "hits": 17, "pct": 12 },
+    { "label": "Algorithmic Fairness", "hits": 1, "pct": 1 }
+  ],
+  "insight": "AI Safety (142) and AI Governance (103) dominate HN. Algorithmic Fairness (1 hit) is almost invisible to tech practitioners — a gap the fairness academic community has not bridged yet.",
+  "stories": [
+    { "title": "The other half of AI safety", "url": "https://news.ycombinator.com/item?id=48129561", "points": 97, "note": "Safety beyond model alignment" },
+    { "title": "Illinois Lawmakers Just Passed America's Strongest AI Safety Bill", "url": "https://news.ycombinator.com/item?id=48302940", "points": 14, "note": "State-level regulation signal" },
+    { "title": "Colorado Rolls Back Landmark AI Governance Law", "url": "https://news.ycombinator.com/item?id=48364520", "points": 8, "note": "Regulatory volatility signal" },
+    { "title": "Vatican-Anthropic relationship reshaping AI ethics debate", "url": "https://news.ycombinator.com/item?id=48273162", "points": 21, "note": "Institutional ethics framing" },
+    { "title": "AI Governance 2026: I Almost Quit over This Shit", "url": "https://news.ycombinator.com/item?id=48252405", "points": null, "note": "Practitioner frustration as field signal" }
+  ]
+}

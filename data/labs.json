@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "asOf": "2026-06",
+  "labs": [
+    {
+      "name": "Anthropic",
+      "output": "Constitutional AI, Claude's Character, RSP",
+      "emphasis": "Self-correction, helpfulness-harmlessness balance",
+      "url": "https://anthropic.com/research",
+      "portalLink": "#p-constitutional"
+    },
+    {
+      "name": "OpenAI",
+      "output": "GPT-4 System Card, Preparedness Framework",
+      "emphasis": "Red teaming, capability thresholds, safety evaluations",
+      "url": "https://openai.com/safety",
+      "portalLink": "#p-instructgpt"
+    },
+    {
+      "name": "Google DeepMind",
+      "output": "Gemini Tech Report, Sparrow principles",
+      "emphasis": "Dual use, capability evaluation, responsible deployment",
+      "url": "https://deepmind.google/responsible"
+    },
+    {
+      "name": "Meta AI",
+      "output": "Purple Llama, LlamaGuard, AI Red Team",
+      "emphasis": "Open source + safety, classifier-based guardrails",
+      "url": "https://ai.meta.com/responsible-use"
+    },
+    {
+      "name": "Mistral",
+      "output": "EU-aligned open models, La Plateforme safety",
+      "emphasis": "EU AI Act alignment, open weights governance",
+      "url": "https://mistral.ai",
+      "portalLink": "#fw-euai"
+    },
+    {
+      "name": "Hugging Face",
+      "output": "Model Cards Toolkit, BigScience BLOOM",
+      "emphasis": "Community-scale transparency, open source governance",
+      "url": "https://huggingface.co/responsible",
+      "portalLink": "#p-modelcards"
+    },
+    {
+      "name": "Microsoft",
+      "output": "RAI Standard, RAI Toolbox, agent governance",
+      "emphasis": "Enterprise deployment, accountability tools",
+      "url": "https://microsoft.com/responsible-ai",
+      "portalLink": "#tools-fairness"
+    },
+    {
+      "name": "IBM",
+      "output": "AI Ethics Board, Trusted AI (AIF360/AIX360/ART)",
+      "emphasis": "Fairness + explainability + robustness together",
+      "url": "https://ibm.com/artificial-intelligence/ethics",
+      "portalLink": "#tools-fairness"
+    }
+  ]
+}

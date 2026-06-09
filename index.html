@@ -765,6 +765,45 @@
       max-width: var(--width-content);
     }
     .callout strong { color: var(--ink-deep); }
+    .callout-warn {
+      background: oklch(96% 0.03 75);
+      border-color: oklch(88% 0.08 65);
+    }
+
+    .signal-bars { margin: var(--space-md) 0; max-width: 560px; }
+    .signal-bar {
+      display: grid;
+      grid-template-columns: 9.5rem 1fr 3.5rem;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-bottom: 0.45rem;
+      font-size: 0.8125rem;
+    }
+    .signal-bar .lbl {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--muted);
+    }
+    .signal-bar .track {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .signal-bar .fill {
+      height: 100%;
+      background: var(--ink);
+      border-radius: 3px;
+      transition: width 0.4s var(--ease-out);
+    }
+    .signal-bar .fill.high { background: var(--copper); }
+    .signal-bar .cnt {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--muted);
+      text-align: right;
+    }
+    .signal-bar .cnt.high { color: var(--copper); font-weight: 500; }
 
     footer {
       border-top: 1px solid var(--border);
@@ -840,6 +879,10 @@
     <li><a href="#policy">Policy &amp; law</a></li>
     <li><a href="#books">Books</a></li>
     <li><a href="#explainers">Explainers</a></li>
+    <li><a href="#labs">Lab perspectives</a></li>
+    <li><a href="#consulting">Consulting</a></li>
+    <li><a href="#startups">Startups</a></li>
+    <li><a href="#signal">Industry signal</a></li>
     <li><a href="#dim-fairness">Fairness &amp; bias</a></li>
     <li><a href="#dim-explainability">Explainability</a></li>
     <li><a href="#dim-privacy">Privacy</a></li>
@@ -1600,6 +1643,97 @@
   </table>
 </section>
 
+<section id="labs">
+  <h2 class="sec">Lab perspectives</h2>
+  <p class="intro">How major AI labs frame responsibility — what they publish, what they emphasize, and where to read more. Compare philosophies before adopting a single vendor narrative.</p>
+  <table class="data">
+    <thead><tr><th>Lab</th><th>Key RAI output</th><th>What they emphasize</th><th>Access</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Anthropic</strong></td><td>Constitutional AI, Claude's Character, RSP</td><td>Self-correction, helpfulness-harmlessness balance</td><td><a href="https://anthropic.com/research" target="_blank" rel="noopener">Research</a> · <a href="#p-constitutional">CAI paper</a></td></tr>
+      <tr><td><strong>OpenAI</strong></td><td>GPT-4 System Card, Preparedness Framework</td><td>Red teaming, capability thresholds, safety evals</td><td><a href="https://openai.com/safety" target="_blank" rel="noopener">Safety</a> · <a href="#p-instructgpt">InstructGPT</a></td></tr>
+      <tr><td><strong>Google DeepMind</strong></td><td>Gemini Tech Report, Sparrow principles</td><td>Dual use, capability evaluation, responsible deployment</td><td><a href="https://deepmind.google/responsible" target="_blank" rel="noopener">Responsible AI</a></td></tr>
+      <tr><td><strong>Meta AI</strong></td><td>Purple Llama, LlamaGuard, AI Red Team</td><td>Open source + safety, classifier guardrails</td><td><a href="https://ai.meta.com/responsible-use" target="_blank" rel="noopener">Responsible use</a></td></tr>
+      <tr><td><strong>Mistral</strong></td><td>EU-aligned open models, La Plateforme safety</td><td>EU AI Act alignment, open weights governance</td><td><a href="https://mistral.ai" target="_blank" rel="noopener">mistral.ai</a> · <a href="#fw-euai">EU Act</a></td></tr>
+      <tr><td><strong>Hugging Face</strong></td><td>Model Cards Toolkit, BigScience BLOOM</td><td>Community transparency, open source governance</td><td><a href="https://huggingface.co/responsible" target="_blank" rel="noopener">Responsible AI</a> · <a href="#p-modelcards">Model Cards</a></td></tr>
+      <tr><td><strong>Microsoft</strong></td><td>RAI Standard, RAI Toolbox, agent governance</td><td>Enterprise deployment, accountability tools</td><td><a href="https://microsoft.com/responsible-ai" target="_blank" rel="noopener">RAI hub</a> · <a href="#tools">Tools</a></td></tr>
+      <tr><td><strong>IBM</strong></td><td>AI Ethics Board, Trusted AI (AIF360/AIX360/ART)</td><td>Fairness + explainability + robustness together</td><td><a href="https://ibm.com/artificial-intelligence/ethics" target="_blank" rel="noopener">AI ethics</a> · <a href="#tools-fairness">AIF360</a></td></tr>
+    </tbody>
+  </table>
+  <div class="callout"><strong>Reading tip:</strong> Lab safety pages describe intent; papers like <a href="#p-constitutional">Constitutional AI</a> and <a href="#p-safety">Concrete Problems in AI Safety</a> describe mechanism. Cross-read both.</div>
+</section>
+
+<section id="consulting">
+  <h2 class="sec">Consulting &amp; practice</h2>
+  <p class="intro">How big consultancies and implementation orgs package RAI for enterprises — useful for vocabulary and stakeholder decks, not as technical truth.</p>
+  <div class="callout callout-warn"><strong>Calibration:</strong> Consulting RAI reports are high on vocabulary and frameworks, low on technical implementation. Use for client-facing language and stakeholder communication. Cross-check claims against <a href="#papers">academic sources</a> and <a href="#tools">open-source tools</a>.</div>
+  <table class="data">
+    <thead><tr><th>Org</th><th>Key RAI asset</th><th>Best used for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>McKinsey Global Institute</strong></td><td>The State of AI annual report; RAI implementation guide</td><td>Market framing, C-suite language</td></tr>
+      <tr><td><strong>Accenture</strong></td><td>RAI practice docs; 6-dimension maturity model</td><td>Enterprise transformation framing</td></tr>
+      <tr><td><strong>Deloitte</strong></td><td>AI Institute trustworthy AI reports</td><td>Risk and audit framing</td></tr>
+      <tr><td><strong>IBM</strong></td><td>Trusted AI org + AIF360/AIX360/ART (actual code)</td><td>Best: consulting org with real code assets — see <a href="#tools">Tools</a></td></tr>
+      <tr><td><strong>Palantir</strong></td><td>AIP platform; ontology-based AI governance</td><td>High-stakes enterprise + government</td></tr>
+      <tr><td><strong>BCG Henderson Institute</strong></td><td>AI governance frameworks</td><td>Strategy-level framing</td></tr>
+      <tr><td><strong>PwC</strong></td><td>Responsible AI Toolkit</td><td>Audit and governance process templates</td></tr>
+      <tr><td><strong>WEF GAIGI</strong></td><td>Global AI Governance Initiative reports</td><td>Cross-border policy coordination</td></tr>
+      <tr><td><strong>Capgemini Research Institute</strong></td><td>AI and the Ethical Minefield</td><td>Sectoral risk analysis</td></tr>
+      <tr><td><strong>TCS</strong></td><td>Responsible AI framework</td><td>Indian/APAC enterprise framing</td></tr>
+    </tbody>
+  </table>
+  <h3>Vocabulary to borrow</h3>
+  <ul>
+    <li><strong>Human-in-the-loop vs human-on-the-loop</strong> — distinction matters for liability and oversight design</li>
+    <li><strong>AI confidence scoring</strong> — decision deferral thresholds</li>
+    <li><strong>RAI impact assessment</strong> — pre-launch gate before deployment</li>
+    <li><strong>Maturity: Awareness → Piloting → Scaling → Institutionalized</strong> — McKinsey framing</li>
+    <li><strong>6-dimension RAI maturity:</strong> Strategy, Governance, People, Process, Tech, Culture (Accenture)</li>
+  </ul>
+</section>
+
+<section id="startups">
+  <h2 class="sec">Startup landscape</h2>
+  <p class="intro">Where venture capital allocates signals where academic tools leave unsolved problems. Startups are a 2–3 year leading indicator ahead of consulting frameworks — problem domains only, not funding rounds.</p>
+  <div class="callout callout-warn"><strong>Coverage note:</strong> US + EU/UK = rich signal. China, India, Israel, and South Korea RAI startup visibility is thin — most activity lives inside large enterprises, not standalone startups.</div>
+  <table class="data">
+    <thead><tr><th>Domain</th><th>What's unsolved</th><th>Representative startups</th><th>Map to</th></tr></thead>
+    <tbody>
+      <tr><td><strong>LLM Safety &amp; Guardrails</strong></td><td>Prompt injection, jailbreaks, hallucination at scale</td><td>Lakera AI · Patronus AI · Guardrails AI</td><td><a href="#tools-llm">Tools</a> · <a href="#dim-safety">Safety</a></td></tr>
+      <tr><td><strong>ML Monitoring / Observability</strong></td><td>Production drift, data quality, unexplained behavior</td><td>Arthur AI · WhyLabs · Galileo AI · Fiddler AI</td><td><a href="#dim-governance">Governance</a></td></tr>
+      <tr><td><strong>Governance &amp; Compliance Automation</strong></td><td>EU AI Act / NIST RMF audit trails, policy-to-code gap</td><td>Credo AI · Holistic AI</td><td><a href="#policy">Policy</a></td></tr>
+      <tr><td><strong>MLOps Security</strong></td><td>Model theft, adversarial inputs, supply chain integrity</td><td>Protect AI · Hidden Layer · Robust Intelligence</td><td><a href="#tools-safety">ART / PyRIT</a></td></tr>
+      <tr><td><strong>Privacy-Preserving ML</strong></td><td>Federated learning, synthetic data at inference time</td><td>Primarily open-source; thin startup layer</td><td><a href="#tools-privacy">Privacy tools</a></td></tr>
+      <tr><td><strong>Fairness in High-Stakes Decisions</strong></td><td>Hiring, lending, credit — automated bias detection</td><td>Parity AI · Fairly AI</td><td><a href="#tools-fairness">AIF360</a> · <a href="#case-compas">COMPAS</a></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="signal">
+  <h2 class="sec">Industry signal</h2>
+  <p class="intro">Static snapshot of what Hacker News discusses — not a live feed. Useful for sensing what tech practitioners care about vs what academics publish. As of June 2026 (last 90 days).</p>
+
+  <h3>Topic frequency on HN</h3>
+  <div class="signal-bars">
+    <div class="signal-bar"><span class="lbl">AI Safety</span><div class="track"><div class="fill high" style="width:100%"></div></div><span class="cnt high">142</span></div>
+    <div class="signal-bar"><span class="lbl">AI Governance</span><div class="track"><div class="fill high" style="width:72%"></div></div><span class="cnt high">103</span></div>
+    <div class="signal-bar"><span class="lbl">AI Regulation</span><div class="track"><div class="fill" style="width:23%"></div></div><span class="cnt">33</span></div>
+    <div class="signal-bar"><span class="lbl">Responsible AI</span><div class="track"><div class="fill" style="width:22%"></div></div><span class="cnt">32</span></div>
+    <div class="signal-bar"><span class="lbl">ML Bias</span><div class="track"><div class="fill" style="width:12%"></div></div><span class="cnt">17</span></div>
+    <div class="signal-bar"><span class="lbl">Algorithmic Fairness</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="cnt">1</span></div>
+  </div>
+
+  <div class="callout"><strong>Key insight:</strong> AI Safety (142) and AI Governance (103) dominate HN. Algorithmic Fairness (1 hit) is almost invisible to tech practitioners — a gap the fairness academic community has not bridged yet. See <a href="#p-hardt">Hardt</a> and <a href="#dim-fairness">Fairness dimension</a>.</div>
+
+  <h3>Notable HN stories</h3>
+  <ul>
+    <li><a href="https://news.ycombinator.com/item?id=48129561" target="_blank" rel="noopener">The other half of AI safety</a> — 97 pts — safety beyond model alignment</li>
+    <li><a href="https://news.ycombinator.com/item?id=48302940" target="_blank" rel="noopener">Illinois Lawmakers Just Passed America's Strongest AI Safety Bill</a> — 14 pts</li>
+    <li><a href="https://news.ycombinator.com/item?id=48364520" target="_blank" rel="noopener">Colorado Rolls Back Landmark AI Governance Law</a> — 8 pts — regulatory volatility</li>
+    <li><a href="https://news.ycombinator.com/item?id=48273162" target="_blank" rel="noopener">Vatican-Anthropic relationship reshaping AI ethics debate</a> — 21 pts</li>
+    <li><a href="https://news.ycombinator.com/item?id=48252405" target="_blank" rel="noopener">AI Governance 2026: I Almost Quit over This Shit</a> — practitioner frustration as field signal</li>
+  </ul>
+</section>
+
 <section id="debates">
   <h2 class="sec">Open debates</h2>
   <p class="intro">Where experts disagree — useful for forming your own view.</p>
@@ -1661,7 +1795,7 @@
 
 <footer>
   <div class="wrap">
-    Responsible AI Learning Map · Curated for DBA cohort exploration · June 2026 · build 7<br>
+    Responsible AI Learning Map · Curated for DBA cohort exploration · June 2026 · build 8<br>
     Published at <a href="https://rai-learning-map.github.io/" target="_blank">rai-learning-map.github.io</a> · <a href="https://github.com/rai-learning-map/rai-learning-map.github.io" target="_blank">Source on GitHub</a><br>
     <a href="#home">Back to top</a>
   </div>
