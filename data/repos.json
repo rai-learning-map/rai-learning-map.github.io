@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "asOf": "2026-06",
+  "categories": [
+    {
+      "id": "explainability",
+      "name": "Explainability / XAI",
+      "dimension": "explainability",
+      "repos": [
+        { "name": "slundberg/shap", "url": "https://github.com/slundberg/shap", "org": "Lundberg (UW)", "note": "Shapley values — industry standard" },
+        { "name": "marcotcr/lime", "url": "https://github.com/marcotcr/lime", "org": "Ribeiro (UW)", "note": "Local interpretable explanations" },
+        { "name": "interpretml/interpret", "url": "https://github.com/interpretml/interpret", "org": "Microsoft", "note": "Glass-box models + SHAP integration" }
+      ]
+    },
+    {
+      "id": "fairness",
+      "name": "Fairness & Bias",
+      "dimension": "fairness",
+      "repos": [
+        { "name": "Trusted-AI/AIF360", "url": "https://github.com/Trusted-AI/AIF360", "org": "IBM Research", "note": "Highest fork ratio — most actively used" },
+        { "name": "fairlearn/fairlearn", "url": "https://github.com/fairlearn/fairlearn", "org": "Microsoft", "note": "Clean API, well-documented" },
+        { "name": "microsoft/responsible-ai-toolbox", "url": "https://github.com/microsoft/responsible-ai-toolbox", "org": "Microsoft", "note": "Dashboard UI for stakeholder demos" }
+      ]
+    },
+    {
+      "id": "privacy",
+      "name": "Privacy-Preserving AI",
+      "dimension": "privacy",
+      "repos": [
+        { "name": "pytorch/opacus", "url": "https://github.com/pytorch/opacus", "org": "Meta (PyTorch)", "note": "DP-SGD for PyTorch" },
+        { "name": "google/differential-privacy", "url": "https://github.com/google/differential-privacy", "org": "Google", "note": "Multi-language DP libraries" },
+        { "name": "OpenMined/PySyft", "url": "https://github.com/OpenMined/PySyft", "org": "OpenMined", "note": "Federated learning + privacy" }
+      ]
+    },
+    {
+      "id": "safety",
+      "name": "Safety, Robustness & Red Teaming",
+      "dimension": "safety",
+      "repos": [
+        { "name": "Trusted-AI/ART", "url": "https://github.com/Trusted-AI/adversarial-robustness-toolbox", "org": "IBM Research", "note": "Attacks + defenses, classical ML" },
+        { "name": "microsoft/PyRIT", "url": "https://github.com/microsoft/PyRIT", "org": "Microsoft", "note": "Gen AI red teaming (2024)" },
+        { "name": "cleverhans-lab/cleverhans", "url": "https://github.com/cleverhans-lab/cleverhans", "org": "Goodfellow / CMU", "note": "Adversarial examples, research-grade" }
+      ]
+    },
+    {
+      "id": "llm-guardrails",
+      "name": "LLM Guardrails & Evaluation",
+      "dimension": "safety",
+      "repos": [
+        { "name": "guardrails-ai/guardrails", "url": "https://github.com/guardrails-ai/guardrails", "org": "Guardrails AI", "note": "Output validation, schema enforcement" },
+        { "name": "NVIDIA/NeMo-Guardrails", "url": "https://github.com/NVIDIA/NeMo-Guardrails", "org": "NVIDIA", "note": "Colang DSL for conversation flows" },
+        { "name": "openai/evals", "url": "https://github.com/openai/evals", "org": "OpenAI", "note": "LLM evaluation framework + benchmarks" }
+      ]
+    },
+    {
+      "id": "sustainability",
+      "name": "Sustainability",
+      "dimension": "sustainability",
+      "repos": [
+        { "name": "mlco2/codecarbon", "url": "https://github.com/mlco2/codecarbon", "org": "Mila + universities", "note": "CO₂ tracking for ML training" },
+        { "name": "EthicalML/awesome-production-ml", "url": "https://github.com/EthicalML/awesome-production-machine-learning", "org": "EthicalML", "note": "Curated list: monitoring, fairness, privacy" },
+        { "name": "Giskard-AI/giskard-oss", "url": "https://github.com/Giskard-AI/giskard-oss", "org": "Giskard AI", "note": "LLM agent testing, vulnerability scanning" }
+      ]
+    }
+  ],
+  "entryPoints": [
+    { "orgType": "Solo / Startup", "repos": ["guardrails-ai", "shap", "codecarbon"], "why": "Quick wins: output safety + explain one prediction + track emissions" },
+    { "orgType": "Product Team", "repos": ["giskard-oss", "deepchecks", "PyRIT"], "why": "Test before ship: LLM vulns + ML validation + red team" },
+    { "orgType": "Mid-size Company", "repos": ["AIF360", "fairlearn", "responsible-ai-toolbox"], "why": "Fairness audit + dashboard for stakeholders" },
+    { "orgType": "Enterprise / Regulated", "repos": ["ART", "opacus", "responsible-ai-toolbox"], "why": "Full stack: robustness + DP + explainability dashboard" },
+    { "orgType": "LLM Product Builder", "repos": ["NeMo-Guardrails", "evals", "PyRIT"], "why": "Conversation control + evaluation + red team" },
+    { "orgType": "Research", "repos": ["SHAP", "AIX360", "AIF360", "cleverhans"], "why": "Full algorithmic toolkit" }
+  ]
+}

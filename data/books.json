@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "books": [
+    { "title": "Weapons of Math Destruction", "author": "Cathy O'Neil", "year": 2016, "why": "Algorithmic systems entrench inequality at scale — best non-technical entry point.", "dimension": "fairness" },
+    { "title": "Atlas of AI", "author": "Kate Crawford", "year": 2021, "why": "Political economy lens: AI as extraction system, not neutral technology.", "dimension": "social-impact" },
+    { "title": "Fairness and Machine Learning", "author": "Barocas, Hardt, Narayanan", "year": 2023, "why": "Free textbook — best technical fairness reference.", "url": "https://fairmlbook.org", "dimension": "fairness" },
+    { "title": "The Alignment Problem", "author": "Brian Christian", "year": 2020, "why": "Accessible narrative on AI systems optimizing wrong objectives.", "dimension": "safety" },
+    { "title": "AI Snake Oil", "author": "Narayanan & Kapoor", "year": 2024, "why": "Distinguishes genuine AI capability from hype — essential calibration.", "dimension": "governance" },
+    { "title": "Unmasking AI", "author": "Joy Buolamwini", "year": 2023, "why": "Facial recognition bias through personal and political journey.", "dimension": "fairness" },
+    { "title": "Algorithms of Oppression", "author": "Safiya Umoja Noble", "year": 2018, "why": "Search engines embed racial and gender bias in everyday tools.", "dimension": "fairness" },
+    { "title": "Human Compatible", "author": "Stuart Russell", "year": 2019, "why": "AI should be uncertain about human values and defer to us.", "dimension": "safety" },
+    { "title": "Interpretable Machine Learning", "author": "Christoph Molnar", "year": 2022, "why": "Free comprehensive XAI methods guide.", "url": "https://christophm.github.io/interpretable-ml-book", "dimension": "explainability" },
+    { "title": "Power and Prediction", "author": "Agrawal, Gans, Goldfarb", "year": 2022, "why": "How AI shifts power via prediction — incumbents vs disruption.", "dimension": "governance" }
+  ],
+  "personas": [
+    { "id": "non-technical", "name": "Non-technical Practitioner", "sequence": ["O'Neil", "Crawford", "Buolamwini", "Christian", "NIST AI RMF"] },
+    { "id": "technical", "name": "Technical Practitioner", "sequence": ["Barocas/Hardt (free)", "Molnar (free)", "Narayanan & Kapoor"] },
+    { "id": "policy", "name": "Policy / Governance", "sequence": ["Eubanks", "Crawford", "Noble", "OECD AI Principles", "EU AI Act"] }
+  ]
+}

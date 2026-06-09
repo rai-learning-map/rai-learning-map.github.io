@@ -445,6 +445,81 @@
       border-color: oklch(86% 0.04 245);
     }
 
+    .entry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .entry-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-sm) var(--space-md);
+      transition: box-shadow 0.25s var(--ease-out), border-color 0.2s var(--ease-out);
+    }
+    .entry-card:hover { box-shadow: var(--shadow-hover); border-color: var(--border-strong); }
+    .entry-card .org-type {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--ink-deep);
+      margin-bottom: 0.35rem;
+    }
+    .entry-card .repos {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+      line-height: 1.5;
+    }
+    .entry-card .why {
+      font-size: 0.8125rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .tool-cat { margin: var(--space-lg) 0 var(--space-sm); }
+    .tool-cat h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 var(--space-xs);
+    }
+    .tool-cat .dim-link {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .tool-cat .dim-link:hover { color: var(--ink); }
+
+    .book-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-sm) var(--space-md);
+      margin: var(--space-xs) 0;
+      transition: box-shadow 0.25s var(--ease-out);
+    }
+    .book-card:hover { box-shadow: var(--shadow-hover); }
+    .book-card h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink-deep);
+      margin: 0 0 0.2rem;
+    }
+    .book-card .meta {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .book-card p { font-size: 0.875rem; margin: 0; line-height: 1.55; color: var(--text); }
+
     .diagram {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -734,9 +809,9 @@
       <span class="pill">~40 curated sources</span>
       <span class="pill">8 RAI dimensions</span>
       <span class="pill">8 topic hubs</span>
-      <span class="pill">Paper summaries</span>
+      <span class="pill">RAI tools</span>
+      <span class="pill">Policy frameworks</span>
       <span class="pill">Case studies</span>
-      <span class="pill">GitHub-ready</span>
     </div>
   </div>
 </header>
@@ -761,6 +836,10 @@
   <h2>Practitioner breadth</h2>
   <ul>
     <li><a href="#dimensions">8 dimensions overview</a></li>
+    <li><a href="#tools">Tools &amp; repos</a></li>
+    <li><a href="#policy">Policy &amp; law</a></li>
+    <li><a href="#books">Books</a></li>
+    <li><a href="#explainers">Explainers</a></li>
     <li><a href="#dim-fairness">Fairness &amp; bias</a></li>
     <li><a href="#dim-explainability">Explainability</a></li>
     <li><a href="#dim-privacy">Privacy</a></li>
@@ -773,7 +852,7 @@
   <h2>Depth</h2>
   <ul>
     <li><a href="#cases">Case studies</a></li>
-    <li><a href="#frameworks">Frameworks</a></li>
+    <li><a href="#policy">Policy &amp; law</a></li>
     <li><a href="#debates">Debates</a></li>
     <li><a href="#frontier">Frontier</a></li>
     <li><a href="#glossary">Glossary</a></li>
@@ -797,7 +876,7 @@
 <section id="home">
   <h2 class="sec">How to use this map</h2>
   <p class="intro">This is not a course schedule or a note-taking app. It is a structured place to land when you want to understand a topic, find the seminal paper, read a short orientation, then jump to the original source. Click any paper title to expand a brief profile; use <strong>Read source</strong> to open arXiv or the official framework page.</p>
-  <div class="callout"><strong>Four ways in:</strong> (1) Start from the <a href="#map">knowledge map</a> for the technical stack. (2) Browse <a href="#dimensions">RAI dimensions</a> for practitioner breadth — fairness through social impact. (3) Pick a <a href="#hubs">topic hub</a> if you know the area. (4) Scan the <a href="#index">quick index</a> for a flat list with dimension tags.</div>
+  <div class="callout"><strong>Five ways in:</strong> (1) <a href="#map">Knowledge map</a> for the technical stack. (2) <a href="#dimensions">RAI dimensions</a> for practitioner lenses. (3) <a href="#tools">Tools &amp; repos</a> when you need code. (4) <a href="#hubs">Topic hubs</a> for papers. (5) <a href="#index">Quick index</a> for a flat list with dimension tags.</div>
 </section>
 
 <section id="map">
@@ -919,6 +998,95 @@
       <tr><td><a href="#hub-governance">Governance</a></td><td>Governance</td><td><a href="#p-modelcards">Model Cards</a>, <a href="#p-nist">NIST RMF</a></td></tr>
     </tbody>
   </table>
+</section>
+
+<section id="tools">
+  <h2 class="sec">Tools &amp; repos</h2>
+  <p class="intro">Open-source starting points by RAI dimension — top repos per category from institutionally maintained projects. Fork/star ratio &gt;0.15 usually means active practitioner use, not bookmark-only.</p>
+  <div class="callout"><strong>Where to start?</strong> Use the entry-point cards below if you know your org type. Otherwise pick the category that matches your immediate question — fairness audit, red team, explain a prediction, track emissions.</div>
+
+  <div class="tool-cat" id="tools-xai">
+    <h4>Explainability / XAI <a class="dim-link" href="#dim-explainability">→ dimension</a></h4>
+    <table class="data">
+      <thead><tr><th>Repo</th><th>Org</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/slundberg/shap" target="_blank" rel="noopener">slundberg/shap</a></td><td>Lundberg (UW)</td><td>Shapley values — industry standard for feature attribution</td></tr>
+        <tr><td><a href="https://github.com/marcotcr/lime" target="_blank" rel="noopener">marcotcr/lime</a></td><td>Ribeiro (UW)</td><td>Local interpretable explanations — pairs with <a href="#p-lime">LIME paper</a></td></tr>
+        <tr><td><a href="https://github.com/interpretml/interpret" target="_blank" rel="noopener">interpretml/interpret</a></td><td>Microsoft</td><td>Glass-box models + SHAP integration</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tool-cat" id="tools-fairness">
+    <h4>Fairness &amp; Bias <a class="dim-link" href="#dim-fairness">→ dimension</a></h4>
+    <table class="data">
+      <thead><tr><th>Repo</th><th>Org</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/Trusted-AI/AIF360" target="_blank" rel="noopener">Trusted-AI/AIF360</a></td><td>IBM Research</td><td>Highest fork ratio in fairness tooling — most actively used</td></tr>
+        <tr><td><a href="https://github.com/fairlearn/fairlearn" target="_blank" rel="noopener">fairlearn/fairlearn</a></td><td>Microsoft</td><td>Clean API, pairs with <a href="#p-hardt">Hardt</a> fairness definitions</td></tr>
+        <tr><td><a href="https://github.com/microsoft/responsible-ai-toolbox" target="_blank" rel="noopener">responsible-ai-toolbox</a></td><td>Microsoft</td><td>Dashboard UI — demo-able to stakeholders</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tool-cat" id="tools-privacy">
+    <h4>Privacy <a class="dim-link" href="#dim-privacy">→ dimension</a></h4>
+    <table class="data">
+      <thead><tr><th>Repo</th><th>Org</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/pytorch/opacus" target="_blank" rel="noopener">pytorch/opacus</a></td><td>Meta (PyTorch)</td><td>DP-SGD for PyTorch training</td></tr>
+        <tr><td><a href="https://github.com/google/differential-privacy" target="_blank" rel="noopener">google/differential-privacy</a></td><td>Google</td><td>Multi-language differential privacy libraries</td></tr>
+        <tr><td><a href="https://github.com/OpenMined/PySyft" target="_blank" rel="noopener">OpenMined/PySyft</a></td><td>OpenMined</td><td>Federated learning + privacy-preserving ML</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tool-cat" id="tools-safety">
+    <h4>Safety, Robustness &amp; Red Teaming <a class="dim-link" href="#dim-safety">→ dimension</a></h4>
+    <table class="data">
+      <thead><tr><th>Repo</th><th>Org</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/Trusted-AI/adversarial-robustness-toolbox" target="_blank" rel="noopener">Trusted-AI/ART</a></td><td>IBM Research</td><td>Attacks + defenses for classical ML — pairs with <a href="#p-safety">AI Safety</a></td></tr>
+        <tr><td><a href="https://github.com/microsoft/PyRIT" target="_blank" rel="noopener">microsoft/PyRIT</a></td><td>Microsoft</td><td>Gen AI red teaming framework (2024)</td></tr>
+        <tr><td><a href="https://github.com/cleverhans-lab/cleverhans" target="_blank" rel="noopener">cleverhans-lab/cleverhans</a></td><td>Goodfellow / CMU</td><td>Adversarial examples — research-grade baseline</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tool-cat" id="tools-llm">
+    <h4>LLM Guardrails &amp; Evaluation <a class="dim-link" href="#dim-safety">→ safety</a></h4>
+    <table class="data">
+      <thead><tr><th>Repo</th><th>Org</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/guardrails-ai/guardrails" target="_blank" rel="noopener">guardrails-ai/guardrails</a></td><td>Guardrails AI</td><td>Output validation and schema enforcement</td></tr>
+        <tr><td><a href="https://github.com/NVIDIA/NeMo-Guardrails" target="_blank" rel="noopener">NVIDIA/NeMo-Guardrails</a></td><td>NVIDIA</td><td>Colang DSL for conversation flow control</td></tr>
+        <tr><td><a href="https://github.com/openai/evals" target="_blank" rel="noopener">openai/evals</a></td><td>OpenAI</td><td>LLM evaluation framework + benchmark registry</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tool-cat" id="tools-sustain">
+    <h4>Sustainability <a class="dim-link" href="#dim-sustainability">→ dimension</a></h4>
+    <table class="data">
+      <thead><tr><th>Repo</th><th>Org</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/mlco2/codecarbon" target="_blank" rel="noopener">mlco2/codecarbon</a></td><td>Mila + universities</td><td>CO₂ tracking for ML training — pairs with <a href="#p-chinchilla">Chinchilla</a> efficiency debate</td></tr>
+        <tr><td><a href="https://github.com/Giskard-AI/giskard-oss" target="_blank" rel="noopener">Giskard-AI/giskard-oss</a></td><td>Giskard AI</td><td>LLM agent testing and vulnerability scanning</td></tr>
+        <tr><td><a href="https://github.com/EthicalML/awesome-production-machine-learning" target="_blank" rel="noopener">EthicalML/awesome-production-ml</a></td><td>EthicalML</td><td>Curated list: monitoring, versioning, fairness, privacy</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="tools-entry">Practitioner entry points</h3>
+  <p class="intro">Pick the card closest to your context — each bundles repos that work together.</p>
+  <div class="entry-grid">
+    <div class="entry-card"><div class="org-type">Solo / Startup</div><div class="repos">guardrails · shap · codecarbon</div><div class="why">Quick wins: output safety + explain one prediction + track emissions</div></div>
+    <div class="entry-card"><div class="org-type">Product Team</div><div class="repos">giskard · deepchecks · PyRIT</div><div class="why">Test before ship: LLM vulns + ML validation + red team</div></div>
+    <div class="entry-card"><div class="org-type">Mid-size Company</div><div class="repos">AIF360 · fairlearn · RAI toolbox</div><div class="why">Fairness audit + dashboard for stakeholders</div></div>
+    <div class="entry-card"><div class="org-type">Enterprise / Regulated</div><div class="repos">ART · opacus · RAI toolbox</div><div class="why">Robustness + differential privacy + explainability dashboard</div></div>
+    <div class="entry-card"><div class="org-type">LLM Product Builder</div><div class="repos">NeMo-Guardrails · evals · PyRIT</div><div class="why">Conversation control + evaluation + red team</div></div>
+    <div class="entry-card"><div class="org-type">Research</div><div class="repos">SHAP · AIX360 · AIF360 · cleverhans</div><div class="why">Full algorithmic toolkit across XAI, fairness, robustness</div></div>
+  </div>
 </section>
 
 <section id="hubs">
@@ -1343,17 +1511,91 @@
   <p style="font-size:.88rem"><a href="https://incidentdatabase.ai" target="_blank">AI Incident Database</a> — ongoing catalogue of real-world AI harms.</p>
 </section>
 
-<section id="frameworks">
-  <h2 class="sec">Frameworks &amp; reports</h2>
-  <table class="data">
-    <thead><tr><th>Resource</th><th>What it gives you</th><th>Link</th></tr></thead>
+<section id="policy">
+  <h2 class="sec">Policy &amp; law</h2>
+  <p class="intro">Global frameworks practitioners reference — what each requires in practice, not just principles on paper. Compare EU (legal), NIST (voluntary US), Singapore (self-assessment), and multilateral baselines.</p>
+  <table class="data" id="frameworks">
+    <thead><tr><th>Framework</th><th>Region</th><th>Year</th><th>Key practitioner obligation</th><th>Source</th></tr></thead>
     <tbody>
-      <tr id="fw-nist"><td><strong>NIST AI RMF 1.0</strong></td><td>Govern · Map · Measure · Manage</td><td><a href="https://airc.nist.gov/airmf-resources/airmf/0-ai-rmf-1-0/" target="_blank">NIST</a> · <a href="#p-nist">profile</a></td></tr>
-      <tr><td><strong>NIST GenAI Profile</strong></td><td>Generative-AI-specific risks</td><td><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" target="_blank">PDF</a></td></tr>
-      <tr id="fw-euai"><td><strong>EU AI Act</strong></td><td>Legal compliance, risk tiers</td><td><a href="https://artificialintelligenceact.eu/high-level-summary/" target="_blank">Summary</a></td></tr>
-      <tr><td><strong>OECD AI Principles</strong></td><td>International policy baseline</td><td><a href="https://oecd.ai/en/ai-principles" target="_blank">OECD</a></td></tr>
-      <tr><td><strong>Stanford AI Index</strong></td><td>Annual RAI metrics &amp; trends</td><td><a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/responsible-ai" target="_blank">HAI</a></td></tr>
-      <tr><td><strong>Fairness and Machine Learning</strong> (book)</td><td>Fairness textbook</td><td><a href="https://fairmlbook.org" target="_blank">fairmlbook.org</a></td></tr>
+      <tr id="fw-euai"><td><strong>EU AI Act</strong></td><td>EU</td><td>2024</td><td>Risk tiers; high-risk = FRIA + technical docs + human oversight</td><td><a href="https://artificialintelligenceact.eu/high-level-summary/" target="_blank" rel="noopener">Summary</a> · <a href="#case-euai">case</a></td></tr>
+      <tr id="fw-nist"><td><strong>NIST AI RMF 1.0</strong></td><td>US</td><td>2023</td><td>Govern → Map → Measure → Manage cycle</td><td><a href="https://airc.nist.gov/airmf-resources/airmf/0-ai-rmf-1-0/" target="_blank" rel="noopener">NIST</a> · <a href="#p-nist">profile</a></td></tr>
+      <tr><td><strong>NIST GenAI Profile</strong></td><td>US</td><td>2024</td><td>Generative-AI-specific risks mapped to RMF functions</td><td><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" target="_blank" rel="noopener">PDF</a></td></tr>
+      <tr><td><strong>OECD AI Principles</strong></td><td>Global</td><td>2019</td><td>5 principles + 5 policy recs; G20 endorsed baseline</td><td><a href="https://oecd.ai/en/ai-principles" target="_blank" rel="noopener">OECD</a></td></tr>
+      <tr><td><strong>UNESCO Recommendation</strong></td><td>Global</td><td>2021</td><td>11 key values; 193 member states; human rights framing</td><td><a href="https://www.unesco.org/en/artificial-intelligence/recommendation-ethics" target="_blank" rel="noopener">UNESCO</a></td></tr>
+      <tr><td><strong>AI Bill of Rights (OSTP)</strong></td><td>US</td><td>2022</td><td>5 protections blueprint; non-binding but enterprise-influential</td><td><a href="https://www.whitehouse.gov/ostp/ai-bill-of-rights/" target="_blank" rel="noopener">White House</a></td></tr>
+      <tr><td><strong>NITI Aayog RAI for All</strong></td><td>India</td><td>2021</td><td>7 principles; sector guidance; public sector adoption</td><td><a href="https://niti.gov.in/sites/default/files/2021-02/Responsible-AI-22022021.pdf" target="_blank" rel="noopener">PDF</a></td></tr>
+      <tr><td><strong>Singapore IMDA MGA v2</strong></td><td>Singapore</td><td>2020</td><td>Self-assessment guide — most practitioner-friendly entry point</td><td><a href="https://www.imda.gov.sg/how-we-can-help/ai-verify" target="_blank" rel="noopener">IMDA</a></td></tr>
+      <tr><td><strong>UK DSIT AI Principles</strong></td><td>UK</td><td>2023</td><td>Safety, robustness, explainability, fairness, accountability</td><td><a href="https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach" target="_blank" rel="noopener">Gov.uk</a></td></tr>
+      <tr><td><strong>Hiroshima AI Process</strong></td><td>G7</td><td>2023</td><td>International LLM governance; foundation model conduct codes</td><td><a href="https://www.soumu.go.jp/hiroshimaaiprocess/" target="_blank" rel="noopener">G7</a></td></tr>
+    </tbody>
+  </table>
+  <p class="intro" style="margin-top:var(--space-md)"><strong>Reports:</strong> <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/responsible-ai" target="_blank" rel="noopener">Stanford AI Index — RAI chapter</a> for annual metrics and trends.</p>
+</section>
+
+<section id="books">
+  <h2 class="sec">Books</h2>
+  <p class="intro">Ten high-signal books with one-sentence orientation — plus reading sequences by persona. Free textbooks linked where available.</p>
+
+  <h3>Reading sequences by persona</h3>
+  <div class="entry-grid">
+    <div class="entry-card"><div class="org-type">Non-technical Practitioner</div><div class="why" style="line-height:1.7">O'Neil → Crawford → Buolamwini → Christian → <a href="#p-nist">NIST AI RMF</a></div></div>
+    <div class="entry-card"><div class="org-type">Technical Practitioner</div><div class="why" style="line-height:1.7"><a href="https://fairmlbook.org" target="_blank" rel="noopener">Barocas/Hardt (free)</a> → <a href="https://christophm.github.io/interpretable-ml-book" target="_blank" rel="noopener">Molnar (free)</a> → Narayanan &amp; Kapoor</div></div>
+    <div class="entry-card"><div class="org-type">Policy / Governance</div><div class="why" style="line-height:1.7">Eubanks → Crawford → Noble → <a href="#policy">OECD AI Principles</a> → <a href="#fw-euai">EU AI Act</a></div></div>
+  </div>
+
+  <h3>Top 10 orientation list</h3>
+  <div class="book-card"><h4>Weapons of Math Destruction</h4><div class="meta">Cathy O'Neil · 2016 · <a href="#dim-fairness">Fairness</a></div><p>Algorithmic systems entrench inequality at scale — best non-technical entry point.</p></div>
+  <div class="book-card"><h4>Atlas of AI</h4><div class="meta">Kate Crawford · 2021 · <a href="#dim-social-impact">Social impact</a></div><p>Political economy lens: AI as extraction system, not neutral technology.</p></div>
+  <div class="book-card"><h4><a href="https://fairmlbook.org" target="_blank" rel="noopener">Fairness and Machine Learning</a></h4><div class="meta">Barocas, Hardt, Narayanan · 2023 · free · <a href="#dim-fairness">Fairness</a></div><p>Best technical fairness reference — pairs with <a href="#p-hardt">Hardt paper</a>.</p></div>
+  <div class="book-card"><h4>The Alignment Problem</h4><div class="meta">Brian Christian · 2020 · <a href="#dim-safety">Safety</a></div><p>Accessible narrative on AI systems optimizing wrong objectives.</p></div>
+  <div class="book-card"><h4>AI Snake Oil</h4><div class="meta">Narayanan &amp; Kapoor · 2024 · <a href="#dim-governance">Governance</a></div><p>Distinguishes genuine AI capability from hype — essential calibration.</p></div>
+  <div class="book-card"><h4>Unmasking AI</h4><div class="meta">Joy Buolamwini · 2023 · <a href="#dim-fairness">Fairness</a></div><p>Facial recognition bias through personal and political journey.</p></div>
+  <div class="book-card"><h4>Algorithms of Oppression</h4><div class="meta">Safiya Umoja Noble · 2018 · <a href="#dim-fairness">Fairness</a></div><p>Search engines embed racial and gender bias in everyday tools.</p></div>
+  <div class="book-card"><h4>Human Compatible</h4><div class="meta">Stuart Russell · 2019 · <a href="#dim-safety">Safety</a></div><p>AI should be uncertain about human values and defer to us.</p></div>
+  <div class="book-card"><h4><a href="https://christophm.github.io/interpretable-ml-book" target="_blank" rel="noopener">Interpretable Machine Learning</a></h4><div class="meta">Christoph Molnar · 2022 · free · <a href="#dim-explainability">XAI</a></div><p>Comprehensive XAI methods — pairs with <a href="#p-lime">LIME</a> and <a href="#p-shap">SHAP</a>.</p></div>
+  <div class="book-card"><h4>Power and Prediction</h4><div class="meta">Agrawal, Gans, Goldfarb · 2022 · <a href="#dim-governance">Governance</a></div><p>How AI shifts power via prediction — incumbents vs disruption.</p></div>
+</section>
+
+<section id="explainers">
+  <h2 class="sec">Explainers</h2>
+  <p class="intro">Curated YouTube and written resources — link out for depth. Snapshot as of June 2026 from practitioner research.</p>
+
+  <h3>YouTube</h3>
+  <table class="data">
+    <thead><tr><th>Video</th><th>Channel</th><th>Dimension</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://youtu.be/w_3L1Bf2P_g" target="_blank" rel="noopener">Introduction to Responsible AI</a></td><td>Google Cloud</td><td><a href="#dim-governance">Governance</a></td></tr>
+      <tr><td><a href="https://youtu.be/yh-3WU1FKrk" target="_blank" rel="noopener">What is Responsible AI? A Guide to AI Governance</a></td><td>IBM Technology</td><td><a href="#dim-governance">Governance</a></td></tr>
+      <tr><td><a href="https://youtu.be/gV0_raKR2UQ" target="_blank" rel="noopener">Algorithmic Bias and Fairness: Crash Course AI #18</a></td><td>CrashCourse</td><td><a href="#dim-fairness">Fairness</a></td></tr>
+      <tr><td><a href="https://youtu.be/og67qeTZPYs" target="_blank" rel="noopener">Algorithmic Bias in AI: What It Is and How to Fix It</a></td><td>IBM Technology</td><td><a href="#dim-fairness">Fairness</a></td></tr>
+      <tr><td><a href="https://youtu.be/4nt2_b9IxAo" target="_blank" rel="noopener">AI Safety Crash Course</a></td><td>Daily AI Safety</td><td><a href="#dim-safety">Safety</a></td></tr>
+      <tr><td><a href="https://youtu.be/viyXQhPAqME" target="_blank" rel="noopener">AI Ethics and Governance in Practice</a></td><td>Alan Turing Institute</td><td><a href="#dim-governance">Governance</a></td></tr>
+      <tr><td><a href="https://youtu.be/nbnTvNEumZI" target="_blank" rel="noopener">Tutorial on AI Alignment (part 1)</a></td><td>TILOS AI</td><td><a href="#dim-safety">Safety</a></td></tr>
+      <tr><td><a href="https://youtu.be/sgcEcYoYRrA" target="_blank" rel="noopener">How to Break Into AI Governance &amp; Ethics</a></td><td>Obi Ogbanufe PhD</td><td><a href="#dim-governance">Governance</a></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Blogs &amp; newsletters</h3>
+  <table class="data">
+    <thead><tr><th>Resource</th><th>Author</th><th>Focus</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://distill.pub" target="_blank" rel="noopener"><strong>Distill.pub</strong></a></td><td>Community</td><td>Interpretability — deep but visual</td></tr>
+      <tr><td><a href="https://jack-clark.net" target="_blank" rel="noopener"><strong>Import AI</strong></a></td><td>Jack Clark</td><td>Weekly curated AI news with RAI signal</td></tr>
+      <tr><td><a href="https://thegradient.pub" target="_blank" rel="noopener"><strong>The Gradient</strong></a></td><td>Stanford community</td><td>ML research explained accessibly</td></tr>
+      <tr><td><a href="https://alignmentforum.org" target="_blank" rel="noopener"><strong>AI Alignment Forum</strong></a></td><td>LessWrong community</td><td>Technical alignment discussions</td></tr>
+      <tr><td><a href="https://bounded-regret.ghost.io" target="_blank" rel="noopener"><strong>Bounded Regret</strong></a></td><td>Moritz Hardt</td><td>Fairness, statistics, ML critique</td></tr>
+      <tr><td><a href="https://montrealethics.ai" target="_blank" rel="noopener"><strong>Montreal AI Ethics Institute</strong></a></td><td>MAIEI</td><td>Accessible weekly ethics digest</td></tr>
+    </tbody>
+  </table>
+
+  <h3>By learning level</h3>
+  <table class="data">
+    <thead><tr><th>Level</th><th>Start here</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Beginner</strong></td><td>CrashCourse AI #18 · Google Cloud Intro to RAI · Montreal AI Ethics digest</td></tr>
+      <tr><td><strong>Intermediate</strong></td><td>IBM Technology YouTube · fast.ai ethics · The Gradient</td></tr>
+      <tr><td><strong>Advanced</strong></td><td>Distill.pub · Alignment Forum · Bounded Regret · <a href="https://fairmlbook.org" target="_blank" rel="noopener">fairmlbook.org</a></td></tr>
+      <tr><td><strong>Policy-focused</strong></td><td>Alan Turing Institute YouTube · Obi Ogbanufe PhD · <a href="https://oecd.ai" target="_blank" rel="noopener">OECD AI Observatory</a></td></tr>
     </tbody>
   </table>
 </section>
@@ -1404,12 +1646,13 @@
 </section>
 
 <section id="media">
-  <h2 class="sec">Books &amp; visual guides</h2>
+  <h2 class="sec">Visual guides &amp; reports</h2>
+  <p class="intro">Technical primers and annual landscape reports. For books and video explainers see <a href="#books">Books</a> and <a href="#explainers">Explainers</a>.</p>
   <ul>
-    <li><a href="http://jalammar.github.io/illustrated-transformer/" target="_blank">The Illustrated Transformer</a> — best visual primer before <a href="#p-attention">Attention paper</a></li>
-    <li><a href="https://martinfowler.com/articles/deepseek-papers.html" target="_blank">Martin Fowler — DeepSeek technical overview</a> — before <a href="#p-deepseek">DeepSeek-V3</a></li>
-    <li><a href="https://fairmlbook.org" target="_blank">Fairness and Machine Learning</a> — fairness pillar</li>
-    <li><a href="https://www.stateof.ai/" target="_blank">State of AI Report</a> — annual landscape</li>
+    <li><a href="http://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">The Illustrated Transformer</a> — best visual primer before <a href="#p-attention">Attention paper</a></li>
+    <li><a href="https://martinfowler.com/articles/deepseek-papers.html" target="_blank" rel="noopener">Martin Fowler — DeepSeek technical overview</a> — before <a href="#p-deepseek">DeepSeek-V3</a></li>
+    <li><a href="https://www.stateof.ai/" target="_blank" rel="noopener">State of AI Report</a> — annual landscape</li>
+    <li><a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/responsible-ai" target="_blank" rel="noopener">Stanford AI Index — RAI chapter</a></li>
   </ul>
 </section>
 
@@ -1418,7 +1661,7 @@
 
 <footer>
   <div class="wrap">
-    Responsible AI Learning Map · Curated for DBA cohort exploration · June 2026 · build 6<br>
+    Responsible AI Learning Map · Curated for DBA cohort exploration · June 2026 · build 7<br>
     Published at <a href="https://rai-learning-map.github.io/" target="_blank">rai-learning-map.github.io</a> · <a href="https://github.com/rai-learning-map/rai-learning-map.github.io" target="_blank">Source on GitHub</a><br>
     <a href="#home">Back to top</a>
   </div>

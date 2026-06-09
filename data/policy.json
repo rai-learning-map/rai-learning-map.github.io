@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "asOf": "2026-06",
+  "frameworks": [
+    {
+      "id": "eu-ai-act",
+      "name": "EU AI Act",
+      "region": "EU",
+      "year": 2024,
+      "obligation": "Risk classification (unacceptable/high/limited/minimal); high-risk = FRIA + technical docs + human oversight",
+      "url": "https://artificialintelligenceact.eu/high-level-summary/",
+      "portalLink": "#fw-euai"
+    },
+    {
+      "id": "nist-rmf",
+      "name": "NIST AI RMF",
+      "region": "US",
+      "year": 2023,
+      "obligation": "Govern-Map-Measure-Manage cycle; voluntary but US gov adoption path",
+      "url": "https://airc.nist.gov/airmf-resources/airmf/0-ai-rmf-1-0/",
+      "portalLink": "#p-nist"
+    },
+    {
+      "id": "oecd",
+      "name": "OECD AI Principles",
+      "region": "Global",
+      "year": 2019,
+      "obligation": "5 principles + 5 policy recommendations; G20 endorsed; most widely referenced globally",
+      "url": "https://oecd.ai/en/ai-principles"
+    },
+    {
+      "id": "unesco",
+      "name": "UNESCO Recommendation on AI Ethics",
+      "region": "Global",
+      "year": 2021,
+      "obligation": "Ethics framework with 11 key values; adopted by 193 member states; links AI to human rights",
+      "url": "https://www.unesco.org/en/artificial-intelligence/recommendation-ethics"
+    },
+    {
+      "id": "ai-bill-of-rights",
+      "name": "AI Bill of Rights (OSTP)",
+      "region": "US",
+      "year": 2022,
+      "obligation": "5 protections blueprint; non-binding but influential in enterprise practice",
+      "url": "https://www.whitehouse.gov/ostp/ai-bill-of-rights/"
+    },
+    {
+      "id": "niti-aayog",
+      "name": "NITI Aayog RAI for All",
+      "region": "India",
+      "year": 2021,
+      "obligation": "7 principles; sector guidance docs; public sector adoption framework",
+      "url": "https://niti.gov.in/sites/default/files/2021-02/Responsible-AI-22022021.pdf"
+    },
+    {
+      "id": "singapore-mga",
+      "name": "Singapore IMDA MGA v2",
+      "region": "Singapore",
+      "year": 2020,
+      "obligation": "Governance framework + self-assessment guide; most practitioner-friendly starting point",
+      "url": "https://www.imda.gov.sg/how-we-can-help/ai-verify"
+    },
+    {
+      "id": "uk-dsit",
+      "name": "UK DSIT AI Principles",
+      "region": "UK",
+      "year": 2023,
+      "obligation": "Safety, security, robustness; explainability; fairness; accountability",
+      "url": "https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach"
+    },
+    {
+      "id": "hiroshima",
+      "name": "Hiroshima AI Process",
+      "region": "G7",
+      "year": 2023,
+      "obligation": "International LLM governance; foundation model conduct codes",
+      "url": "https://www.soumu.go.jp/hiroshimaaiprocess/"
+    },
+    {
+      "id": "nist-genai",
+      "name": "NIST GenAI Profile",
+      "region": "US",
+      "year": 2024,
+      "obligation": "Generative-AI-specific risks mapped to AI RMF functions",
+      "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf"
+    }
+  ]
+}
